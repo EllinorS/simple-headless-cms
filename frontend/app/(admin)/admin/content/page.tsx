@@ -8,16 +8,6 @@ import { PAGE_BLOCKS } from '@/lib/content-blocks';
 import ContentBlock from './_components/ContentBlock';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
-// all pages available in the content editor
-const PAGES = [
-  'global',
-  'home',
-  'about',
-  'book-surf-lesson',
-  'surf-in-new-zealand',
-  'faq',
-] as const;
-
 export default function ContentPage() {
   // all content items fetched for the selected page
   const [content, setContent] = useState<ContentItem[]>([]);
@@ -79,7 +69,7 @@ export default function ContentPage() {
         {/* flex-wrap allows tabs to wrap to a new line if there are too many */}
         <TabsList variant="line" className="flex-wrap h-auto gap-2">
           {/* Create one tab button per page in the PAGES array */}
-          {PAGES.map((page) => (
+          {Object.keys(PAGE_BLOCKS).map((page) => (
             <TabsTrigger
               key={page} // unique key required by React when rendering lists
               value={page} // when clicked, onValueChange sets selectedPage to this value

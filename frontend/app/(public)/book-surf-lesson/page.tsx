@@ -31,7 +31,7 @@ async function getSessions(): Promise<CalendarSession[]> {
       price: s.price,
     }));
   } catch {
-    // Network error or timeout — return empty array instead of crashing the page
+
     return [];
   }
 }

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   // Load all text/image content for this page from the DB
   const content = await getPageContent('home');
-  // v() reads text values, img() reads image URLs (and prefixes the backend URL if needed)
+  // v() = text values, img() = image URLs
   const { v, img } = readContent(content);
 
   return (
@@ -31,12 +31,9 @@ export default async function HomePage() {
       <CoachSection v={v} img={img} />
       <UspSection v={v} />
 
-      {/* Decorative NZ map accents layered behind the full-width image below */}
-      {/* relative + z-10 so the accents can bleed into adjacent sections */}
       <div className="relative z-10">
         <NzAccent variant="full" color="green" side="left" width={600} className="top-1/2 -translate-y-1/2 -translate-x-1/3 opacity-80 w-80 md:w-96 lg:w-162.5 z-10" />
         <NzAccent variant="line" color="yellow" side="left" width={600} className="top-[calc(50%+12px)] -translate-y-1/2 -translate-x-1/4 opacity-100 w-80 md:w-96 lg:w-162.5 z-10" />
-        {/* Full-width decorative image between USP and Carousel sections */}
         <section className="py-16 container mx-auto px-6">
           <SimpleImage
             src={img('home_simple_image', PLACEHOLDER_IMG)}
@@ -46,7 +43,6 @@ export default async function HomePage() {
         </section>
       </div>
       <CarouselSection v={v} img={img} />
-      {/* Reviews are only rendered if at least one review has content — see ReviewsSection */}
       <ReviewsSection v={v} />
     </>
   );

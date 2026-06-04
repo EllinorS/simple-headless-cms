@@ -115,7 +115,7 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
                 >
                   {format(day, 'd')}
                 </span>
-                {/* Dot indicator — visible only when the day has sessions */}
+                {/* Dot indicator, visible only when the day has sessions */}
                 <span
                   className={`w-1.5 h-1.5 rounded-full ${hasSessions ? 'bg-primary' : 'bg-transparent'}`}
                 />
@@ -174,7 +174,7 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
   );
 }
 
-// Mobile card — larger, with a colour badge and a "Book →" link
+// Mobile card
 function MobileCard({ session }: { session: CalendarSession }) {
   return (
     <div className="bg-background border rounded-2xl p-4">
@@ -191,7 +191,7 @@ function MobileCard({ session }: { session: CalendarSession }) {
         >
           {session.type}
         </span>
-        {/* Scrolls down to the contact form */}
+
         <a href="#contact-form" className="text-sm font-bold hover:underline">
           Book →
         </a>
@@ -200,7 +200,7 @@ function MobileCard({ session }: { session: CalendarSession }) {
   );
 }
 
-// Desktop card — compact, entire card links to the contact form
+// Desktop card
 function DesktopCard({ session }: { session: CalendarSession }) {
   return (
     <a
@@ -217,7 +217,7 @@ function DesktopCard({ session }: { session: CalendarSession }) {
       {session.price > 0 && (
         <p className="text-[10px] text-muted-foreground mt-0.5">${session.price} / person</p>
       )}
-      {/* "Book →" fades in on hover */}
+
       <p className="text-[10px] font-semibold text-primary mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
         Book →
       </p>

@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Fallback image
-export const PLACEHOLDER_IMG = '/assets/placeholder.webp';
+export const PLACEHOLDER_IMG = '/assets/surfboards-under-flax.webp';
 
 // Returns true if the URL points to a video file
 export function isVideo(url: string): boolean {

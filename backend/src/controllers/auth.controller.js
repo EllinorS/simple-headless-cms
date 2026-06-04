@@ -45,7 +45,6 @@ export const login = asyncHandler(async (req, res) => {
   );
 
   // httpOnly: JS cannot read this cookie, protecting against XSS.
-  // secure: HTTPS-only in production. sameSite:'strict' means the cookie is never sent on any
   // cross-site request, blocking CSRF entirely (admin back-office, so the UX cost is acceptable).
   res.cookie('auth_token', token, {
     httpOnly: true,

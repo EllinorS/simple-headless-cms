@@ -87,11 +87,11 @@ export type ContentItem = {
 // A surf session as returned by GET /api/sessions/public
 export type Session = {
   id: number;
-  date: string;     // YYYY-MM-DD
-  time: string;     // "9:00 AM"
-  type: string;     // "Group Lesson"
-  duration: string; // "1h30"
-  price: number;    // price per person in NZD
+  date: string;
+  time: string;
+  type: string;
+  duration: string;
+  price: number;
 };
 
 export type CarouselSlide = {

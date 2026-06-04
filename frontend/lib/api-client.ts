@@ -1,43 +1,33 @@
-// Base URL for the backend: read from .env.local, falls back to localhost
+// Backend URL: from environment variable in production, localhost in development
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
-// Internal function that makes the actual network call
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function request<T = any>(endpoint: string, options: RequestInit = {}): Promise<T> {
+// Central function that makes all HTTP requests to the backend
+async function request(endpoint: string, method: string, body?: unknown) {
   const response = await fetch(API_URL + endpoint, {
-    ...options,
-    headers: { 'Content-Type': 'application/json', ...(options.headers as Record<string, string>) },
-    credentials: 'include',
+    method: method,
+    headers: { 'Content-Type': 'application/json' }, // tell the server we're sending JSON
+    credentials: 'include', // send cookies with every request (required for authentication)
+    body: body ? JSON.stringify(body) : undefined, // convert JS object to JSON string if provided
   });
 
-  // If the server responds with an error (400, 500...), throw an exception
+  // If the server returns an error (400, 401, 500...), throw an exception
   if (!response.ok) {
-    // Try to read the error message from the server, otherwise use the HTTP status text
+    // Try to read the error message from the server response
     const error = await response.json().catch(() => ({ message: response.statusText }));
     throw new Error(error.message || 'An error occurred');
   }
 
-  const body = await response.json();
-  return (body?.data ?? body) as T;
+  // Parse the JSON response
+  const body2 = await response.json();
+  // The backend wraps responses in { data: ... } — unwrap it, or return directly if not wrapped
+  return body2?.data ?? body2;
 }
 
-// Exported object with one method per HTTP verb
-// Each method calls request() with the right parameters
+// One method per HTTP verb — each calls request() with the correct method
 export const apiClient = {
-  get: (endpoint: string) =>
-    request(endpoint, { method: 'GET' }),
-
-  post: (endpoint: string, data?: unknown) =>
-    // JSON.stringify converts the JS object to text to send in the request body
-    request(endpoint, { method: 'POST', body: JSON.stringify(data) }),
-
-  put: (endpoint: string, data: unknown) =>
-  request(endpoint, { method: 'PUT', body: JSON.stringify(data) }),
-
-  patch: (endpoint: string, data: unknown) =>
-    request(endpoint, { method: 'PATCH', body: JSON.stringify(data) }),
-
-  delete: (endpoint: string) =>
-    request(endpoint, { method: 'DELETE' }),
+  get: (endpoint: string) => request(endpoint, 'GET'),
+  post: (endpoint: string, data?: unknown) => request(endpoint, 'POST', data),
+  put: (endpoint: string, data: unknown) => request(endpoint, 'PUT', data),
+  patch: (endpoint: string, data: unknown) => request(endpoint, 'PATCH', data),
+  delete: (endpoint: string) => request(endpoint, 'DELETE'),
 };
