@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https://res.cloudinary.com",
               "media-src 'self' https://res.cloudinary.com",
-              "connect-src 'self' " + new URL(process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000').origin,
+              "connect-src 'self'" + (process.env.NEXT_PUBLIC_API_URL?.startsWith('http') ? " " + new URL(process.env.NEXT_PUBLIC_API_URL).origin : ""),
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "object-src 'none'",
