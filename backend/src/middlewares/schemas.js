@@ -1,0 +1,77 @@
+// All Zod validation schemas used by validate() in schema.validator.js.
+// Each schema mirrors the shape of the corresponding API request body.
+import { z } from 'zod';
+
+// invite user (SUPER_ADMIN only)
+
+export const inviteUserSchema = z.object({
+  email: z.email('Invalid email address'),
+  firstName: z.string().min(1).max(100),
+  lastName: z.string().min(1).max(100),
+  role: z.enum(['SUPER_ADMIN', 'COACH']).default('COACH'),
+});
+
+// login
+
+export const loginSchema = z.object({
+  email: z.email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters long'),
+});
+
+// reset password request
+
+export const resetPasswordRequestSchema = z.object({
+  email: z.email('Invalid email address'),
+});
+
+// reset password
+
+export const resetPasswordSchema = z
+  .object({
+    token: z.string().min(1, 'Token is required'),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters long')
+      .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+      .regex(/[0-9]/, 'Password must contain at least one number'),
+  })
+
+// update media
+
+export const updateMediaSchema = z.object({
+  alt: z.string().max(500).optional(),
+});
+
+// update site content
+
+export const updateSiteContentSchema = z.object({
+  value: z.string().optional(),
+  page: z.string().min(1),
+  label: z.string().min(1),
+  type: z.enum(['TEXT', 'RICHTEXT', 'IMAGE_URL', 'NUMBER']),
+});
+
+// session
+
+export const createSessionSchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD'),
+  time: z.string().min(1).max(10),
+  type: z.enum(['Group - Adults', 'Group - Kids']),
+  duration: z.string().min(1).max(10),
+  price: z.number().min(0, 'Price must be 0 or more'),
+});
+
+
+// contact form
+
+export const contactSchema = z.object({
+  firstName: z.string().min(1).max(100),
+  lastName: z.string().min(1).max(100),
+  email: z.email(),
+  phone: z.string().regex(/^[+\d\s()./-]{1,30}$/, 'Invalid phone number').optional(),
+  subject: z.string().min(1).max(255),
+  message: z.string().min(1),
+  source: z.string().max(100).optional(),
+});
+
+
