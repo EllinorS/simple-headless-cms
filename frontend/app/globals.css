@@ -89,13 +89,17 @@
 }
 
 @layer base {
+  /* Apply design-token colors to borders and focus rings across all elements */
   * {
     @apply border-border outline-ring/50;
   }
+  /* Use CSS variable colors so dark mode works without touching components */
   body {
     @apply bg-background text-foreground;
   }
 
+  /* Semi-transparent black overlay via pseudo-element, keeps hero text readable over images.
+     pointer-events: none so the overlay doesn't block clicks. */
   .overlay-black::before {
     content: '';
     position: absolute;
@@ -105,6 +109,7 @@
     z-index: 0;
   }
 
+  /* Global heading styles, applied site-wide without repeating classes */
   h3 {
     @apply text-3xl sm:text-4xl font-bold mb-4;
   }
@@ -113,19 +118,26 @@
   }
 }
 
+/* Custom utility classes, used like any Tailwind class */
 @utility eyebrow {
+  /* Small uppercase label displayed above section titles */
   @apply text-xs font-semibold uppercase tracking-widest;
 }
 @utility heading-xl {
+  /* Responsive hero/page title */
   @apply text-4xl md:text-5xl font-black;
 }
 @utility heading-lg {
+  /* Responsive section title */
   @apply text-3xl md:text-4xl font-black;
 }
 @utility icon-circle {
+  /* Circular icon container used in USP cards */
   @apply w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center;
 }
 
+/* WCAG accessibility: disable all animations/transitions for users who enabled
+  "reduce motion" in their OS settings */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -33,12 +33,6 @@ export const metadata: Metadata = {
     description: 'Professional surf lessons and custom surf road trips in Raglan, New Zealand.',
     images: [{ url: '/assets/surfer-ocean-new-zealand.webp', width: 1200, height: 630, alt: 'Surfer riding a wave in Raglan, New Zealand' }],
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'ALAIA Surf Coach | Raglan, New Zealand',
-    description: 'Professional surf lessons and custom surf road trips in Raglan, New Zealand.',
-    images: ['/assets/surfer-ocean-new-zealand.webp'],
-  },
   icons: {
     icon: '/assets/favicon.svg',
   },
