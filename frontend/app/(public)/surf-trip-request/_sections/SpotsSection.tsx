@@ -31,8 +31,8 @@ export function SpotsSection({ spots }: Props) {
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {spots.map((spot) => (
-            <Card key={spot.id} className="gap-0 p-0">
-              <div className="relative h-44">
+            <Card key={spot.id} className="gap-0 p-0 h-full flex flex-col">
+              <div className="relative h-44 shrink-0">
                 <Image
                   src={spot.image}
                   alt={spot.name}
@@ -41,7 +41,7 @@ export function SpotsSection({ spots }: Props) {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
               </div>
-              <CardContent className="flex flex-col gap-3 p-5">
+              <CardContent className="flex flex-col gap-3 p-5 flex-1">
                 <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <MapPin className="w-3 h-3 shrink-0" />
                   {spot.region}
