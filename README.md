@@ -1,19 +1,19 @@
 # ALAIA Surf Coach — Headless CMS
 
-Site vitrine et CMS headless pour un coach de surf basé en Nouvelle-Zélande. Le coach gère ses contenus, créneaux de cours et comptes utilisateurs depuis un panneau d'administration. Les visiteurs peuvent contacter le coach et demander un surf trip sur mesure.
+Showcase website and headless CMS for a surf coach based in New Zealand. The coach manages content, lesson slots, and user accounts from an admin panel. Visitors can contact the coach and request a custom surf trip.
 
 ## Stack
 
-| Élément | Technologie |
+| Layer | Technology |
 |---|---|
 | Backend | Node.js / Express 5 (ESM) |
-| Base de données | MySQL avec mysql2/promise |
+| Database | MySQL with mysql2/promise |
 | Validation | Zod |
-| Authentification | JWT + Argon2 |
-| Fichiers | Multer + Cloudinary |
+| Authentication | JWT + Argon2 |
+| File storage | Multer + Cloudinary |
 | Emails | Nodemailer + Brevo SMTP |
 | Frontend | Next.js 15 / TypeScript / Tailwind CSS |
-| Composants UI | shadcn/ui |
+| UI components | shadcn/ui |
 
 ## Structure
 
@@ -40,15 +40,15 @@ simple-headless-cms/
 
 ## Installation
 
-### Prérequis
+### Prerequisites
 
 - Node.js 18+
 - MySQL
 - Yarn
 
-### Base de données
+### Database
 
-Créer une base de données MySQL et importer le fichier `backend/db.sql`.
+Create a MySQL database and import `backend/db.sql`.
 
 ### Backend
 
@@ -56,11 +56,11 @@ Créer une base de données MySQL et importer le fichier `backend/db.sql`.
 cd backend
 yarn install
 cp .env.example .env
-# Renseigner les variables dans .env
+# Fill in the variables in .env
 yarn dev
 ```
 
-Le backend démarre sur `http://localhost:3000`.
+The backend starts on `http://localhost:3000`.
 
 ### Frontend
 
@@ -68,54 +68,54 @@ Le backend démarre sur `http://localhost:3000`.
 cd frontend
 yarn install
 cp .env.example .env.local
-# Renseigner les variables dans .env.local
+# Fill in the variables in .env.local
 yarn dev
 ```
 
-Le frontend démarre sur `http://localhost:3001`.
+The frontend starts on `http://localhost:3001`.
 
-## Variables d'environnement
+## Environment variables
 
 ### Backend (`backend/.env`)
 
 | Variable | Description |
 |---|---|
-| `DB_HOST` | Hôte MySQL |
-| `DB_USER` | Utilisateur MySQL |
-| `DB_PASSWORD` | Mot de passe MySQL |
-| `DB_NAME` | Nom de la base de données |
-| `PORT` | Port du serveur (défaut : 3000) |
-| `JWT_SECRET` | Clé secrète pour signer les tokens JWT |
-| `JWT_EXPIRES_IN` | Durée de validité du token (ex: `7d`) |
-| `BREVO_SMTP_HOST` | Hôte SMTP Brevo |
-| `BREVO_SMTP_PORT` | Port SMTP Brevo |
-| `BREVO_SMTP_USER` | Identifiant SMTP Brevo |
-| `BREVO_SMTP_PASS` | Mot de passe SMTP Brevo |
-| `SMTP_FROM` | Adresse expéditeur des emails |
-| `CONTACT_EMAIL` | Adresse de réception des messages du formulaire |
-| `CLOUDINARY_CLOUD_NAME` | Nom du cloud Cloudinary |
-| `CLOUDINARY_API_KEY` | Clé API Cloudinary |
-| `CLOUDINARY_API_SECRET` | Secret API Cloudinary |
-| `CLIENT_URL` | URL du frontend (pour CORS) |
+| `DB_HOST` | MySQL host |
+| `DB_USER` | MySQL user |
+| `DB_PASSWORD` | MySQL password |
+| `DB_NAME` | Database name |
+| `PORT` | Server port (default: 3000) |
+| `JWT_SECRET` | Secret key for signing JWT tokens |
+| `JWT_EXPIRES_IN` | Token validity duration (e.g. `7d`) |
+| `BREVO_SMTP_HOST` | Brevo SMTP host |
+| `BREVO_SMTP_PORT` | Brevo SMTP port |
+| `BREVO_SMTP_USER` | Brevo SMTP username |
+| `BREVO_SMTP_PASS` | Brevo SMTP password |
+| `SMTP_FROM` | Sender email address |
+| `CONTACT_EMAIL` | Recipient address for contact form submissions |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
+| `CLOUDINARY_API_KEY` | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret |
+| `CLIENT_URL` | Frontend URL (for CORS) |
 
 ### Frontend (`frontend/.env.local`)
 
 | Variable | Description |
 |---|---|
-| `NEXT_PUBLIC_API_URL` | URL de l'API backend |
-| `NEXT_PUBLIC_SITE_URL` | URL du frontend |
-| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | Nom du cloud Cloudinary |
+| `NEXT_PUBLIC_API_URL` | Backend API URL |
+| `NEXT_PUBLIC_SITE_URL` | Frontend URL |
+| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
 
-## Fonctionnalités
+## Features
 
 ### Public
-- Pages CMS : accueil, à propos, surf en Nouvelle-Zélande, FAQ, mentions légales
-- Calendrier des créneaux de cours disponibles
-- Formulaire de contact, de réservation et de demande de surf trip (email-only)
+- CMS pages: home, about, surf in New Zealand, FAQ, legal
+- Available lesson slot calendar
+- Contact, booking, and surf trip request forms (email-only)
 
-### Administration
-- Authentification JWT avec cookie HttpOnly
-- Gestion du contenu de toutes les pages publiques
-- Gestion des créneaux de cours
-- Gestion des médias (upload Cloudinary)
-- Gestion des comptes utilisateurs (invitation par email)
+### Admin
+- JWT authentication with HttpOnly cookie
+- Content management for all public pages
+- Lesson slot management
+- Media management (Cloudinary upload)
+- User account management (email invitation)
