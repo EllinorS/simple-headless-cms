@@ -11,7 +11,7 @@ export default async function Footer() {
   const facebookUrl = v('global_facebook_url');
 
   return (
-    <footer className="relative overflow-x-clip bg-blue-grey text-secondary-foreground">
+    <footer className="relative overflow-x-clip bg-footer text-secondary-foreground">
       {/* Full-width image with gradient overlay */}
       <div className="relative h-[70vh] md:h-[80vh] min-h-125 w-full -mt-30 pointer-events-none">
         <Image
@@ -20,8 +20,8 @@ export default async function Footer() {
           fill
           className="object-cover object-top"
         />
-        <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/30 to-transparent" />
-        <div className="absolute inset-0 bg-linear-to-b from-black/0 via-transparent to-blue-grey" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/0 via-transparent to-footer" />
 
         {/* CTA overlay */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-10">
@@ -38,13 +38,13 @@ export default async function Footer() {
       </div>
 
       {/* Footer links */}
-      <div className="relative bg-blue-gray text-secondary-foreground z-20">
+      <div className="relative text-dark-blue z-20 ">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 pb-12">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 pt-16">
             {/* Navigation columns */}
             <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-left">
               <div>
-                <p className="font-bold mb-6 text-base text-green tracking-wider uppercase">
+                <p className="font-bold mb-6 text-base underline underline-offset-4 decoration-2 tracking-wider uppercase">
                   Experiences
                 </p>
                 <ul className="space-y-3 text-sm opacity-80">
@@ -72,7 +72,7 @@ export default async function Footer() {
                 </ul>
               </div>
               <div>
-                <p className="font-bold mb-6 text-base text-green tracking-wider uppercase ">
+                <p className="font-bold mb-6 text-base underline underline-offset-4 decoration-2 tracking-wider uppercase">
                   Discover
                 </p>
                 <ul className="space-y-3 text-sm opacity-80">

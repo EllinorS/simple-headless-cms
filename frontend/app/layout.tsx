@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import '@/app/globals.css';
 import { Poppins, Rubik } from "next/font/google"
 import { ThemeProvider } from '@/components/ui/theme-provider';
-import { PageLoader } from '@/components/web/layout/PageLoader';
 import { Toaster } from 'sonner';
 
 const poppins = Poppins({
@@ -100,8 +99,7 @@ export default function RootLayout({
       </head>
       <body className={`${poppins.variable} ${rubik.variable} min-h-screen flex flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <PageLoader />
-          {children}
+{children}
           <Toaster richColors />
         </ThemeProvider>
       </body>

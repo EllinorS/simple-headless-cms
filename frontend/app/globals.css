@@ -28,6 +28,8 @@
   --color-text: var(--text);
   --color-blue-grey: var(--blue-grey);
   --color-blue-light: var(--blue-light);
+  --color-footer: var(--footer);
+  --color-dark-blue: var(--dark-blue);
 }
 
 :root {
@@ -54,6 +56,8 @@
   --blue: #7a95a3;
   --blue-grey: #7a95a3;
   --blue-light: #7299a3;
+  --footer: #a8c5d4;
+  --dark-blue: #152d3c;
 }
 
 .dark {
@@ -80,6 +84,8 @@
   --blue: #5aafcc;
   --blue-grey: #7a95a3;
   --blue-light: #69c4d0;
+  --footer: #a8c5d4;
+  --dark-blue: #152d3c;
 }
 
 @layer base {
@@ -118,31 +124,6 @@
 }
 @utility icon-circle {
   @apply w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center;
-}
-
-/* Full-screen logo round swallow animation that plays once on page load.
-   pointer-events:none lets clicks reach the page even while the loader is still visible.
-   The 1s delay (third value in animation shorthand) holds the animation for 1 s before it starts.
-   loader-swallow shrinks a clipping circle from full coverage to nothing, wiping the loader away. */
-.page-loader {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--secondary);
-  pointer-events: none;
-  animation: loader-swallow 0.9s ease-in 1s both;
-}
-
-@keyframes loader-swallow {
-  from {
-    clip-path: circle(150% at 50% 50%);
-  } /* 150% ensures full coverage on wide screens */
-  to {
-    clip-path: circle(0% at 50% 50%);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
