@@ -26,7 +26,7 @@ export function SpotsSection({ spots }: Props) {
       <div className="container mx-auto max-w-5xl">
         <p className="eyebrow text-primary mb-3">Aotearoa New Zealand</p>
         <h2 className="text-3xl md:text-4xl font-bold mb-3">Where could you surf?</h2>
-        <p className="text-muted-foreground mb-12 max-w-2xl">
+        <p className="text-muted-foreground mb-12">
           3,000 km of coastline. A wave for every level. Here are some of the regions we explore on custom surf trips.
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
