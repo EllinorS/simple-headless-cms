@@ -263,7 +263,11 @@ export const FAQ_BLOCKS = [
 ];
 
 
-export const SPOTS_BLOCKS = [
+export const SURF_TRIP_BLOCKS = [
+  {
+    label: 'Hero',
+    keys: ['surf_trip_hero_title', 'surf_trip_hero_subtitle', 'surf_trip_hero_image'],
+  },
   {
     label: 'Region 1 — Raglan',
     keys: ['spots_card_1_name', 'spots_card_1_region', 'spots_card_1_type', 'spots_card_1_level', 'spots_card_1_desc', 'spots_card_1_image'],
@@ -291,5 +295,5 @@ export const PAGE_BLOCKS: Record<string, ContentBlockGroup> = {
   'book-surf-lesson': BOOK_SURF_LESSON_BLOCKS,
   'surf-in-new-zealand': SURF_IN_NZ_BLOCKS,
   faq: FAQ_BLOCKS,
-  spots: SPOTS_BLOCKS,
+  'surf-trip': SURF_TRIP_BLOCKS,
 };

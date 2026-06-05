@@ -12,21 +12,17 @@ export const metadata: Metadata = {
 };
 
 export default async function SurfTripRequestPage() {
-  const [c, cSpots] = await Promise.all([
-    getPageContent('surf-trip'),
-    getPageContent('spots'),
-  ]);
+  const c = await getPageContent('surf-trip');
   const { v, img } = readContent(c);
-  const { v: vs, img: imgs } = readContent(cSpots);
 
   const spots = [1, 2, 3, 4].map((n) => ({
     id: n,
-    name: vs(`spots_card_${n}_name`),
-    region: vs(`spots_card_${n}_region`),
-    type: vs(`spots_card_${n}_type`),
-    level: vs(`spots_card_${n}_level`),
-    desc: vs(`spots_card_${n}_desc`),
-    image: imgs(`spots_card_${n}_image`, PLACEHOLDER_IMG),
+    name: v(`spots_card_${n}_name`),
+    region: v(`spots_card_${n}_region`),
+    type: v(`spots_card_${n}_type`),
+    level: v(`spots_card_${n}_level`),
+    desc: v(`spots_card_${n}_desc`),
+    image: img(`spots_card_${n}_image`, PLACEHOLDER_IMG),
   })).filter((s) => s.name);
 
   return (
@@ -34,7 +30,7 @@ export default async function SurfTripRequestPage() {
       <Hero
         title={v('surf_trip_hero_title', 'Plan your custom surf trip')}
         subtitle={v('surf_trip_hero_subtitle', "Tell us about your level and what you're looking for.")}
-        backgroundImage={img('snz_hero_image', '/assets/surfers-paddling.webp')}
+        backgroundImage={img('surf_trip_hero_image', '/assets/surfers-paddling.webp')}
         size="medium"
       />
 

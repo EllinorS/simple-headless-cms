@@ -1,4 +1,4 @@
-# ALAIA Surf Coach — Headless CMS
+# ALAIA Surf Coach: Headless CMS
 
 Showcase website and headless CMS for a surf coach based in New Zealand. The coach manages content, lesson slots, and user accounts from an admin panel. Visitors can contact the coach and request a custom surf trip.
 
