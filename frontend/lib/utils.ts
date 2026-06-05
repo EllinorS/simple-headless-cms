@@ -15,3 +15,9 @@ export function isVideo(url: string): boolean {
   return /\.(mp4|webm|ogg)$/i.test(url);
 }
 
+// Injects q_auto:eco into Cloudinary video URLs to reduce payload size
+export function optimizeCloudinaryVideo(url: string): string {
+  if (!url.includes('res.cloudinary.com')) return url;
+  return url.replace('/upload/', '/upload/q_auto:eco/');
+}
+

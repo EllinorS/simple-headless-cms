@@ -73,6 +73,8 @@ export default function CarouselBlock({ slides }: { slides: CarouselSlide[] }) {
               {slides.map((_, i) => (
                 <button
                   key={i}
+                  onClick={() => setCurrent(i)}
+                  aria-label="Go to next slide"
                   className={`flex-1 rounded-full transition-all duration-300 ${
                     i === current ? 'h-2 bg-white' : 'h-1 bg-white/40'
                   }`}

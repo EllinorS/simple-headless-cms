@@ -25,9 +25,9 @@ export default async function Footer() {
 
         {/* CTA overlay */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-10">
-          <h4 className="text-secondary-foreground font-bold uppercase tracking-widest text-xs md:text-sm mb-4">
+          <p className="eyebrow text-secondary-foreground text-xs md:text-sm mb-4">
             Catch the next wave
-          </h4>
+          </p>
           <h3 className="text-secondary-foreground text-3xl md:text-6xl font-bold mb-8 max-w-2xl leading-tight">
             Connect with us & start your journey
           </h3>
@@ -44,9 +44,9 @@ export default async function Footer() {
             {/* Navigation columns */}
             <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-left">
               <div>
-                <h4 className="font-bold mb-6 text-base tracking-wider uppercase italic">
+                <p className="font-bold mb-6 text-base text-green tracking-wider uppercase">
                   Experiences
-                </h4>
+                </p>
                 <ul className="space-y-3 text-sm opacity-80">
                   <li>
                     <Link
@@ -72,9 +72,9 @@ export default async function Footer() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold mb-6 text-base tracking-wider uppercase italic">
+                <p className="font-bold mb-6 text-base text-green tracking-wider uppercase ">
                   Discover
-                </h4>
+                </p>
                 <ul className="space-y-3 text-sm opacity-80">
                   <li>
                     <Link href="/about" className="hover:opacity-100 transition-opacity">

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { isVideo } from '@/lib/utils';
+import { isVideo, optimizeCloudinaryVideo } from '@/lib/utils';
 
 type HeroProps = {
   title: string;
@@ -31,9 +31,10 @@ export default function Hero({
           loop
           muted
           playsInline
+          preload="metadata"
           className="absolute inset-0 h-full w-full object-cover"
         >
-          <source src={backgroundImage} type="video/mp4" />
+          <source src={optimizeCloudinaryVideo(backgroundImage)} type="video/mp4" />
         </video>
       ) : backgroundImage ? (
         <Image
