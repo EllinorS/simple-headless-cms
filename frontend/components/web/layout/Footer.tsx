@@ -131,7 +131,7 @@ export default async function Footer() {
                 </div>
               )}
               <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                <Button asChild variant="accent-outline">
+                <Button asChild variant="secondary-outline">
                   <Link href="/book-surf-lesson">Book Lesson</Link>
                 </Button>
                 <Button asChild variant="white">
