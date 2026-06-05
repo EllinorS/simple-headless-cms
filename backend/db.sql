@@ -268,6 +268,32 @@ INSERT INTO `site_content` (`id`, `key_name`, `value`, `type`, `page`, `label`, 
 (187, 'faq_cat4_item3_q', 'What happens if the coach cancels?', 'TEXT', 'faq', 'Cat 4 — Q3', '2026-05-27 09:53:03', '2026-05-27 09:53:03'),
 (188, 'faq_cat4_item3_a', 'If we cancel a session for any reason (weather, emergency), you\'ll be notified by email and offered a full reschedule at no extra cost.', 'TEXT', 'faq', 'Cat 4 — A3', '2026-05-27 09:53:03', '2026-05-27 09:53:03');
 
+INSERT INTO `site_content` (`key_name`, `value`, `type`, `page`, `label`, `created_at`, `updated_at`) VALUES
+('spots_card_1_name', 'Raglan', 'TEXT', 'spots', 'Card 1 Name', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_1_region', 'Waikato', 'TEXT', 'spots', 'Card 1 Region', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_1_type', 'Point breaks', 'TEXT', 'spots', 'Card 1 Wave Type', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_1_level', 'All levels', 'TEXT', 'spots', 'Card 1 Level', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_1_desc', 'Home base. World-class left-hand point breaks that cater to every level — from the gentle beach break at Ngarunui to the legendary long walls of Manu Bay.', 'RICHTEXT', 'spots', 'Card 1 Description', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_1_image', 'https://res.cloudinary.com/dz8bupnto/image/upload/v1779371781/alaia-surf/smiellaliohhjewonehe.webp', 'IMAGE_URL', 'spots', 'Card 1 Image', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_2_name', 'Northland', 'TEXT', 'spots', 'Card 2 Name', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_2_region', 'Te Tai Tokerau', 'TEXT', 'spots', 'Card 2 Region', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_2_type', 'Beach breaks', 'TEXT', 'spots', 'Card 2 Wave Type', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_2_level', 'All levels', 'TEXT', 'spots', 'Card 2 Level', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_2_desc', 'Warm water, long stretches of uncrowded beach, and consistent swell year-round. Ideal for a relaxed road trip with waves for everyone — from sheltered bays to exposed west coast breaks.', 'RICHTEXT', 'spots', 'Card 2 Description', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_2_image', 'https://res.cloudinary.com/dz8bupnto/image/upload/v1779371788/alaia-surf/eodicbzxomcacqkqfkzp.webp', 'IMAGE_URL', 'spots', 'Card 2 Image', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_3_name', 'Gisborne', 'TEXT', 'spots', 'Card 3 Name', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_3_region', 'East Cape', 'TEXT', 'spots', 'Card 3 Region', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_3_type', 'Beach & point breaks', 'TEXT', 'spots', 'Card 3 Wave Type', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_3_level', 'Beginner to Intermediate', 'TEXT', 'spots', 'Card 3 Level', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_3_desc', 'The first city in the world to see the sunrise. Gisborne catches easterly and southerly swells that bypass the rest of the country — quality waves with almost no crowds. A hidden gem.', 'RICHTEXT', 'spots', 'Card 3 Description', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_3_image', 'https://res.cloudinary.com/dz8bupnto/image/upload/v1779379786/alaia-surf/am2brubss0rr42ejbffm.webp', 'IMAGE_URL', 'spots', 'Card 3 Image', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_4_name', 'The Catlins', 'TEXT', 'spots', 'Card 4 Name', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_4_region', 'Southland', 'TEXT', 'spots', 'Card 4 Region', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_4_type', 'Beach breaks', 'TEXT', 'spots', 'Card 4 Wave Type', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_4_level', 'Intermediate to Advanced', 'TEXT', 'spots', 'Card 4 Level', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_4_desc', 'Raw Southern Ocean swell, old-growth rainforest meeting the sea, and complete solitude. The Catlins is New Zealand at its most wild — powerful, dramatic, and utterly unforgettable.', 'RICHTEXT', 'spots', 'Card 4 Description', '2026-06-05 00:00:00', '2026-06-05 00:00:00'),
+('spots_card_4_image', 'https://res.cloudinary.com/dz8bupnto/image/upload/v1779371783/alaia-surf/zgkepdzy0lvnj2u7qpzz.webp', 'IMAGE_URL', 'spots', 'Card 4 Image', '2026-06-05 00:00:00', '2026-06-05 00:00:00');
+
 -- --------------------------------------------------------
 
 --

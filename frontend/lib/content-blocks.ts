@@ -263,6 +263,25 @@ export const FAQ_BLOCKS = [
 ];
 
 
+export const SPOTS_BLOCKS = [
+  {
+    label: 'Region 1 — Raglan',
+    keys: ['spots_card_1_name', 'spots_card_1_region', 'spots_card_1_type', 'spots_card_1_level', 'spots_card_1_desc', 'spots_card_1_image'],
+  },
+  {
+    label: 'Region 2 — Northland',
+    keys: ['spots_card_2_name', 'spots_card_2_region', 'spots_card_2_type', 'spots_card_2_level', 'spots_card_2_desc', 'spots_card_2_image'],
+  },
+  {
+    label: 'Region 3 — Gisborne',
+    keys: ['spots_card_3_name', 'spots_card_3_region', 'spots_card_3_type', 'spots_card_3_level', 'spots_card_3_desc', 'spots_card_3_image'],
+  },
+  {
+    label: 'Region 4 — The Catlins',
+    keys: ['spots_card_4_name', 'spots_card_4_region', 'spots_card_4_type', 'spots_card_4_level', 'spots_card_4_desc', 'spots_card_4_image'],
+  },
+];
+
 type ContentBlockGroup = { label: string; keys: string[] }[];
 
 export const PAGE_BLOCKS: Record<string, ContentBlockGroup> = {
@@ -272,4 +291,5 @@ export const PAGE_BLOCKS: Record<string, ContentBlockGroup> = {
   'book-surf-lesson': BOOK_SURF_LESSON_BLOCKS,
   'surf-in-new-zealand': SURF_IN_NZ_BLOCKS,
   faq: FAQ_BLOCKS,
+  spots: SPOTS_BLOCKS,
 };
