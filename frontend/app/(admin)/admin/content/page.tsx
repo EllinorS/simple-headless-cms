@@ -24,7 +24,6 @@ export default function ContentPage() {
       .finally(() => setLoading(false));
   }, [selectedPage]);
 
-  // called by ContentField when the user clicks Save
   // updates the DB then syncs local state to avoid a full re-fetch
   const handleSave = async (keyName: string, value: string) => {
     const existing = content.find((item) => item.keyName === keyName);
@@ -63,16 +62,15 @@ export default function ContentPage() {
         <p className="text-muted-foreground mt-1">Edit site text by page</p>
       </div>
 
-      {/* One tab per page, switching tab triggers a new fetch */}
+      {/* One tab per page*/}
       <Tabs value={selectedPage} onValueChange={setSelectedPage} className="flex-col space-y-6">
-        {/* TabsList renders the row of clickable page buttons */}
-        {/* flex-wrap allows tabs to wrap to a new line if there are too many */}
+
         <TabsList variant="line" className="flex-wrap h-auto gap-2">
           {/* Create one tab button per page in the PAGES array */}
           {Object.keys(PAGE_BLOCKS).map((page) => (
             <TabsTrigger
-              key={page} // unique key required by React when rendering lists
-              value={page} // when clicked, onValueChange sets selectedPage to this value
+              key={page} 
+              value={page}
               className="capitalize rounded-md border border-border px-4 py-1.5 text-sm data-[state=active]:border-primary data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
             >
               {page}
@@ -80,26 +78,20 @@ export default function ContentPage() {
           ))}
         </TabsList>
 
-        {/* TabsContent only renders when its value matches the active selectedPage */}
+
         <TabsContent value={selectedPage}>
           {/* PAGE_BLOCKS[selectedPage] returns the list of sections for the active page */}
-          {/* e.g. for "home": [{ label: "Hero", keys: ["home_hero_title", ...] }, ...] */}
-          {/* ?. prevents a crash if the page has no blocks defined */}
           {PAGE_BLOCKS[selectedPage]?.map((block) => {
-            // for each key in the block, find the matching ContentItem from the API response
-            // content.find() returns undefined if the key doesn't exist in the DB yet
-            // filter(Boolean) removes those undefined values from the array
             const items = block.keys
               .map((k) => content.find((i) => i.keyName === k))
               .filter(Boolean) as ContentItem[];
 
             return (
-              // ContentBlock renders an accordion section with all its fields
               <ContentBlock
-                key={block.label} // unique key for React
-                blockLabel={block.label} // the section title shown in the accordion
-                items={items} // the content fields to display
-                onSave={handleSave} // called when the user saves a field
+                key={block.label} 
+                blockLabel={block.label} 
+                items={items}
+                onSave={handleSave}
               />
             );
           })}

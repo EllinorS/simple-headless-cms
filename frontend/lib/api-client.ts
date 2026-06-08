@@ -5,9 +5,9 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 async function request(endpoint: string, method: string, body?: unknown) {
   const response = await fetch(API_URL + endpoint, {
     method: method,
-    headers: { 'Content-Type': 'application/json' }, // tell the server we're sending JSON
-    credentials: 'include', // send cookies with every request (required for authentication)
-    body: body ? JSON.stringify(body) : undefined, // convert JS object to JSON string if provided
+    headers: { 'Content-Type': 'application/json' }, 
+    credentials: 'include', 
+    body: body ? JSON.stringify(body) : undefined,
   });
 
   // If the server returns an error (400, 401, 500...), throw an exception
@@ -16,8 +16,6 @@ async function request(endpoint: string, method: string, body?: unknown) {
     const error = await response.json().catch(() => ({ message: response.statusText }));
     throw new Error(error.message || 'An error occurred');
   }
-
-  // Parse the JSON response
   const body2 = await response.json();
   // The backend wraps responses in { data: ... } — unwrap it, or return directly if not wrapped
   return body2?.data ?? body2;

@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-// Fixed list of session types shown in the dropdown — must match the backend schema enum
+// Fixed list of session types shown in the dropdown
 const SESSION_TYPES = ['Group - Adults', 'Group - Kids'];
 // Fixed list of duration options shown in the dropdown
 const DURATIONS = [
@@ -49,11 +49,8 @@ export default function SessionEditor({
   const [newDuration, setNewDuration] = useState(DURATIONS[6]);
   const [newPrice, setNewPrice] = useState<number>(defaultPrices[SESSION_TYPES[0]] ?? 0);
 
-  // Prevents double-submits while an API call is in progress
   const [saving, setSaving] = useState(false);
 
-  // Fetch all sessions once when the component first renders
-  // The empty [] dependency array means this only runs once (on mount)
   useEffect(() => {
     apiClient
       .get('/sessions')
@@ -63,13 +60,13 @@ export default function SessionEditor({
   }, []);
 
   const handleAdd = async () => {
-    if (!newDate) return; // do nothing if no date is selected
+    if (!newDate) return;
     setSaving(true);
     try {
-      // Send the new session to the API — it returns the new row's ID
+      // Send the new session to the API
       const created = await apiClient.post('/sessions', {
         date: newDate,
-        time: newTime, // already in 12h format — no conversion needed
+        time: newTime,
         type: newType,
         duration: newDuration,
         price: newPrice,
@@ -115,14 +112,12 @@ export default function SessionEditor({
     setSaving(true);
     try {
       await apiClient.delete(`/sessions/${id}`);
-      // Remove the deleted session from local state without re-fetching
       setSessions((prev) => {
         return prev.filter((session) => {
-          // for each session, check if its id matches the one we want to delete
           if (session.id === id) {
-            return false; // exclude this session it was deleted
+            return false; 
           }
-          return true; // keep all other sessions
+          return true;
         });
       });
       toast.success('Session deleted');
@@ -147,7 +142,6 @@ export default function SessionEditor({
               key={s.id}
               className="flex items-center gap-3 bg-muted/50 border rounded-lg px-3 py-2 text-sm"
             >
-              {/* Fixed widths (w-36, w-20) keep columns aligned across all rows */}
               <span className="font-medium w-36 shrink-0">{formatSessionDate(s.date)}</span>
               <span className="text-primary font-medium w-20 shrink-0">{formatTime(s.time)}</span>
               <span className="flex-1 text-muted-foreground">{s.type}</span>

@@ -40,23 +40,19 @@ function ContentField({
   item: ContentItem;
   onSave: (keyName: string, value: string) => Promise<void>;
 }) {
-  // tracks whether the field is in edit mode
+
   const [editing, setEditing] = useState(false);
-  // local copy of the value : changes as the user types, not saved until Save is clicked
   const [editValue, setEditValue] = useState(item.value || '');
-  // true while the API call is in progress : disables the Save button
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {
     setSaving(true);
-    // calls the parent's save function which hits the API
     await onSave(item.keyName, editValue);
     setSaving(false);
-    // close edit mode after successful save
     setEditing(false);
   };
 
-  // the value currently stored in the DB
+  // value currently stored in the DB
   const displayValue = item.value;
 
   return (
@@ -97,7 +93,6 @@ function ContentField({
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
                 autoFocus
-                // IMAGE_URL fields expect a Cloudinary URL pasted by the user
                 placeholder={item.type === 'IMAGE_URL' ? 'Paste a Cloudinary URL' : ''}
               />
             )}
@@ -108,7 +103,6 @@ function ContentField({
             )}
 
             <div className="flex gap-2">
-              {/* disabled while saving to prevent double submit */}
               <Button size="sm" onClick={handleSave} disabled={saving}>
                 <Check className="w-3 h-3" /> Save
               </Button>
@@ -127,7 +121,7 @@ function ContentField({
             </div>
           </div>
         ) : (
-          // read mode — show image preview or text value
+          // read mode
           <div className="flex items-center gap-3">
             {item.type === 'IMAGE_URL' && displayValue ? (
               <MediaPreview src={displayValue} alt={item.label} />
@@ -140,7 +134,7 @@ function ContentField({
         )}
       </div>
 
-      {/* Pencil button : only visible in read mode */}
+      {/* Pencil button */}
       {!editing && (
         <Button
           variant="ghost"
