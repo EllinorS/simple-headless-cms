@@ -18,6 +18,8 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-destructive: oklch(0.704 0.191 22.216);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
   --radius-lg: var(--radius);
 
   --color-green: var(--green);
@@ -47,6 +49,8 @@
   --input: #4a687038;
   --ring: #1a7060;
   --radius: 0.75rem;
+  --popover: #ffffff;
+  --popover-foreground: #2e2622;
 
   --text: #2e2622;
   --green: #1a7060;
@@ -75,6 +79,8 @@
   --input: #e8eff41e;
   --ring: #e8a85e;
   --radius: 0.75rem;
+  --popover: #152d3c;
+  --popover-foreground: #e8eff4;
 
   --text: #e8eff4;
   --green: #1a7060;

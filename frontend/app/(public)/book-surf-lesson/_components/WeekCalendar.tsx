@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import {
   startOfISOWeek,
   addWeeks,
@@ -76,21 +78,25 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
     <div>
       {/* Week navigation: prev button / week label / next button */}
       <div className="flex items-center justify-center gap-3 mb-8">
-        <button
+        <Button
+          variant="outline"
+          size="icon"
           onClick={goBack}
           aria-label="Previous week"
-          className="w-9 h-9 flex items-center justify-center rounded-full border hover:bg-muted transition-colors"
+          className="rounded-full"
         >
           <ChevronLeft className="w-4 h-4" />
-        </button>
+        </Button>
         <span className="text-sm font-semibold w-44 text-center">{weekLabel}</span>
-        <button
+        <Button
+          variant="outline"
+          size="icon"
           onClick={goForward}
           aria-label="Next week"
-          className="w-9 h-9 flex items-center justify-center rounded-full border hover:bg-muted transition-colors"
+          className="rounded-full"
         >
           <ChevronRight className="w-4 h-4" />
-        </button>
+        </Button>
       </div>
 
       {/* Mobile: tappable day strip + sessions for the selected day */}
@@ -101,10 +107,11 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
             const isSel = ds === selectedDay;
             const hasSessions = !!byDate[ds]?.length;
             return (
-              <button
+              <Button
                 key={ds}
+                variant="ghost"
                 onClick={() => setSelectedDay(ds)}
-                className="flex flex-col items-center gap-1.5 py-2"
+                className="flex flex-col items-center gap-1.5 py-2 h-auto w-full"
               >
                 <span className="text-[10px] font-medium text-muted-foreground">
                   {format(day, 'EEE')}
@@ -119,7 +126,7 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
                 <span
                   className={`w-1.5 h-1.5 rounded-full ${hasSessions ? 'bg-primary' : 'bg-transparent'}`}
                 />
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -192,9 +199,9 @@ function MobileCard({ session }: { session: CalendarSession }) {
           {session.type}
         </span>
 
-        <a href="#contact-form" className="text-sm font-bold hover:underline">
+        <Link href="#contact-form" className="text-sm font-bold hover:underline">
           Book →
-        </a>
+        </Link>
       </div>
     </div>
   );
@@ -203,7 +210,7 @@ function MobileCard({ session }: { session: CalendarSession }) {
 // Desktop card
 function DesktopCard({ session }: { session: CalendarSession }) {
   return (
-    <a
+    <Link
       href="#contact-form"
       className="block bg-background border rounded-xl p-2.5 hover:border-primary/60 hover:shadow-sm transition-all group"
     >
@@ -221,6 +228,6 @@ function DesktopCard({ session }: { session: CalendarSession }) {
       <p className="text-[10px] font-semibold text-primary mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
         Book →
       </p>
-    </a>
+    </Link>
   );
 }

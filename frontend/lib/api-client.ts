@@ -23,7 +23,7 @@ async function request(endpoint: string, method: string, body?: unknown) {
   return body2?.data ?? body2;
 }
 
-// One method per HTTP verb — each calls request() with the correct method
+// One method per HTTP verb, each calls request() with the correct method
 export const apiClient = {
   get: (endpoint: string) => request(endpoint, 'GET'),
   post: (endpoint: string, data?: unknown) => request(endpoint, 'POST', data),

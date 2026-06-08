@@ -90,9 +90,9 @@ export default function LoginPage() {
               />
             </div>
             <div className="flex justify-end">
-              <button type="button" onClick={() => setForgotOpen(true)}>
+              <Button type="button" variant="link" className="p-0 h-auto text-sm" onClick={() => setForgotOpen(true)}>
                 Forgot password?
-              </button>
+              </Button>
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
               Sign In

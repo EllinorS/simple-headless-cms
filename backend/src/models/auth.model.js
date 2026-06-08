@@ -4,7 +4,6 @@
 import crypto from 'crypto';
 import { db } from '../config/db.js';
 
-// SHA-256 is enough here: the token is a high-entropy random UUID, not a low-entropy password,
 // so it needs no slow hash (argon2). We compare hashes, never the raw token.
 const hashToken = (token) => crypto.createHash('sha256').update(token).digest('hex');
 

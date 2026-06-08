@@ -64,9 +64,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="flex min-h-screen bg-muted/30">
       {/* Mobile top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-14 bg-background border-b z-40 flex items-center px-4 gap-3">
-        <button onClick={() => setMobileOpen(true)}>
+        <Button variant="ghost" size="icon" onClick={() => setMobileOpen(true)}>
           <MenuIcon className="w-5 h-5" />
-        </button>
+        </Button>
       </div>
 
       {mobileOpen && (

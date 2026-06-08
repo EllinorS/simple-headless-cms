@@ -42,7 +42,7 @@ export default async function BookSurfLessonPage() {
   const sessions = await getSessions();
 
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       <Hero
         title={v('book_hero_title', 'Book a Surf Lesson')}
         subtitle={v('book_hero_subtitle', 'Raglan, New Zealand')}
@@ -77,6 +77,6 @@ export default async function BookSurfLessonPage() {
           />
         </div>
       </section>
-    </main>
+    </div>
   );
 }

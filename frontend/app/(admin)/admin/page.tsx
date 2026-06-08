@@ -48,9 +48,6 @@ export default function DashboardPage() {
                     <span className="font-medium w-28 shrink-0">{formatSessionDate(s.date)}</span>
                     <span className="text-primary w-20 shrink-0">{s.time}</span>
                     <span className="flex-1 text-muted-foreground truncate">{s.type}</span>
-                    {s.price > 0 && (
-                      <span className="text-xs text-muted-foreground shrink-0">${s.price}</span>
-                    )}
                   </li>
                 ))}
               </ul>

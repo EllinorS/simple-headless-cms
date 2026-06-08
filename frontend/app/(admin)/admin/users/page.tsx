@@ -11,6 +11,13 @@ import { Separator } from '@/components/ui/separator';
 import { apiClient } from '@/lib/api-client';
 import { InviteUserSchema, User } from '@/lib/types';
 import { Loader2 } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 export default function UsersPage() {
   const [email, setEmail] = useState('');
@@ -123,16 +130,15 @@ export default function UsersPage() {
 
             <div className="space-y-2">
               <Label htmlFor="role">Role</Label>
-              <select
-                id="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                disabled={loading}
-                className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
-              >
-                <option value="COACH">Coach</option>
-                <option value="SUPER_ADMIN">Super Admin</option>
-              </select>
+              <Select value={role} onValueChange={setRole} disabled={loading}>
+                <SelectTrigger id="role">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="COACH">Coach</SelectItem>
+                  <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <Button type="submit" className="w-full" disabled={loading}>

@@ -8,6 +8,13 @@ import { toast } from 'sonner';
 import type { Session } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 // Fixed list of session types shown in the dropdown — must match the backend schema enum
 const SESSION_TYPES = ['Group - Adults', 'Group - Kids'];
@@ -126,10 +133,6 @@ export default function SessionEditor({
     }
   };
 
-  // Shared Tailwind classes for all form inputs and selects
-  const fieldClass =
-    'px-3 py-2 text-sm bg-muted border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-ring';
-
   if (loading) return <p className="text-sm text-muted-foreground py-2">Loading sessions...</p>;
 
   return (
@@ -156,14 +159,16 @@ export default function SessionEditor({
                   {s.duration}
                 </span>
               )}
-              <button
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => handleDelete(s.id)}
                 disabled={saving}
-                className="p-1 rounded text-muted-foreground hover:text-destructive transition-colors disabled:opacity-40"
                 aria-label="Delete session"
+                className="text-muted-foreground hover:text-destructive"
               >
                 <Trash2 className="w-3.5 h-3.5" />
-              </button>
+              </Button>
             </li>
           ))
         )}
@@ -187,19 +192,23 @@ export default function SessionEditor({
         </div>
         <div className="flex flex-col gap-1">
           <label className="text-xs text-muted-foreground">Type</label>
-          <select
+          <Select
             value={newType}
-            onChange={(e) => {
-              setNewType(e.target.value);
+            onValueChange={(val) => {
+              setNewType(val);
               // Auto-fill price from CMS default when type changes
-              if (defaultPrices[e.target.value]) setNewPrice(defaultPrices[e.target.value]);
+              if (defaultPrices[val]) setNewPrice(defaultPrices[val]);
             }}
-            className={fieldClass}
           >
-            {SESSION_TYPES.map((t) => (
-              <option key={t}>{t}</option>
-            ))}
-          </select>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {SESSION_TYPES.map((t) => (
+                <SelectItem key={t} value={t}>{t}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex flex-col gap-1">
           <label className="text-xs text-muted-foreground">Price (NZD / person)</label>
@@ -213,15 +222,16 @@ export default function SessionEditor({
         </div>
         <div className="flex flex-col gap-1">
           <label className="text-xs text-muted-foreground">Duration</label>
-          <select
-            value={newDuration}
-            onChange={(e) => setNewDuration(e.target.value)}
-            className={fieldClass}
-          >
-            {DURATIONS.map((d) => (
-              <option key={d}>{d}</option>
-            ))}
-          </select>
+          <Select value={newDuration} onValueChange={setNewDuration}>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {DURATIONS.map((d) => (
+                <SelectItem key={d} value={d}>{d}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <Button type="submit" disabled={!newDate || saving} className="flex items-center gap-1.5">
           <Plus className="w-4 h-4" />

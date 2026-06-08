@@ -12,6 +12,8 @@ import { isVideo } from '@/lib/utils';
 import type { ContentItem } from '@/lib/types';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 function MediaPreview({ src, alt }: { src: string; alt: string }) {
   if (isVideo(src)) {
@@ -72,32 +74,31 @@ function ContentField({
           <div className="space-y-2">
             {/* Show different input depending on field type */}
             {item.type === 'RICHTEXT' ? (
-              <textarea
+              <Textarea
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
                 rows={3}
                 autoFocus
-                className="w-full px-3 py-2 text-sm bg-muted border border-border rounded-md resize-none focus:outline-none focus:ring-1 focus:ring-ring"
+                className="resize-none"
               />
             ) : item.type === 'NUMBER' ? (
-              <input
+              <Input
                 type="number"
                 min="0"
                 step="1"
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
                 autoFocus
-                className="w-32 px-3 py-2 text-sm bg-muted border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-32"
               />
             ) : (
-              <input
+              <Input
                 type="text"
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
                 autoFocus
                 // IMAGE_URL fields expect a Cloudinary URL pasted by the user
                 placeholder={item.type === 'IMAGE_URL' ? 'Paste a Cloudinary URL' : ''}
-                className="w-full px-3 py-2 text-sm bg-muted border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-ring"
               />
             )}
 
@@ -141,15 +142,17 @@ function ContentField({
 
       {/* Pencil button : only visible in read mode */}
       {!editing && (
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => {
             setEditing(true);
             setEditValue(item.value || '');
           }}
-          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors shrink-0 mt-0.5"
+          className="shrink-0 mt-0.5 text-muted-foreground hover:text-foreground"
         >
           <Pencil className="w-4 h-4" />
-        </button>
+        </Button>
       )}
     </div>
   );

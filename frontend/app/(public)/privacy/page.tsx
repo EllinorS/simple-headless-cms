@@ -15,7 +15,7 @@ export default async function PrivacyPage() {
   const body = v('privacy_body');
 
   return (
-    <main className="max-w-3xl mx-auto px-6 py-20">
+    <div className="max-w-3xl mx-auto px-6 py-20">
       <h1 className="text-4xl font-black mb-2">{title}</h1>
       {lastUpdated && (
         <p className="text-sm text-muted-foreground mb-10">Last updated: {lastUpdated}</p>
@@ -24,6 +24,6 @@ export default async function PrivacyPage() {
       <div className="prose prose-sm max-w-none text-foreground whitespace-pre-wrap leading-relaxed">
         {body}
       </div>
-    </main>
+    </div>
   );
 }
