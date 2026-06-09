@@ -11,7 +11,7 @@ const esc = (str) => sanitizeHtml(String(str ?? ''), { allowedTags: [], allowedA
 export const transporter = nodemailer.createTransport({
   host: process.env.BREVO_SMTP_HOST,
   port: Number(process.env.BREVO_SMTP_PORT),
-  secure: true,
+  secure: false,
   auth: {
     user: process.env.BREVO_SMTP_USER,
     pass: process.env.BREVO_SMTP_PASS,
