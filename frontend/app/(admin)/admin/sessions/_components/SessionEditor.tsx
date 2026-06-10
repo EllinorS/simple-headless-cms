@@ -74,7 +74,7 @@ export default function SessionEditor({
 
       // Build the full Session object to add to local state (avoids a re-fetch)
       const newSession: Session = {
-        id: created.sessionId,
+        id: created.id,
         date: newDate,
         time: newTime,
         type: newType,

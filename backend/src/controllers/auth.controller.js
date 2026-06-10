@@ -1,5 +1,4 @@
-// Auth controller: login/logout (JWT in HttpOnly cookie),
-// password reset via one-time token, and admin user management.
+// Auth controller: login/logout (JWT in HttpOnly cookie)
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import ms from 'ms';
@@ -44,8 +43,6 @@ export const login = asyncHandler(async (req, res) => {
     { expiresIn: process.env.JWT_EXPIRES_IN },
   );
 
-  // httpOnly: JS cannot read this cookie, protecting against XSS.
-  // cross-site request, blocking CSRF entirely (admin back-office, so the UX cost is acceptable).
   res.cookie('auth_token', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
@@ -70,7 +67,6 @@ export const resetPasswordRequest = asyncHandler(async (req, res) => {
   const { email } = req.body;
   const user = await authModel.findUserByEmail(email);
   // Always return 200 with the same message regardless of whether the email exists.
-  // Returning 404 when the email is unknown would let attackers enumerate registered accounts.
   if (!user)
     return res.status(200).json({ message: 'If this email exists, a reset link has been sent.' });
   const resetToken = uuid4();
