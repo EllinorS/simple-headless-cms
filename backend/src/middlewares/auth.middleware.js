@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
 export const authMiddleware = (req, res, next) => {
-  // The token lives in an HttpOnly cookie (not localStorage) so JS on the page cannot read it.
   // cookieParser in app.js parses it into req.cookies before this middleware runs.
   const token = req.cookies?.auth_token;
 

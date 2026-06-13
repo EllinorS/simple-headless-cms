@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { getPageContent, readContent } from '@/lib/get-page-content';
 import { FaqCategory } from '@/lib/types';
 import { FaqAccordion } from '@/components/web/blocks/FaqAccordion';
+import { range } from '@/lib/cms-utils';
 
 export const metadata: Metadata = {
   title: 'FAQ — Surf Lessons in Raglan | ALAIA Surf Coach',
@@ -27,12 +28,13 @@ export default async function FaqPage() {
   const content = await getPageContent('FAQ');
   const { v } = readContent(content);
 
-  const categories: FaqCategory[] = [1, 2, 3, 4].map((n) => ({
+  const categories: FaqCategory[] = range(4).map((n) => ({
     title: v(`faq_cat${n}_title`),
-    items: [1, 2, 3, 4, 5]
+    items: range(5)
       .map((m) => ({ q: v(`faq_cat${n}_item${m}_q`), a: v(`faq_cat${n}_item${m}_a`) }))
       .filter((item) => item.q),
-  }));
+  })).filter((cat) => cat.items.length > 0);
+  
   return (
     <>
       <div className="relative h-56 w-full overflow-hidden">

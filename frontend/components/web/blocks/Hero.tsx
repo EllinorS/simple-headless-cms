@@ -7,6 +7,7 @@ type HeroProps = {
   title: string;
   subtitle?: string;
   backgroundImage?: string;
+  alt?: string;
   primaryButton?: { text: string; href: string; show: boolean };
   secondaryButton?: { text: string; href: string; show: boolean };
   overlay?: boolean;
@@ -17,6 +18,7 @@ export default function Hero({
   title,
   subtitle,
   backgroundImage,
+  alt,
   primaryButton,
   secondaryButton,
   overlay = true,
@@ -39,7 +41,7 @@ export default function Hero({
       ) : backgroundImage ? (
         <Image
           src={backgroundImage}
-          alt=""
+          alt={alt ?? ''}
           fill
           priority
           sizes="100vw"

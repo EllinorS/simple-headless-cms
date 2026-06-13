@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     siteName: 'ALAIA Surf Coach',
     title: 'ALAIA Surf Coach | Raglan, New Zealand',
     description: 'Professional surf lessons and custom surf road trips in Raglan, New Zealand.',
-    images: [{ url: '/assets/surfer-ocean-new-zealand.webp', width: 1200, height: 630, alt: 'Surfer riding a wave in Raglan, New Zealand' }],
+    images: [{ url: '/assets/surfboards-under-flax.webp', width: 1200, height: 630, alt: 'Surferboards under a flax plant' }],
   },
   icons: {
     icon: '/assets/favicon.svg',

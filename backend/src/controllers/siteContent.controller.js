@@ -27,12 +27,8 @@ export const getContentByKey = asyncHandler(async (req, res) => {
 
 export const updateContentByKey = asyncHandler(async (req, res) => {
   const { keyName } = req.params;
-  const { value, page, label, type } = req.body;
+  const { value } = req.body;
 
-  if (!page || !label || !type) {
-    return res.status(400).json({ message: 'page, label, and type are required.' });
-  }
-
-  await contentModel.updateContent(keyName, page, label, type, value);
+  await contentModel.updateContent(keyName, value);
   res.status(200).json({ message: 'Content updated' });
 });

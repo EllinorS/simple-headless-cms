@@ -11,8 +11,8 @@ export default function CarouselBlock({ slides }: { slides: CarouselSlide[] }) {
   const [current, setCurrent] = useState(0);
   const slide = slides[current];
 
-  const prev = () => setCurrent((p) => (p - 1 + slides.length) % slides.length);
-  const next = () => setCurrent((p) => (p + 1) % slides.length);
+  const prev = () => setCurrent((s) => (s - 1 + slides.length) % slides.length);
+  const next = () => setCurrent((s) => (s + 1) % slides.length);
 
   return (
     <section className="py-16 md:py-24 bg-secondary text-secondary-foreground">
@@ -25,7 +25,7 @@ export default function CarouselBlock({ slides }: { slides: CarouselSlide[] }) {
             <ul className="space-y-3 mb-8">
                  {/* Filter empty bullet points before rendering */}
               {slide.bulletPoints
-                .filter((p) => p.text)
+                .filter((point) => point.text)
                 .map((point, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <Check className="w-5 h-5 shrink-0 mt-1" />
@@ -71,10 +71,8 @@ export default function CarouselBlock({ slides }: { slides: CarouselSlide[] }) {
             {/* One dot per slide — active dot is taller and fully opaque */}
             <div className="absolute bottom-2 left-3 right-3 flex gap-2">
               {slides.map((_, i) => (
-                <button
+                <div
                   key={i}
-                  onClick={() => setCurrent(i)}
-                  aria-label="Go to next slide"
                   className={`flex-1 rounded-full transition-all duration-300 ${
                     i === current ? 'h-2 bg-white' : 'h-1 bg-white/40'
                   }`}

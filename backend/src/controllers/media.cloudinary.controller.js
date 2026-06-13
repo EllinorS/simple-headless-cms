@@ -15,7 +15,7 @@ function streamUpload(buffer, options) {
   });
 }
 
-// POST /api/media-cloudinary — upload one or more files
+// POST /api/media-cloudinary : upload one or more files
 export const createMedia = asyncHandler(async (req, res) => {
   if (!req.files || req.files.length === 0) {
     return res.status(400).json({ message: 'No file provided' });
@@ -24,6 +24,7 @@ export const createMedia = asyncHandler(async (req, res) => {
   const { alt } = req.body;
   const mediaArray = [];
 
+  //loop on uploaded files
   for (const file of req.files) {
     // Upload the file buffer to Cloudinary
     // resource_type: 'auto' handles both images and videos automatically
@@ -35,11 +36,11 @@ export const createMedia = asyncHandler(async (req, res) => {
     // Store the Cloudinary URL and public_id in the DB
     const id = await mediaModel.createMedia(
       file.originalname,
-      result.secure_url,  // full HTTPS URL — ready to use in <img> tags without any prefix
+      result.secure_url,
       file.mimetype,
       file.size,
       alt || null,
-      result.public_id,   // e.g. "alaia-surf/abc123" — needed to delete from Cloudinary later
+      result.public_id,
     );
     mediaArray.push(id);
   }

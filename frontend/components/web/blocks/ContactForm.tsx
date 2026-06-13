@@ -34,6 +34,7 @@ export function ContactForm({ source, messagePlaceholder }: Props) {
   const set = (key: keyof typeof EMPTY_FORM, value: string) =>
     setForm((f) => ({ ...f, [key]: value }));
 
+  // validates data before sending
   const handleSubmit = async () => {
     const result = ContactSchema.safeParse({ ...form, consent });
     if (!result.success) {
@@ -58,7 +59,7 @@ export function ContactForm({ source, messagePlaceholder }: Props) {
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-center py-12">
+      <div className="flex flex-col items-center justify-center min-h-50 text-center py-12">
         <div className="icon-circle mb-4">
           <Check className="w-8 h-8 text-primary" />
         </div>
@@ -66,6 +67,12 @@ export function ContactForm({ source, messagePlaceholder }: Props) {
         <p className="text-muted-foreground">
           Thanks for reaching out. We&apos;ll get back to you shortly.
         </p>
+        <button
+          onClick={() => { setSubmitted(false); setForm(EMPTY_FORM); }}
+          className="text-sm text-primary underline underline-offset-4 mt-4"
+        >
+          Send another message
+        </button>
       </div>
     );
   }

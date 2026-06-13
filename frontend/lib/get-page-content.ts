@@ -20,14 +20,11 @@ export async function getPageContent(page: string): Promise<PageContent> {
 }
 
 export function readContent(c: PageContent) {
-  // Gets a text value by key, returns fallback if not found
   function v(key: string, fallback = '') {
     return c[key]?.value || fallback;
   }
   function img(key: string, fallback = '') {
-    const value = c[key]?.value;
-    if (!value) return fallback;
-    return value;
+    return c[key]?.value || fallback;
   }
   return { v, img };
 }

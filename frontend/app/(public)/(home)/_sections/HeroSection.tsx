@@ -13,6 +13,7 @@ export default function HeroSection({ v, img }: Props) {
       title={v('home_hero_title', 'Your next adventure starts here')}
       subtitle={v('home_hero_subtitle', 'Experience the best surf coaching in New Zealand')}
       backgroundImage={img('home_hero_image', PLACEHOLDER_IMG)}
+      alt={v('home_hero_image_alt', 'Home page image illustrating surfing in New Zealand')}
       primaryButton={{
         text: v('home_hero_cta_lesson', 'Book a lesson'),
         href: '/book-surf-lesson',

@@ -6,7 +6,6 @@ export const toUserDTO = (u) => ({
   firstName: u.first_name,
   lastName: u.last_name,
   role: u.role,
-  isActive: !!u.is_active,
   lastLogin: u.last_login,
 });
 

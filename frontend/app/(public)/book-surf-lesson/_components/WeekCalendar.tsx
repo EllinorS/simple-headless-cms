@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
   startOfISOWeek,
@@ -13,10 +12,11 @@ import {
   isToday,
   startOfToday,
 } from 'date-fns';
+import { formatTime } from '@/lib/date-formatter';
 
 // One session passed in from page.tsx
 export type CalendarSession = {
-  dateStr: string;
+  date: string;
   time: string;
   type: string;
   duration: string;
@@ -28,7 +28,7 @@ type Props = {
   emptyMessage: string; // shown when a week has no sessions
 };
 
-// Formats a Date as "YYYY-MM-DD" to match session.dateStr from the DB
+// Formats a Date as "YYYY-MM-DD" to match session.date from the DB
 function toDateStr(d: Date): string {
   return format(d, 'yyyy-MM-dd');
 }
@@ -40,39 +40,28 @@ function typeColor(type: string): string {
   return 'bg-green text-white';
 }
 
-// Groups sessions by date string for fast lookup: { "2026-05-28": [session, ...] }
-function groupByDate(sessions: CalendarSession[]): Record<string, CalendarSession[]> {
-  const map: Record<string, CalendarSession[]> = {};
-  for (const s of sessions) {
-    if (!map[s.dateStr]) map[s.dateStr] = [];
-    map[s.dateStr].push(s);
-  }
-  return map;
-}
-
 export function WeekCalendar({ sessions, emptyMessage }: Props) {
+  // State: base date, displayed week (Monday), and selected day on mobile
   const today = startOfToday();
-  // weekStart = the Monday of the currently displayed week
   const [weekStart, setWeekStart] = useState(() => startOfISOWeek(today));
-  // selectedDay = the tapped day on mobile
-  const [selectedDay, setSelectedDay] = useState(toDateStr(today));
+  const [selectedDay, setSelectedDay] = useState(toDateStr(today)); 
 
-  // All 7 days of the displayed week (Mon–Sun)
-  const weekDays = eachDayOfInterval({ start: weekStart, end: addDays(weekStart, 6) });
-  const byDate = groupByDate(sessions);
-
+  // Navigation: shift weekStart by +-7 days to move between weeks
   const goBack = () => setWeekStart((p) => addWeeks(p, -1));
   const goForward = () => setWeekStart((p) => addWeeks(p, 1));
 
-  // "5 May – 11 May" label shown above the calendar
+  // Derived from weekStart: 7 Date objects (Mon–Sun) and the header label "9 Jun – 15 Jun"
+  const weekDays = eachDayOfInterval({ start: weekStart, end: addDays(weekStart, 6) });
   const weekLabel = `${format(weekStart, 'd MMM')} – ${format(addDays(weekStart, 6), 'd MMM')}`;
 
-  // Mobile: index and sessions for the selected day
+  // All sessions grouped by date: { "2026-06-15": [session, ...] }
+  const byDate = Object.groupBy(sessions, (s) => s.date);
+  // True if at least one session exists this week, controls desktop empty state
+  const hasAnyThisWeek = weekDays.some((d) => (byDate[toDateStr(d)]?.length ?? 0) > 0);
+
+  // Mobile only: index of selected day in weekDays (to format the title), and its sessions
   const selIdx = weekDays.findIndex((d) => toDateStr(d) === selectedDay);
   const selSessions = byDate[selectedDay] ?? [];
-
-  // True if at least one session exists in the current week
-  const hasAnyThisWeek = weekDays.some((d) => (byDate[toDateStr(d)]?.length ?? 0) > 0);
 
   return (
     <div>
@@ -103,14 +92,14 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
       <div className="md:hidden">
         <div className="grid grid-cols-7 border-b pb-1 mb-6">
           {weekDays.map((day) => {
-            const ds = toDateStr(day);
-            const isSel = ds === selectedDay;
-            const hasSessions = !!byDate[ds]?.length;
+            const dateStr = toDateStr(day);
+            const isSel = dateStr === selectedDay;
+            const hasSessions = !!byDate[dateStr]?.length;
             return (
               <Button
-                key={ds}
+                key={dateStr}
                 variant="ghost"
-                onClick={() => setSelectedDay(ds)}
+                onClick={() => setSelectedDay(dateStr)}
                 className="flex flex-col items-center gap-1.5 py-2 h-auto w-full"
               >
                 <span className="text-[10px] font-medium text-muted-foreground">
@@ -130,13 +119,14 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
             );
           })}
         </div>
+        {/* Sessions list */}
         {selIdx >= 0 && (
           <p className="text-sm font-semibold mb-4">{format(weekDays[selIdx], 'EEEE d MMM')}</p>
         )}
         {selSessions.length > 0 ? (
           <div className="space-y-3">
             {selSessions.map((s, i) => (
-              <MobileCard key={i} session={s} />
+              <SessionCard key={i} session={s} />
             ))}
           </div>
         ) : (
@@ -167,7 +157,7 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
               return (
                 <div key={ds} className="space-y-2 min-h-20">
                   {daySessions.map((s, j) => (
-                    <DesktopCard key={j} session={s} />
+                    <SessionCard key={j} session={s} compact />
                   ))}
                 </div>
               );
@@ -181,53 +171,53 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
   );
 }
 
-// Mobile card
-function MobileCard({ session }: { session: CalendarSession }) {
+function SessionCard({ session, compact = false }: { session: CalendarSession; compact?: boolean }) {
+  const inner = (
+    <>
+      <p className={compact ? 'text-xs font-semibold text-primary mb-0.5' : 'font-bold text-base mb-1'}>
+        {formatTime(session.time)}
+      </p>
+      {session.duration && (
+        <p className={compact ? 'text-[10px] text-muted-foreground mb-0.5' : 'text-xs text-muted-foreground mb-1'}>
+          {session.duration}
+        </p>
+      )}
+      <span className={`w-fit font-semibold rounded-full ${compact ? 'text-[10px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} ${typeColor(session.type)}`}>
+        {session.type}
+      </span>
+      {session.price > 0 && (
+        <p className={compact ? 'text-[10px] text-muted-foreground mt-0.5' : 'text-xs text-muted-foreground mb-4'}>
+          ${session.price} / person
+        </p>
+      )}
+      {compact && (
+        <p className="text-[10px] font-semibold text-primary mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+          Book →
+        </p>
+      )}
+    </>
+  );
+
+  if (compact) {
+    return (
+      <a
+        href="#contact-form"
+        className="block bg-background border rounded-xl p-2.5 hover:border-primary/60 hover:shadow-sm transition-all group"
+      >
+        {inner}
+      </a>
+    );
+  }
+
   return (
     <div className="bg-background border rounded-2xl p-4">
-      <p className="font-bold text-base mb-1">{session.type}</p>
-      <p className="text-sm font-medium text-primary mb-1">{session.time}</p>
-      {session.duration && <p className="text-xs text-muted-foreground mb-1">{session.duration}</p>}
-      {session.price > 0 && (
-        <p className="text-xs text-muted-foreground mb-4">${session.price} / person</p>
-      )}
       {!session.duration && <div className="mb-4" />}
-      <div className="flex items-center justify-between">
-        <span
-          className={`text-xs font-semibold px-2.5 py-1 rounded-full ${typeColor(session.type)}`}
-        >
-          {session.type}
-        </span>
-
-        <Link href="#contact-form" className="text-sm font-bold hover:underline">
+      {inner}
+      <div className="flex items-center justify-between mt-4">
+        <a href="#contact-form" className="text-sm font-bold hover:underline ml-auto">
           Book →
-        </Link>
+        </a>
       </div>
     </div>
-  );
-}
-
-// Desktop card
-function DesktopCard({ session }: { session: CalendarSession }) {
-  return (
-    <Link
-      href="#contact-form"
-      className="block bg-background border rounded-xl p-2.5 hover:border-primary/60 hover:shadow-sm transition-all group"
-    >
-      <p className="text-xs font-semibold text-primary mb-0.5">{session.time}</p>
-      {session.duration && (
-        <p className="text-[10px] text-muted-foreground mb-0.5">{session.duration}</p>
-      )}
-      <span className={`w-fit text-[10px] font-semibold px-2 py-0.5 rounded-full ${typeColor(session.type)}`}>
-  {session.type}
-</span>
-      {session.price > 0 && (
-        <p className="text-[10px] text-muted-foreground mt-0.5">${session.price} / person</p>
-      )}
-
-      <p className="text-[10px] font-semibold text-primary mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-        Book →
-      </p>
-    </Link>
   );
 }

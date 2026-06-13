@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-interface ImageTextBlockProps {
+type ImageTextBlockProps = {
   title: string;
   eyebrow?: string;
   subtitle?: string;

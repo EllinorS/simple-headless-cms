@@ -26,7 +26,7 @@ export const GLOBAL_BLOCKS = [
 export const HOME_BLOCKS = [
   {
     label: 'Hero',
-    keys: ['home_hero_title', 'home_hero_cta_lesson', 'home_hero_cta_trip', 'home_hero_image'],
+    keys: ['home_hero_title', 'home_hero_cta_lesson', 'home_hero_cta_trip', 'home_hero_image', 'home_hero_image_alt'],
   },
   {
     label: 'About Coach',
@@ -103,7 +103,7 @@ export const HOME_BLOCKS = [
 export const ABOUT_BLOCKS = [
   {
     label: 'Hero',
-    keys: ['about_hero_title', 'about_hero_subtitle', 'about_hero_image'],
+    keys: ['about_hero_title', 'about_hero_subtitle', 'about_hero_image', 'about_hero_image_alt'],
   },
   {
     label: 'Meet the Coach',
@@ -148,7 +148,7 @@ export const ABOUT_BLOCKS = [
 ];
 
 export const SURF_IN_NZ_BLOCKS = [
-  { label: 'Hero', keys: ['snz_hero_title', 'snz_hero_subtitle', 'snz_hero_image'] },
+  { label: 'Hero', keys: ['snz_hero_title', 'snz_hero_subtitle', 'snz_hero_image', 'snz_hero_image_alt'] },
   {
     label: 'Surf Lessons',
     keys: [
@@ -188,7 +188,7 @@ export const SURF_IN_NZ_BLOCKS = [
 export const BOOK_SURF_LESSON_BLOCKS = [
   {
     label: 'Hero',
-    keys: ['book_hero_title', 'book_hero_subtitle', 'book_hero_image'],
+    keys: ['book_hero_title', 'book_hero_subtitle', 'book_hero_image', 'book_hero_image_alt'],
   },
   {
     label: 'Schedule',
@@ -266,7 +266,7 @@ export const FAQ_BLOCKS = [
 export const SURF_TRIP_BLOCKS = [
   {
     label: 'Hero',
-    keys: ['surf_trip_hero_title', 'surf_trip_hero_subtitle', 'surf_trip_hero_image'],
+    keys: ['surf_trip_hero_title', 'surf_trip_hero_subtitle', 'surf_trip_hero_image', 'surf_trip_hero_image_alt'],
   },
   {
     label: 'Region 1 — Raglan',

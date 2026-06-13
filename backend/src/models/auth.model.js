@@ -22,7 +22,7 @@ export const createAdminUser = async (roleId, email, passwordHash, firstName, la
 export const findAllUsers = async () => {
   const [rows] = await db.query(
     `SELECT users.id, users.email, users.first_name, users.last_name,
-       roles.name AS role, users.is_active, users.last_login
+       roles.name AS role, users.last_login
        FROM users JOIN roles ON roles.id = users.role_id
        ORDER BY users.created_at DESC`,
     [],
@@ -33,7 +33,7 @@ export const findAllUsers = async () => {
 
 export const findUserByEmail = async (email) => {
   const [rows] = await db.query(
-    `SELECT users.id, users.role_id, users.email, users.password, users.first_name, users.last_name, users.is_active, users.last_login, 
+    `SELECT users.id, users.role_id, users.email, users.password, users.first_name, users.last_name, users.last_login,
     roles.name AS role
     FROM users
     JOIN roles ON roles.id = users.role_id
@@ -47,7 +47,7 @@ export const findUserByEmail = async (email) => {
 
 export const findUserById = async (id) => {
   const [rows] = await db.query(
-    `SELECT users.id, users.email, users.first_name, users.last_name, users.is_active, users.last_login, roles.name AS role FROM users JOIN roles ON roles.id = users.role_id WHERE users.id = ? AND users.is_active = 1`,
+    `SELECT users.id, users.email, users.first_name, users.last_name, users.last_login, roles.name AS role FROM users JOIN roles ON roles.id = users.role_id WHERE users.id = ?`,
     [id],
   );
   return rows[0] || null;
@@ -56,7 +56,7 @@ export const findUserById = async (id) => {
 // find user with a valid token to reset password
 export const findUserByResetToken = async (token) => {
   const [rows] = await db.query(
-    `SELECT id, role_id, email, first_name, last_name, is_active, reset_token_expires_at FROM users WHERE reset_token=? AND reset_token_expires_at > NOW()`,
+    `SELECT id, role_id, email, first_name, last_name, reset_token_expires_at FROM users WHERE reset_token=? AND reset_token_expires_at > NOW()`,
     [hashToken(token)],
   );
   return rows[0];

@@ -142,8 +142,7 @@
   @apply w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center;
 }
 
-/* WCAG accessibility: disable all animations/transitions for users who enabled
-  "reduce motion" in their OS settings */
+/* accessibility: disable all animations/transitions */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

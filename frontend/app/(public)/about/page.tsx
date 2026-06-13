@@ -4,7 +4,7 @@ import ImageTextBlock from '@/components/web/blocks/ImageTextBlock';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Award, Heart, Users, Waves } from 'lucide-react';
-import { ValueSection } from './_sections/ValueSection';
+import { IconCardGrid } from '@/components/web/blocks/IconCardGrid';
 import { PLACEHOLDER_IMG } from '@/lib/utils';
 import { getPageContent, readContent } from '@/lib/get-page-content';
 
@@ -18,47 +18,22 @@ export const metadata: Metadata = {
   },
 };
 
+const VALUE_ITEMS = [
+  { icon: Award, titleKey: 'about_value_1_title', descKey: 'about_value_1_desc' },
+  { icon: Heart, titleKey: 'about_value_2_title', descKey: 'about_value_2_desc' },
+  { icon: Users, titleKey: 'about_value_3_title', descKey: 'about_value_3_desc' },
+  { icon: Waves, titleKey: 'about_value_4_title', descKey: 'about_value_4_desc' },
+];
+
 export default async function AboutPage() {
-  // Load all text/image content for this page from the DB
   const c = await getPageContent('about');
-  // v() reads text values, img() reads image URLs (and prefixes the backend URL if needed)
   const { v, img } = readContent(c);
 
-  // Each value card pairs a Lucide icon with its title and description from the DB
-  const values = [
-    {
-      icon: Award,
-      title: v('about_value_1_title', 'Safety First'),
-      desc: v(
-        'about_value_1_desc',
-        'Certified instructors, proper equipment, and comprehensive ocean safety training for every student.',
-      ),
-    },
-    {
-      icon: Heart,
-      title: v('about_value_2_title', 'Personalized'),
-      desc: v(
-        'about_value_2_desc',
-        'Every lesson is tailored to your skill level, physical abilities, and personal goals.',
-      ),
-    },
-    {
-      icon: Users,
-      title: v('about_value_3_title', 'Small Groups'),
-      desc: v(
-        'about_value_3_desc',
-        'Maximum 4 students per session ensures individual attention and faster progress.',
-      ),
-    },
-    {
-      icon: Waves,
-      title: v('about_value_4_title', 'Local Expert'),
-      desc: v(
-        'about_value_4_desc',
-        "Deep knowledge of Raglan's breaks, tides, and conditions for the perfect surf session.",
-      ),
-    },
-  ];
+  const values = VALUE_ITEMS.map(({ icon, titleKey, descKey }) => ({
+    icon,
+    title: v(titleKey),
+    desc: v(descKey),
+  }));
 
   return (
     <>
@@ -70,6 +45,7 @@ export default async function AboutPage() {
           "Passionate about sharing the art of surfing in New Zealand's stunning waters",
         )}
         backgroundImage={img('about_hero_image', PLACEHOLDER_IMG)}
+        alt={v('about_hero_image_alt', '')}
       />
 
       {/* Coach bio with photo on the right */}
@@ -88,13 +64,11 @@ export default async function AboutPage() {
       />
 
       {/* Grid of value cards built from the values array above */}
-      <ValueSection
+      <IconCardGrid
+        eyebrow="Our Values"
         title={v('about_values_title', 'What Makes ALAIA Different')}
-        subtitle={v(
-          'about_values_subtitle',
-          "We believe surfing is more than a sport, it's a lifestyle, a connection to nature, and a journey of personal growth.",
-        )}
-        values={values}
+        subtitle={v('about_values_subtitle')}
+        items={values}
       />
 
       {/* Three paragraphs of mission statement text */}

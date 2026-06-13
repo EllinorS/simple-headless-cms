@@ -19,6 +19,7 @@ export default function ContactPage() {
         title="Contact Us"
         subtitle="Got a question? We'd love to hear from you."
         backgroundImage="https://res.cloudinary.com/dz8bupnto/image/upload/alaia-surf/eodicbzxomcacqkqfkzp.webp"
+        alt="Surf coaching in Raglan, New Zealand"
         size="medium"
       />
       <section className="py-16 md:py-24">

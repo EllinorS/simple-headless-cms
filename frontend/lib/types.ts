@@ -55,7 +55,7 @@ export type ContactFormData = z.infer<typeof ContactSchema>;
 
 
 
-// --- PLAIN TYPES (réponses API, pas de validation nécessaire) ---
+// --- PLAIN TYPES ---
 
 export type User = {
   id: number;

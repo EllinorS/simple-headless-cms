@@ -31,10 +31,6 @@ export const login = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: 'Incorrect email or password' });
   }
 
-  if (!user.is_active) {
-    return res.status(403).json({ message: 'Account disabled' });
-  }
-
   await authModel.updateLastLogin(user.id);
 
   const token = jwt.sign(

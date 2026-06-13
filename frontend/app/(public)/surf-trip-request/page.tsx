@@ -4,6 +4,7 @@ import { ContactForm } from '@/components/web/blocks/ContactForm';
 import Hero from '@/components/web/blocks/Hero';
 import { SpotsSection } from './_sections/SpotsSection';
 import { PLACEHOLDER_IMG } from '@/lib/utils';
+import { range } from '@/lib/cms-utils';
 
 export const metadata: Metadata = {
   title: 'Plan Your Surf Trip in New Zealand | ALAIA Surf Coach',
@@ -15,7 +16,7 @@ export default async function SurfTripRequestPage() {
   const c = await getPageContent('surf-trip');
   const { v, img } = readContent(c);
 
-  const spots = [1, 2, 3, 4].map((n) => ({
+  const spots = range(4).map((n) => ({
     id: n,
     name: v(`spots_card_${n}_name`),
     region: v(`spots_card_${n}_region`),
@@ -31,6 +32,7 @@ export default async function SurfTripRequestPage() {
         title={v('surf_trip_hero_title', 'Plan your custom surf trip')}
         subtitle={v('surf_trip_hero_subtitle', "Tell us about your level and what you're looking for.")}
         backgroundImage={img('surf_trip_hero_image', '/assets/surfers-paddling.webp')}
+        alt={v('surf_trip_hero_image_alt', '')}
         size="medium"
       />
 

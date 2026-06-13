@@ -23,12 +23,10 @@ export const findContentByKey = async (keyName) => {
   return rows[0] || null;
 };
 
-export const updateContent = async (keyName, page, label, type, value) => {
+export const updateContent = async (keyName, value) => {
   const [result] = await db.query(
-    `INSERT INTO site_content (key_name, page, label, type, value)
-     VALUES (?, ?, ?, ?, ?)
-     ON DUPLICATE KEY UPDATE value = VALUES(value)`,
-    [keyName, page, label, type, value ?? ''],
+    `UPDATE site_content SET value = ? WHERE key_name = ?`,
+    [value, keyName],
   );
   return result;
 };
