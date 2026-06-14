@@ -10,7 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 // Fallback image
 export const PLACEHOLDER_IMG = '/assets/surfboards-under-flax.webp';
 
-// Returns true if the URL points to a video file
+// Regex checks if URL ends with video info. Returns true of false
 export function isVideo(url: string): boolean {
   return /\.(mp4|webm|ogg)$/i.test(url);
 }

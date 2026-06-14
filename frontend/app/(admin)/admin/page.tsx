@@ -1,23 +1,17 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { apiClient } from '@/lib/api-client';
 import { formatSessionDate } from '@/lib/date-formatter';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import type { Session } from '@/lib/types';
 
-export default function DashboardPage() {
-  const [sessions, setSessions] = useState<Session[]>([]);
-  const [loading, setLoading] = useState(true);
+async function getSessions(): Promise<Session[]> {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+  const res = await fetch(`${API_URL}/sessions/public`, { cache: 'no-store' });
+  if (!res.ok) return [];
+  const body = await res.json();
+  return body?.data ?? body;
+}
 
-  useEffect(() => {
-    apiClient.get('/sessions/public')
-      .then((sessions) => {
-        setSessions(sessions);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+export default async function DashboardPage() {
+  const sessions = await getSessions();
 
   return (
     <div className="space-y-10">
@@ -34,9 +28,7 @@ export default function DashboardPage() {
             <CardTitle>Upcoming Sessions</CardTitle>
           </CardHeader>
           <CardContent>
-            {loading ? (
-              <p className="text-sm text-muted-foreground">Loading...</p>
-            ) : sessions.length === 0 ? (
+            {sessions.length === 0 ? (
               <p className="text-sm text-muted-foreground italic">No upcoming sessions.</p>
             ) : (
               <ul className="space-y-2">

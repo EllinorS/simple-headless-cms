@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import type { Session } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -83,15 +84,13 @@ export default function SessionEditor({
       };
 
       // Append and re-sort so the list stays in chronological order
-      setSessions((prev) => {
-        const withNew = [...prev, newSession];
-        const sorted = withNew.sort((a, b) => {
-          const dateComparison = a.date.localeCompare(b.date);
-          if (dateComparison !== 0) return dateComparison;
-          return a.time.localeCompare(b.time);
-        });
-        return sorted;
-      });
+      setSessions((prev) =>
+        [...prev, newSession].sort((a, b) =>
+          a.date !== b.date
+            ? a.date.localeCompare(b.date)
+            : a.time.localeCompare(b.time)
+        )
+      );
 
       toast.success('Session added');
 
@@ -109,17 +108,11 @@ export default function SessionEditor({
   };
 
   const handleDelete = async (id: number) => {
+    if (!confirm('Delete this session?')) return;
     setSaving(true);
     try {
       await apiClient.delete(`/sessions/${id}`);
-      setSessions((prev) => {
-        return prev.filter((session) => {
-          if (session.id === id) {
-            return false; 
-          }
-          return true;
-        });
-      });
+      setSessions((prev) => prev.filter((session) => session.id !== id));
       toast.success('Session deleted');
     } catch {
       toast.error('Failed to delete session');
@@ -145,14 +138,10 @@ export default function SessionEditor({
               <span className="font-medium w-36 shrink-0">{formatSessionDate(s.date)}</span>
               <span className="text-primary font-medium w-20 shrink-0">{formatTime(s.time)}</span>
               <span className="flex-1 text-muted-foreground">{s.type}</span>
-              {s.price > 0 && (
-                <span className="text-xs text-muted-foreground shrink-0">${s.price}</span>
-              )}
-              {s.duration && (
-                <span className="text-xs bg-muted border rounded px-2 py-0.5 shrink-0">
-                  {s.duration}
-                </span>
-              )}
+              <span className="text-xs text-muted-foreground shrink-0">${s.price}</span>
+              <span className="text-xs bg-muted border rounded px-2 py-0.5 shrink-0">
+                {s.duration}
+              </span>
               <Button
                 variant="ghost"
                 size="icon"
@@ -177,15 +166,15 @@ export default function SessionEditor({
         className="flex flex-wrap gap-2 items-end border-t pt-4"
       >
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-muted-foreground">Date</label>
-          <Input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} />
+          <Label htmlFor="session-date">Date</Label>
+          <Input id="session-date" type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-muted-foreground">Time</label>
-          <Input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} />
+          <Label htmlFor="session-time">Time</Label>
+          <Input id="session-time" type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-muted-foreground">Type</label>
+          <Label htmlFor="session-type">Type</Label>
           <Select
             value={newType}
             onValueChange={(val) => {
@@ -194,7 +183,7 @@ export default function SessionEditor({
               if (defaultPrices[val]) setNewPrice(defaultPrices[val]);
             }}
           >
-            <SelectTrigger>
+            <SelectTrigger id="session-type">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -205,8 +194,9 @@ export default function SessionEditor({
           </Select>
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-muted-foreground">Price (NZD / person)</label>
+          <Label htmlFor="session-price">Price (NZD / person)</Label>
           <Input
+            id="session-price"
             type="number"
             min="0"
             step="1"
@@ -215,9 +205,9 @@ export default function SessionEditor({
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-muted-foreground">Duration</label>
+          <Label htmlFor="session-duration">Duration</Label>
           <Select value={newDuration} onValueChange={setNewDuration}>
-            <SelectTrigger>
+            <SelectTrigger id="session-duration">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

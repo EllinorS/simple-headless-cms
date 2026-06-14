@@ -14,6 +14,8 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { apiClient } from '@/lib/api-client';
+import { toast } from 'sonner';
 
 function MediaPreview({ src, alt }: { src: string; alt: string }) {
   if (isVideo(src)) {
@@ -31,34 +33,34 @@ function MediaPreview({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-// Renders a single editable content field.
-// Switches between read mode (shows current value) and edit mode (shows input + save/cancel).
-function ContentField({
-  item,
-  onSave,
-}: {
-  item: ContentItem;
-  onSave: (keyName: string, value: string) => Promise<void>;
-}) {
-
+function ContentField({ item }: { item: ContentItem }) {
   const [editing, setEditing] = useState(false);
+  const [currentValue, setCurrentValue] = useState(item.value || '');
   const [editValue, setEditValue] = useState(item.value || '');
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {
     setSaving(true);
-    await onSave(item.keyName, editValue);
-    setSaving(false);
-    setEditing(false);
+    try {
+      await apiClient.put(`/content/key/${item.keyName}`, {
+        value: editValue,
+        page: item.page,
+        label: item.label,
+        type: item.type,
+      });
+      setCurrentValue(editValue);
+      setEditing(false);
+      toast.success('Saved');
+    } catch {
+      toast.error('Failed to save');
+    } finally {
+      setSaving(false);
+    }
   };
-
-  // value currently stored in the DB
-  const displayValue = item.value;
 
   return (
     <div className="flex items-start gap-3 py-3 border-b border-border last:border-0">
       <div className="flex-1 min-w-0">
-        {/* Field label and type badge */}
         <div className="flex items-center gap-2 mb-1">
           <p className="text-sm font-medium">{item.label}</p>
           <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
@@ -68,7 +70,6 @@ function ContentField({
 
         {editing ? (
           <div className="space-y-2">
-            {/* Show different input depending on field type */}
             {item.type === 'RICHTEXT' ? (
               <Textarea
                 value={editValue}
@@ -97,7 +98,6 @@ function ContentField({
               />
             )}
 
-            {/* Live preview while pasting an image URL */}
             {item.type === 'IMAGE_URL' && editValue && (
               <MediaPreview src={editValue} alt={item.label} />
             )}
@@ -106,14 +106,12 @@ function ContentField({
               <Button size="sm" onClick={handleSave} disabled={saving}>
                 <Check className="w-3 h-3" /> Save
               </Button>
-
-              {/* reset editValue to original and close edit mode */}
               <Button
                 size="sm"
                 variant="outline"
                 onClick={() => {
                   setEditing(false);
-                  setEditValue(item.value || '');
+                  setEditValue(currentValue);
                 }}
               >
                 <X className="w-3 h-3" /> Cancel
@@ -121,27 +119,25 @@ function ContentField({
             </div>
           </div>
         ) : (
-          // read mode
           <div className="flex items-center gap-3">
-            {item.type === 'IMAGE_URL' && displayValue ? (
-              <MediaPreview src={displayValue} alt={item.label} />
+            {item.type === 'IMAGE_URL' && currentValue ? (
+              <MediaPreview src={currentValue} alt={item.label} />
             ) : (
               <p className="text-sm text-muted-foreground line-clamp-2">
-                {item.value || <span className="italic">empty</span>}
+                {currentValue || <span className="italic">empty</span>}
               </p>
             )}
           </div>
         )}
       </div>
 
-      {/* Pencil button */}
       {!editing && (
         <Button
           variant="ghost"
           size="icon"
           onClick={() => {
             setEditing(true);
-            setEditValue(item.value || '');
+            setEditValue(currentValue);
           }}
           className="shrink-0 mt-0.5 text-muted-foreground hover:text-foreground"
         >
@@ -153,13 +149,11 @@ function ContentField({
 }
 
 export default function ContentBlock({
-  blockLabel,
+  blockTitle,
   items,
-  onSave,
 }: {
-  blockLabel: string;
+  blockTitle: string;
   items: ContentItem[];
-  onSave: (keyName: string, value: string) => Promise<void>;
 }) {
   if (items.length === 0) return null;
 
@@ -169,13 +163,13 @@ export default function ContentBlock({
       collapsible
       className="bg-background rounded-lg border overflow-hidden mb-3"
     >
-      <AccordionItem value={blockLabel} className="border-0">
+      <AccordionItem value={blockTitle} className="border-0">
         <AccordionTrigger className="px-4 py-3 text-sm font-semibold hover:no-underline hover:bg-muted/50">
-          {blockLabel}
+          {blockTitle}
         </AccordionTrigger>
         <AccordionContent className="px-4 pb-2 pt-0">
           {items.map((item) => (
-            <ContentField key={item.keyName} item={item} onSave={onSave} />
+            <ContentField key={item.keyName} item={item} />
           ))}
         </AccordionContent>
       </AccordionItem>

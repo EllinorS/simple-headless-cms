@@ -30,8 +30,7 @@ export default function LoginPage() {
     }
     setLoading(true);
     try {
-      const user = await apiClient.post('/auth/login', { email, password });
-      sessionStorage.setItem('user', JSON.stringify(user));
+      await apiClient.post('/auth/login', { email, password });
       router.push('/admin');
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Invalid credentials');
@@ -50,7 +49,7 @@ export default function LoginPage() {
     setForgotLoading(true);
     try {
       await apiClient.post('/auth/reset-password-request', { email: forgotEmail });
-      setForgotSubmitted(true);
+      setForgotSubmitted(true); // confirmation message "If an account exists for that email, a reset link has been sent."
     } catch {
       toast.error('Something went wrong. Please try again.');
     } finally {
@@ -117,6 +116,7 @@ export default function LoginPage() {
             <p>If an account exists for that email, a reset link has been sent.</p>
           ) : (
             <form onSubmit={handleForgot} className="space-y-2">
+              <Label htmlFor="forgot-password">Email</Label>
               <Input
                 id="forgot-password"
                 type="email"

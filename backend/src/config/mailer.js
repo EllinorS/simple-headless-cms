@@ -77,24 +77,7 @@ export const sendResetPasswordEmail = async (email, token) => {
   });
 };
 
-// Sent to the admin inbox when a visitor submits the surf trip request form.
-export const newSurfTripRequestEmail = async (firstName, lastName, email, phone, message) => {
-  await sendBrevo({
-    to: process.env.CONTACT_EMAIL,
-    replyTo: email,
-    subject: `New surf trip request — ${esc(firstName)} ${esc(lastName)}`,
-    html: `
-      <p>First name: ${esc(firstName)}<br/>
-      Last name: ${esc(lastName)}<br/>
-      Phone: ${esc(phone)}<br/>
-      Email: ${esc(email)}<br/>
-      Message: ${esc(message)}</p>
-    `,
-  });
-};
-
 // Sent to the admin inbox when a visitor submits the contact form.
-// replyTo is set to the visitor's email so replying goes to them, not to SMTP_FROM.
 export const newContactEmail = async (firstName, lastName, email, phone, subject, message, source) => {
   const emailSubject = source
     ? `${esc(source)} — ${esc(subject)}`

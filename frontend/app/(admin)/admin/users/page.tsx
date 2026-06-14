@@ -25,15 +25,8 @@ export default function UsersPage() {
   const [lastName, setLastName] = useState('');
   const [role, setRole] = useState('COACH');
   const [loading, setLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
-
-  async function loadUsers() {
-    try {
-      setUsers(await apiClient.get('/auth/users'));
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to load users.');
-    }
-  }
 
   useEffect(() => {
     apiClient
@@ -53,13 +46,13 @@ export default function UsersPage() {
 
     setLoading(true);
     try {
-      await apiClient.post('/auth/users/invite', { email, firstName, lastName, role });
+      const created = await apiClient.post('/auth/users/invite', { email, firstName, lastName, role });
       toast.success(`Invitation sent to ${email}.`);
       setEmail('');
       setFirstName('');
       setLastName('');
       setRole('COACH');
-      await loadUsers();
+      setUsers((prev) => [...prev, created]);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Something went wrong.');
     } finally {
@@ -69,13 +62,15 @@ export default function UsersPage() {
 
   async function handleDelete(id: number) {
     if (!confirm('delete this user?')) return;
-
+    setDeleting(true);
     try {
       await apiClient.delete(`/auth/users/${id}`);
       toast.success('User deleted.');
-      await loadUsers();
+      setUsers((prev) => prev.filter((u) => u.id !== id));
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Failed to delete user.');
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -180,6 +175,7 @@ export default function UsersPage() {
                         variant="destructive"
                         size="sm"
                         onClick={() => handleDelete(u.id)}
+                        disabled={deleting}
                       >
                         Delete
                       </Button>

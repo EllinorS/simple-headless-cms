@@ -24,30 +24,6 @@ export default function ContentPage() {
       .finally(() => setLoading(false));
   }, [selectedPage]);
 
-  // updates the DB then syncs local state to avoid a full re-fetch
-  const handleSave = async (keyName: string, value: string) => {
-    const existing = content.find((item) => item.keyName === keyName);
-
-    try {
-      await apiClient.put(`/content/key/${keyName}`, {
-        value,
-        page: selectedPage,
-        label: existing?.label ?? keyName,
-        type: existing?.type ?? 'TEXT',
-      });
-      const updated = content.map((item) => {
-        if (item.keyName === keyName) {
-          return { ...item, value };
-        }
-        return item;
-      });
-      setContent(updated);
-      toast.success('Saved');
-    } catch {
-      toast.error('Failed to save');
-    }
-  };
-
   if (loading)
     return (
       <div className="flex items-center justify-center h-64">
@@ -88,10 +64,9 @@ export default function ContentPage() {
 
             return (
               <ContentBlock
-                key={block.label} 
-                blockLabel={block.label} 
+                key={block.title}
+                blockTitle={block.title}
                 items={items}
-                onSave={handleSave}
               />
             );
           })}

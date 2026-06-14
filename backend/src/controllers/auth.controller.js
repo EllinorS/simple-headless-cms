@@ -99,7 +99,6 @@ export const logout = (req, res) => {
 };
 
 // Invite user (SUPER_ADMIN only)
-// Creates an already-verified account, then sends a set-password email so the
 // new user can choose their own password before their first login.
 
 export const inviteUser = asyncHandler(async (req, res) => {
@@ -118,7 +117,8 @@ export const inviteUser = asyncHandler(async (req, res) => {
   await authModel.saveResetPassword(userId, resetToken);
   await sendResetPasswordEmail(email, resetToken);
 
-  res.status(201).json({ message: 'User invited. A set-password email has been sent.' });
+  const newUser = await authModel.findUserById(userId);
+  res.status(201).json({ data: toUserDTO(newUser) });
 });
 
 // delete user

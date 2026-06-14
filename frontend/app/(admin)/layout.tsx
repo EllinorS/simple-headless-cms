@@ -8,7 +8,6 @@ import {
   FileText,
   CalendarDays,
   LogOut,
-  Loader2,
   Users,
   MenuIcon,
 } from 'lucide-react';
@@ -26,24 +25,15 @@ const navItems = [
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
+  // fetch user info to display at bottom of sidebar
   useEffect(() => {
-    async function checkAuth() {
-      try {
-        const data = await apiClient.get('/auth/me');
-        setUser(data);
-        setLoading(false);
-      } catch {
-        router.push('/login');
-      }
-    }
-    checkAuth();
-  }, [router]);
+    apiClient.get('/auth/me').then(setUser).catch(() => {});
+  }, []);
 
   async function handleLogout() {
     try {
@@ -53,13 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       toast.error(err instanceof Error ? err.message : 'Something went wrong');
     }
   }
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
+
   return (
     <div className="flex min-h-screen bg-muted/30">
       {/* Mobile top bar */}
