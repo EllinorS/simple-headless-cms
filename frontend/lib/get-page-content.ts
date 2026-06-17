@@ -8,13 +8,17 @@ export async function getPageContent(page: string): Promise<PageContent> {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/content/page/${page}`, {
       next: { revalidate: 60 },
     });
-    if (!res.ok) return {};
+    if (!res.ok) {
+      console.error('[getPageContent] HTTP', res.status, 'for page', page);
+      return {};
+    }
     // dictionary keyed by keyName
     const body = await res.json();
     const items = body?.data ?? body;
     if (!Array.isArray(items)) return {};
     return Object.fromEntries((items as ContentItem[]).map((i) => [i.keyName, i]));
-  } catch {
+  } catch (err) {
+    console.error('[getPageContent] fetch failed for page', page, err);
     return {};
   }
 }

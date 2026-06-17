@@ -29,7 +29,8 @@ export function SpotsSection({ spots }: Props) {
         <p className="text-muted-foreground mb-12">
           3,000 km of coastline. A wave for every level. Here are some of the regions we explore on custom surf trips.
         </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* mobile 1 col, >=640 2 cols, >=768 4 cols */}
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
           {spots.map((spot) => (
             <Card key={spot.id} className="gap-0 p-0 h-full flex flex-col">
               <div className="relative h-44 shrink-0">

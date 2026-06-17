@@ -1,5 +1,6 @@
 import { Compass, Waves, TrendingUp, MapPin } from 'lucide-react';
 import { TextCardsSection } from '@/components/web/blocks/TextCardsSection';
+import { range } from '@/lib/cms-utils';
 
 const TRIP_CARDS = [
   { icon: Compass, label: 'Personalised itinerary', sub: 'Built around your level' },
@@ -10,10 +11,10 @@ const TRIP_CARDS = [
 
 type Props = {
   v: (key: string, fallback?: string) => string;
-  bullets: string[];
 };
 
-export function TripsSection({ v, bullets }: Props) {
+export function TripsSection({ v }: Props) {
+  const bullets = range(3).map((n) => v(`snz_trips_b${n}`)).filter(Boolean);
   return (
     <TextCardsSection
       eyebrow={v('snz_trips_eyebrow', 'New Zealand, your way')}

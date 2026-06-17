@@ -2,36 +2,15 @@ import type { Metadata } from 'next';
 import Hero from '@/components/web/blocks/Hero';
 import { ContactForm } from '@/components/web/blocks/ContactForm';
 import { BusAccent } from '@/components/web/blocks/BusAccent';
-import { WeekCalendar, type CalendarSession } from './_components/WeekCalendar';
+import { WeekCalendar} from './_components/WeekCalendar';
 import { getPageContent, readContent } from '@/lib/get-page-content';
-import type { Session } from '@/lib/types';
+import { getSessions } from '@/lib/get-sessions';
 import { PLACEHOLDER_IMG } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Book a Surf Lesson in Raglan | ALAIA Surf Coach',
   description: 'See upcoming surf lesson dates in Raglan and get in touch to book your session.',
 };
-
-// Fetches sessions from the backend — returns empty array on failure
-async function getSessions(): Promise<CalendarSession[]> {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sessions/public`, {
-      cache: 'no-store',
-    });
-    if (!res.ok) {
-      console.error('[getSessions] HTTP', res.status);
-      return [];
-    }
-
-    // Backend wraps the array in { data: ... } unwrap it (this fetch bypasses api-client).
-    const body = await res.json();
-    const sessions: Session[] = body?.data ?? body;
-    return sessions;
-  } catch (err) {
-    console.error('[getSessions] fetch failed:', err);
-    return [];
-  }
-}
 
 export default async function BookSurfLessonPage() {
   const c = await getPageContent('book-surf-lesson');
@@ -54,10 +33,17 @@ export default async function BookSurfLessonPage() {
           <h2 className="text-2xl font-bold mb-8">
             {v('book_schedule_title', 'Upcoming Lessons')}
           </h2>
-          <WeekCalendar
-            sessions={sessions}
-            emptyMessage="No sessions scheduled right now, get in touch to arrange a lesson."
-          />
+          {sessions === null ? (
+            <p className="text-sm text-muted-foreground py-4">
+              There seems to be an error loading sessions. Get in touch to arrange a lesson.
+            </p>
+          ) : (
+            <WeekCalendar
+              sessions={sessions}
+              emptyMessage="No sessions scheduled right now, get in touch to arrange a lesson."
+            />
+          )}
+          <p className="text-xs text-muted-foreground mt-4">Kids: 12 and under · Adults: 13 and over</p>
         </div>
       </section>
 
@@ -67,6 +53,7 @@ export default async function BookSurfLessonPage() {
         className="relative overflow-hidden bg-muted/40 border-t py-20 px-4"
       >
         <BusAccent color="green" side="left" width={300} className="opacity-[0.07]" />
+
         <div className="container mx-auto max-w-2xl">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold mb-3">
@@ -79,6 +66,7 @@ export default async function BookSurfLessonPage() {
               )}
             </p>
           </div>
+
           <ContactForm
             source="Booking Page"
             messagePlaceholder="Please let us know which date and lesson type you're interested in."

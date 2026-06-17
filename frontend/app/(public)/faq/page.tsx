@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { getPageContent, readContent } from '@/lib/get-page-content';
 import { FaqCategory } from '@/lib/types';
 import { FaqAccordion } from '@/components/web/blocks/FaqAccordion';
 import { range } from '@/lib/cms-utils';
+import Hero from '@/components/web/blocks/Hero';
+import { PLACEHOLDER_IMG } from '@/lib/utils';
+import { CtaBanner } from '@/components/web/blocks/CtaBanner';
 
 export const metadata: Metadata = {
   title: 'FAQ — Surf Lessons in Raglan | ALAIA Surf Coach',
@@ -26,49 +27,38 @@ export const metadata: Metadata = {
 
 export default async function FaqPage() {
   const content = await getPageContent('FAQ');
-  const { v } = readContent(content);
+  const { v, img } = readContent(content);
 
-  const categories: FaqCategory[] = range(4).map((n) => ({
-    title: v(`faq_cat${n}_title`),
-    items: range(5)
-      .map((m) => ({ q: v(`faq_cat${n}_item${m}_q`), a: v(`faq_cat${n}_item${m}_a`) }))
-      .filter((item) => item.q),
-  })).filter((cat) => cat.items.length > 0);
+  // creates array expected by FaqAccordion component
+  const categories: FaqCategory[] = range(4).map((n) => ({ // 4 categories
+    title: v(`faq_cat${n}_title`), // category title
+    items: range(5) // 5 questions possible
+      .map((m) => ({ q: v(`faq_cat${n}_item${m}_q`), a: v(`faq_cat${n}_item${m}_a`) })) // for each number, create a pair of question and answer
+      .filter((item) => item.q), // keep pairs with a question
+  })).filter((cat) => cat.items.length > 0); // keep categories with at least one question
   
   return (
     <>
-      <div className="relative h-56 w-full overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/assets/surfboards-under-flax.webp')" }}
-        />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 flex h-full items-end px-6 pb-10">
-          <div className="container mx-auto max-w-3xl text-white">
-            <h1 className="heading-lg mb-2">Frequently Asked Questions</h1>
-            <p className="opacity-80">Everything you need to know before hitting the water</p>
-          </div>
-        </div>
-      </div>
+      <Hero
+        title={v('faq_hero_title', 'Frequently Asked Questions')}
+        subtitle={v('faq_hero_subtitle', 'Everything you need to know before hitting the water')}
+        backgroundImage={img('faq_hero_image', PLACEHOLDER_IMG)}
+        alt={v('faq_hero_image_alt', '')}
+        size="medium"
+      />
 
       <div className="container mx-auto max-w-3xl px-6 py-16">
         <FaqAccordion categories={categories} />
       </div>
 
-      <div className="mt-16 bg-muted/40 rounded-2xl p-8 text-center">
-        <h2 className="text-xl font-bold mb-2">Still have a question?</h2>
-        <p className="text-muted-foreground text-sm mb-6">
-          Send us a message and we&apos;ll get back to you within 24 hours.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button asChild size="lg">
-            <Link href="/contact">Contact us</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link href="/book-surf-lesson">Book a lesson</Link>
-          </Button>
-        </div>
-      </div>
+      <CtaBanner
+        title="Still have a question?"
+        subtitle="Send us a message and we'll get back to you within 24 hours."
+        buttons={[
+          { text: 'Contact us', href: '/contact', variant: 'white' },
+          { text: 'Book a lesson', href: '/book-surf-lesson', variant: 'glass' },
+        ]}
+      />
     </>
   );
 }

@@ -18,7 +18,7 @@ async function request(endpoint: string, method: string, body?: unknown) {
   }
   if (response.status === 204) return null;
   const body2 = await response.json();
-  // The backend wraps responses in { data: ... } — unwrap it, or return directly if not wrapped
+  // unwrap BE response, or return directly if not wrapped
   return body2?.data ?? body2;
 }
 

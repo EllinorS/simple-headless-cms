@@ -29,17 +29,14 @@ export const findPublicSessions = async () => {
   return rows;
 };
 
-// Returns a single session by ID — used to check existence before deleting
-
+// Returns a single session by ID : used to check existence before deleting
 
 export const findSessionById = async (id) => {
   const [rows] = await db.query(`SELECT * FROM sessions WHERE id = ?`, [id]);
   return rows[0];
 };
 
-
-
-// Hard-deletes a session row by ID
+// Delete a session row by ID
 export const deleteSessionById = async (id) => {
   const [result] = await db.query(`DELETE FROM sessions WHERE id = ?`, [id]);
   return result.affectedRows;

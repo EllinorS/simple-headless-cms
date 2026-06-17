@@ -50,6 +50,14 @@ const authLimiter = rateLimit({
   message: { message: 'Too many login attempts, please try again later.' },
 });
 
+const contactLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: process.env.NODE_ENV === 'production' ? 5 : 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many messages sent, please try again later.' },
+});
+
 if (process.env.NODE_ENV !== 'test') app.use(limiter);
 app.use(cookieParser());
 
@@ -63,7 +71,7 @@ app.get('/api/health', (req, res) => res.status(200).json({ status: 'OK' }));
 app.use('/api/auth', ...(process.env.NODE_ENV !== 'test' ? [authLimiter] : []), authRoutes);
 app.use('/api/media', mediaRoutes);
 app.use('/api/content', siteContentRoutes);
-app.use('/api/contact', contactRoutes);
+app.use('/api/contact', ...(process.env.NODE_ENV !== 'test' ? [contactLimiter] : []), contactRoutes);
 app.use('/api/sessions', sessionRoutes);
 
 app.use(errorHandler);

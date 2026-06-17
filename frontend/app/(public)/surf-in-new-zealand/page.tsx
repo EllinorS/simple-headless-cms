@@ -4,7 +4,6 @@ import { getPageContent, readContent } from '@/lib/get-page-content';
 import { LessonsSection } from './_sections/LessonsSection';
 import { PackagesSection } from './_sections/PackagesSection';
 import { TripsSection } from './_sections/TripsSection';
-import { range } from '@/lib/cms-utils';
 
 export const metadata: Metadata = {
   title: 'Surf in New Zealand | ALAIA Surf Coach',
@@ -24,8 +23,8 @@ export default async function SurfInNewZealandPage() {
 
   const pricingCards = [
     { sessions: 1, price: priceSingle, per: priceSingle, label: 'Single session', accent: false },
-    { sessions: 3, price: pricePack3, per: Math.round(pricePack3 / 3), label: 'Best value', accent: true },
-    { sessions: 5, price: pricePack5, per: Math.round(pricePack5 / 5), label: 'Full package', accent: false },
+    { sessions: 3, price: pricePack3, per: Math.round(pricePack3 / 3), label: 'Package', accent: true },
+    { sessions: 5, price: pricePack5, per: Math.round(pricePack5 / 5), label: 'Best value', accent: false },
   ];
 
   return (
@@ -36,19 +35,9 @@ export default async function SurfInNewZealandPage() {
         backgroundImage={img('snz_hero_image', '/assets/surfers-paddling.webp')}
         alt={v('snz_hero_image_alt', '')}
       />
-      <LessonsSection
-        v={v}
-        bullets={range(3).map((n) => v(`snz_lessons_b${n}`)).filter(Boolean)}
-      />
-      <PackagesSection
-        v={v}
-        bullets={range(3).map((n) => v(`snz_packages_b${n}`)).filter(Boolean)}
-        pricingCards={pricingCards}
-      />
-      <TripsSection
-        v={v}
-        bullets={range(3).map((n) => v(`snz_trips_b${n}`)).filter(Boolean)}
-      />
+      <LessonsSection v={v} />
+      <PackagesSection v={v} pricingCards={pricingCards} />
+      <TripsSection v={v} />
     </>
   );
 }

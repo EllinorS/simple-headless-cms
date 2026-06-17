@@ -1,6 +1,5 @@
 // Auth model: user and role queries. The reset token is stored hashed in the DB with an
-// expiry timestamp so it self-invalidates without a cleanup job. Only the raw token (sent
-// by email) is usable; a DB leak exposes only the useless hash.
+// expiry timestamp so it self-invalidates without a cleanup job. Only the raw token (sent by email) is usable; a DB leak exposes only the useless hash.
 import crypto from 'crypto';
 import { db } from '../config/db.js';
 

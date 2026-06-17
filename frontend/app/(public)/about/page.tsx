@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import Hero from '@/components/web/blocks/Hero';
 import ImageTextBlock from '@/components/web/blocks/ImageTextBlock';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { Award, Heart, Users, Waves } from 'lucide-react';
+import { CtaBanner } from '@/components/web/blocks/CtaBanner';
 import { IconCardGrid } from '@/components/web/blocks/IconCardGrid';
 import { PLACEHOLDER_IMG } from '@/lib/utils';
 import { getPageContent, readContent } from '@/lib/get-page-content';
@@ -82,28 +81,14 @@ export default async function AboutPage() {
         imagePosition="right"
       />
 
-      {/* Bottom CTA banner with two action buttons */}
-      <section className="py-16 px-4 bg-secondary text-secondary-foreground">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            {v('about_cta_title', 'Ready to Start Your Surf Journey?')}
-          </h2>
-          <p className="text-lg mb-8 opacity-90">
-            {v(
-              'about_cta_subtitle',
-              'Book your first lesson today or plan an unforgettable surf trip across New Zealand',
-            )}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="white" asChild>
-              <Link href="/book-surf-lesson">Book a Lesson</Link>
-            </Button>
-            <Button size="lg" variant="glass" asChild>
-              <Link href="/surf-trip-request">Plan a Surf Trip</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <CtaBanner
+        title={v('about_cta_title', 'Ready to Start Your Surf Journey?')}
+        subtitle={v('about_cta_subtitle', 'Book your first lesson today or plan an unforgettable surf trip across New Zealand')}
+        buttons={[
+          { text: 'Book a Lesson', href: '/book-surf-lesson', variant: 'white' },
+          { text: 'Plan a Surf Trip', href: '/surf-trip-request', variant: 'glass' },
+        ]}
+      />
     </>
   );
 }

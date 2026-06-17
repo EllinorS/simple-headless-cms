@@ -9,7 +9,7 @@ type Props = {
 
 export default function CarouselSection({ v, img }: Props) {
   return (
-    // Each slide maps to a lesson type — content comes from the DB via v() and img()
+    // Each slide maps to a lesson type : content comes from the DB via v() and img()
     <CarouselBlock
       slides={[
         {

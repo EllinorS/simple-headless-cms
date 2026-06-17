@@ -1,5 +1,6 @@
 import { db } from '../config/db.js';
 
+// find all content
 export const findAllContent = async () => {
   const [rows] = await db.query(
     `SELECT * FROM site_content ORDER BY page, key_name`,
@@ -7,6 +8,7 @@ export const findAllContent = async () => {
   return rows;
 };
 
+// find content by page
 export const findContentByPage = async (pageName) => {
   const [rows] = await db.query(
     `SELECT * FROM site_content WHERE page = ?`,
@@ -15,6 +17,7 @@ export const findContentByPage = async (pageName) => {
   return rows;
 };
 
+// find content by key
 export const findContentByKey = async (keyName) => {
   const [rows] = await db.query(
     `SELECT * FROM site_content WHERE key_name = ?`,
@@ -23,6 +26,7 @@ export const findContentByKey = async (keyName) => {
   return rows[0] || null;
 };
 
+// update content
 export const updateContent = async (keyName, value) => {
   const [result] = await db.query(
     `UPDATE site_content SET value = ? WHERE key_name = ?`,

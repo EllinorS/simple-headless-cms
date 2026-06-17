@@ -10,8 +10,9 @@ import { Suspense, useState } from 'react';
 import { toast } from 'sonner';
 
 function ResetPasswordForm() {
+  // access ULR params
   const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const token = searchParams.get('token'); // extract token from url
   const router = useRouter();
 
   const [password, setPassword] = useState('');
@@ -42,6 +43,7 @@ function ResetPasswordForm() {
       setLoading(false);
     }
   }
+  
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">

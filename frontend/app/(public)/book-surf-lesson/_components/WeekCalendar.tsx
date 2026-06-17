@@ -65,7 +65,7 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
 
   return (
     <div>
-      {/* Week navigation: prev button / week label / next button */}
+      {/* Mobile and Desktop : Week navigation: prev button / week label / next button */}
       <div className="flex items-center justify-center gap-3 mb-8">
         <Button
           variant="outline"
@@ -149,6 +149,7 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
             </div>
           ))}
         </div>
+        {/* Sessions list */}
         {hasAnyThisWeek ? (
           <div className="grid grid-cols-7 gap-2">
             {weekDays.map((day) => {
@@ -156,8 +157,8 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
               const daySessions = byDate[ds] ?? [];
               return (
                 <div key={ds} className="space-y-2 min-h-20">
-                  {daySessions.map((s, j) => (
-                    <SessionCard key={j} session={s} compact />
+                  {daySessions.map((s, index) => (
+                    <SessionCard key={index} session={s} compact />
                   ))}
                 </div>
               );

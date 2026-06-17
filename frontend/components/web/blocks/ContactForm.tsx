@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { apiClient } from '@/lib/api-client';
 import { ContactSchema } from '@/lib/types';
 import { Button } from '@/components/ui/button';
@@ -27,10 +28,11 @@ type Props = {
 export function ContactForm({ source, messagePlaceholder }: Props) {
   const [form, setForm] = useState(EMPTY_FORM);
   const [consent, setConsent] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false); // deactivate button
+  const [submitted, setSubmitted] = useState(false); // display message
   const [error, setError] = useState('');
 
+  // Generic helper to avoid duplicating logic in each input
   const set = (key: keyof typeof EMPTY_FORM, value: string) =>
     setForm((f) => ({ ...f, [key]: value }));
 
@@ -126,8 +128,11 @@ export function ContactForm({ source, messagePlaceholder }: Props) {
         />
         <Label htmlFor="consent" className="text-xs text-muted-foreground leading-relaxed cursor-pointer">
           I agree that my personal data (name, email, phone) will be processed by ALAIA Surf Coach
-          solely for the purpose of responding to my enquiry, in accordance with applicable data
-          protection regulations. My data will not be shared with third parties.
+          solely for the purpose of responding to my enquiry, in accordance with our{' '}
+          <Link href="/privacy" className="underline underline-offset-2 hover:text-foreground">
+            privacy policy
+          </Link>
+          . My data will not be shared with third parties.
         </Label>
       </div>
 

@@ -35,35 +35,6 @@ export function TextCardsSection({
 }: Props) {
   const isSecondary = variant === 'secondary';
 
-  const text = (
-    <div>
-      {eyebrow && (
-        <p className={`eyebrow mb-4 ${isSecondary ? 'text-secondary-foreground/60' : 'text-primary'}`}>
-          {eyebrow}
-        </p>
-      )}
-      <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
-      {desc && (
-        <p className={`leading-relaxed mb-6 ${isSecondary ? 'text-secondary-foreground/70' : 'text-muted-foreground'}`}>
-          {desc}
-        </p>
-      )}
-      {bullets.length > 0 && (
-        <ul className="space-y-2 mb-8">
-          {bullets.map((b) => (
-            <li key={b} className={`flex items-start gap-3 text-sm ${isSecondary ? 'text-secondary-foreground' : ''}`}>
-              <CheckCircle className={`w-4 h-4 shrink-0 mt-0.5 ${isSecondary ? 'text-gold' : 'text-ring'}`} />
-              {b}
-            </li>
-          ))}
-        </ul>
-      )}
-      <Button asChild size="lg" variant={isSecondary ? 'white' : 'default'}>
-        <Link href={buttonHref}>{buttonText}</Link>
-      </Button>
-    </div>
-  );
-
   return (
     <section className={`py-20 px-4 ${isSecondary ? 'bg-secondary text-secondary-foreground' : ''}`}>
       <div className="container mx-auto max-w-5xl">
@@ -71,7 +42,30 @@ export function TextCardsSection({
 
           {/* Text */}
           <div className={cardPosition === 'left' ? 'md:col-start-2' : ''}>
-            {text}
+            {eyebrow && (
+              <p className={`eyebrow mb-4 ${isSecondary ? 'text-secondary-foreground/60' : 'text-primary'}`}>
+                {eyebrow}
+              </p>
+            )}
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
+            {desc && (
+              <p className={`leading-relaxed mb-6 ${isSecondary ? 'text-secondary-foreground/70' : 'text-muted-foreground'}`}>
+                {desc}
+              </p>
+            )}
+            {bullets.length > 0 && (
+              <ul className="space-y-2 mb-8">
+                {bullets.map((b) => (
+                  <li key={b} className={`flex items-start gap-3 text-sm ${isSecondary ? 'text-secondary-foreground' : ''}`}>
+                    <CheckCircle className={`w-4 h-4 shrink-0 mt-0.5 ${isSecondary ? 'text-gold' : 'text-ring'}`} />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <Button asChild size="lg" variant={isSecondary ? 'white' : 'default'}>
+              <Link href={buttonHref}>{buttonText}</Link>
+            </Button>
           </div>
 
           {/* Cards grid */}

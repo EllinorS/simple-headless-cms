@@ -60,7 +60,8 @@ export default function SessionEditor({
       .finally(() => setLoading(false));
   }, []);
 
-  const handleAdd = async () => {
+  const handleAdd = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!newDate) return;
     setSaving(true);
     try {
@@ -159,10 +160,7 @@ export default function SessionEditor({
 
       {/* Form to add a new session */}
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleAdd();
-        }}
+        onSubmit={handleAdd}
         className="flex flex-wrap gap-2 items-end border-t pt-4"
       >
         <div className="flex flex-col gap-1">

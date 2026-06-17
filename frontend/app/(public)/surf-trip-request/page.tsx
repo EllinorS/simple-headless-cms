@@ -46,7 +46,7 @@ export default async function SurfTripRequestPage() {
           </p>
           <ContactForm
             source="Surf Trip Request"
-            messagePlaceholder="Tell is about your level, prefered dates, who's coming, what you're looking for..."
+            messagePlaceholder="Tell us about your level, prefered dates, who's coming, what you're looking for..."
           />
         </div>
       </div>
