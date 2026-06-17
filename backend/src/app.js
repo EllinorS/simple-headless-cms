@@ -33,7 +33,7 @@ app.use(
 // secure http headers
 app.use(helmet());
 
-// Limits the number of requests per IP to prevent brute force attacks\
+// Limits the number of requests per IP to prevent brute force attacks
 const limiter = rateLimit({
   windowMs: 30 * 60 * 1000,
   max: 100,

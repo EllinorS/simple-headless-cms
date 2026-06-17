@@ -66,7 +66,7 @@ export const resetPasswordRequest = asyncHandler(async (req, res) => {
   if (!user)
     return res.status(200).json({ message: 'If this email exists, a reset link has been sent.' });
   const resetToken = uuid4();
-  await authModel.saveResetPassword(user.id, resetToken);
+  await authModel.storeResetToken(user.id, resetToken);
   await sendResetPasswordEmail(email, resetToken);
   res.status(200).json({ message: 'If this email exists, a reset link has been sent.' });
 });
@@ -111,10 +111,16 @@ export const inviteUser = asyncHandler(async (req, res) => {
   if (!roleRecord) return res.status(400).json({ message: 'Invalid role.' });
 
   const passwordHash = await argon2.hash(uuid4());
-  const userId = await authModel.createAdminUser(roleRecord.id, email, passwordHash, firstName, lastName);
+  const userId = await authModel.createAdminUser(
+    roleRecord.id,
+    email,
+    passwordHash,
+    firstName,
+    lastName,
+  );
 
   const resetToken = uuid4();
-  await authModel.saveResetPassword(userId, resetToken);
+  await authModel.storeResetToken(userId, resetToken);
   await sendResetPasswordEmail(email, resetToken);
 
   const newUser = await authModel.findUserById(userId);

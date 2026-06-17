@@ -41,7 +41,7 @@ export default function ContentPage() {
       {/* One tab per page*/}
       <Tabs value={selectedPage} onValueChange={setSelectedPage} className="flex-col space-y-6">
         <TabsList variant="line" className="flex-wrap h-auto gap-2">
-          {/* Create one tab button per page in the PAGES array */}
+          {/* Create one tab button per page in the PAGES array. <Tabs> reads its value to update setSelectedPage*/}
           {Object.keys(PAGE_BLOCKS).map((page) => (
             <TabsTrigger
               key={page}
@@ -56,9 +56,10 @@ export default function ContentPage() {
         <TabsContent value={selectedPage}>
           {/* PAGE_BLOCKS[selectedPage] returns the list of sections for the active page */}
           {PAGE_BLOCKS[selectedPage]?.map((block) => {
+            // items maps over the keys of one section to grab the content related to it
             const items = block.keys
-              .map((k) => content.find((i) => i.keyName === k))
-              .filter(Boolean) as ContentItem[];
+              .map((k) => content.find((i) => i.keyName === k)) // returns the element in its entirety
+              .filter(Boolean) as ContentItem[]; // drops keys with no match found ( ex missing in db)
 
             return <ContentBlock key={block.title} blockTitle={block.title} items={items} />;
           })}

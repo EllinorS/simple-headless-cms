@@ -28,6 +28,7 @@ export const HOME_BLOCKS = [
     title: 'Hero',
     keys: [
       'home_hero_title',
+      'home_hero_subtitle',
       'home_hero_cta_lesson',
       'home_hero_cta_trip',
       'home_hero_image',
