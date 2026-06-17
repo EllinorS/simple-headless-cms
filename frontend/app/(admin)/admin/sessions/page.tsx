@@ -8,7 +8,7 @@ export default async function SessionsPage() {
   // Map each session type to its CMS-managed default price
   const defaultPrices: Record<string, number> = {
     'Group - Adults': Number(v('global_price_group_adults')) || 0,
-    'Group - Kids':   Number(v('global_price_group_kids'))   || 0
+    'Group - Kids': Number(v('global_price_group_kids')) || 0,
   };
 
   return (

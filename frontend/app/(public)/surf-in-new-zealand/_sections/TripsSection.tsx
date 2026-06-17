@@ -14,7 +14,9 @@ type Props = {
 };
 
 export function TripsSection({ v }: Props) {
-  const bullets = range(3).map((n) => v(`snz_trips_b${n}`)).filter(Boolean);
+  const bullets = range(3)
+    .map((n) => v(`snz_trips_b${n}`))
+    .filter(Boolean);
   return (
     <TextCardsSection
       eyebrow={v('snz_trips_eyebrow', 'New Zealand, your way')}

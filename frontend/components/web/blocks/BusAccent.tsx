@@ -7,9 +7,14 @@ type BusAccentProps = {
   side?: 'left' | 'right';
   width?: number;
   className?: string;
-}
+};
 
-export function BusAccent({ color = 'green', side = 'right', width = 280, className = '' }: BusAccentProps) {
+export function BusAccent({
+  color = 'green',
+  side = 'right',
+  width = 280,
+  className = '',
+}: BusAccentProps) {
   const height = Math.round(width * (130 / 192.51));
   return (
     <div

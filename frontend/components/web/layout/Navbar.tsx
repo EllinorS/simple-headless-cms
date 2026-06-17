@@ -10,17 +10,32 @@ import { ChevronDown } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import NavbarMobileMenu from './NavbarMobileMenu';
 
-
 const Navbar = () => {
   return (
-    <nav className="fixed top-4 sm:top-6 left-1/2 z-50 w-[94%] sm:w-[92%] max-w-6xl -translate-x-1/2
+    <nav
+      className="fixed top-4 sm:top-6 left-1/2 z-50 w-[94%] sm:w-[92%] max-w-6xl -translate-x-1/2
       flex items-center justify-between px-4 sm:px-6 py-2 sm:py-3
       rounded-md border border-white/20 bg-white/20 backdrop-blur-xl
-      shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-300">
-
+      shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-300"
+    >
       <Link href="/">
-        <Image src="/assets/alaia-surf-coach-logo-green.svg" alt="ALAIA Surf Coach" width={120} height={23} priority className="h-10 w-auto dark:hidden" style={{ width: 'auto' }} />
-        <Image src="/assets/alaia-surf-coach-logo-white.svg" alt="ALAIA Surf Coach" width={120} height={23} className="h-10 w-auto hidden dark:block" style={{ width: 'auto' }} />
+        <Image
+          src="/assets/alaia-surf-coach-logo-green.svg"
+          alt="ALAIA Surf Coach"
+          width={120}
+          height={23}
+          priority
+          className="h-10 w-auto dark:hidden"
+          style={{ width: 'auto' }}
+        />
+        <Image
+          src="/assets/alaia-surf-coach-logo-white.svg"
+          alt="ALAIA Surf Coach"
+          width={120}
+          height={23}
+          className="h-10 w-auto hidden dark:block"
+          style={{ width: 'auto' }}
+        />
       </Link>
 
       {/* Desktop links */}
@@ -50,7 +65,7 @@ const Navbar = () => {
         <NavbarMobileMenu />
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

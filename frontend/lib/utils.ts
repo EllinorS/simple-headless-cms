@@ -1,4 +1,3 @@
-
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -20,4 +19,3 @@ export function optimizeCloudinaryVideo(url: string): string {
   if (!url.includes('res.cloudinary.com')) return url;
   return url.replace('/upload/', '/upload/q_auto:eco/');
 }
-

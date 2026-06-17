@@ -5,11 +5,19 @@ import { ContactForm } from '@/components/web/blocks/ContactForm';
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: "Get in touch with ALAIA Surf Coach in Raglan, New Zealand. Questions about surf lessons, bookings or surf trips — we'd love to hear from you.",
+  description:
+    "Get in touch with ALAIA Surf Coach in Raglan, New Zealand. Questions about surf lessons, bookings or surf trips — we'd love to hear from you.",
   openGraph: {
     title: 'Contact ALAIA Surf Coach',
     description: 'Get in touch with us in Raglan, New Zealand.',
-    images: [{ url: '/assets/surfboards-under-flax.webp', width: 1200, height: 630, alt: 'Surf on the west coast of New Zealand' }],
+    images: [
+      {
+        url: '/assets/surfboards-under-flax.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Surf on the west coast of New Zealand',
+      },
+    ],
   },
 };
 export default function ContactPage() {
@@ -26,9 +34,7 @@ export default function ContactPage() {
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="grid md:grid-cols-2 gap-16">
             <ContactInfo />
-            <ContactForm
-            source="Contact Page"
-          />
+            <ContactForm source="Contact Page" />
           </div>
         </div>
       </section>

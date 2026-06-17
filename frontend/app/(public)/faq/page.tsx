@@ -30,13 +30,15 @@ export default async function FaqPage() {
   const { v, img } = readContent(content);
 
   // creates array expected by FaqAccordion component
-  const categories: FaqCategory[] = range(4).map((n) => ({ // 4 categories
-    title: v(`faq_cat${n}_title`), // category title
-    items: range(5) // 5 questions possible
-      .map((m) => ({ q: v(`faq_cat${n}_item${m}_q`), a: v(`faq_cat${n}_item${m}_a`) })) // for each number, create a pair of question and answer
-      .filter((item) => item.q), // keep pairs with a question
-  })).filter((cat) => cat.items.length > 0); // keep categories with at least one question
-  
+  const categories: FaqCategory[] = range(4) // 4 categories
+    .map((n) => ({
+      title: v(`faq_cat${n}_title`), // category title
+      items: range(5) // 5 questions possible
+        .map((m) => ({ q: v(`faq_cat${n}_item${m}_q`), a: v(`faq_cat${n}_item${m}_a`) })) // for each number, create a pair of question and answer
+        .filter((item) => item.q), // keep pairs with a question
+    }))
+    .filter((cat) => cat.items.length > 0); // keep categories with at least one question
+
   return (
     <>
       <Hero

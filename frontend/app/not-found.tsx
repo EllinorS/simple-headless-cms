@@ -11,7 +11,8 @@ export default function NotFound() {
         <p className="text-8xl font-black text-primary mb-6">404</p>
         <h1 className="text-3xl sm:text-4xl font-bold mb-4">Page not found</h1>
         <p className="text-muted-foreground max-w-md mb-10">
-          Looks like this wave has already broken. The page you&apos;re looking for doesn&apos;t exist or has moved.
+          Looks like this wave has already broken. The page you&apos;re looking for doesn&apos;t
+          exist or has moved.
         </p>
         <Button asChild size="lg">
           <Link href="/">Back to home</Link>

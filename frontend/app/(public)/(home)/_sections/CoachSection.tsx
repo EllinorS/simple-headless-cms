@@ -12,7 +12,12 @@ export default function CoachSection({ v, img }: Props) {
   return (
     <div className="relative overflow-hidden">
       {/* Decorative bus illustration in the background */}
-      <BusAccent color="yellow" side="right" width={300} className="opacity-[0.2] top-1/4 md:top-auto md:bottom-0 z-0" />
+      <BusAccent
+        color="yellow"
+        side="right"
+        width={300}
+        className="opacity-[0.2] top-1/4 md:top-auto md:bottom-0 z-0"
+      />
       <div className="relative z-10">
         <ImageTextBlock
           title={v('home_coach_title', 'About coach')}

@@ -15,7 +15,9 @@ type Props = {
 
 export function LessonsSection({ v }: Props) {
   // bullets returns an array of str for bullets props in TextCardsSection
-  const bullets = range(3).map((n) => v(`snz_lessons_b${n}`)).filter(Boolean);
+  const bullets = range(3)
+    .map((n) => v(`snz_lessons_b${n}`))
+    .filter(Boolean);
   return (
     <TextCardsSection
       eyebrow={v('snz_lessons_eyebrow', 'Raglan, New Zealand')}

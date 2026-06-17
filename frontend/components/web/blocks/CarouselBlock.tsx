@@ -23,7 +23,7 @@ export default function CarouselBlock({ slides }: { slides: CarouselSlide[] }) {
             <h2 className="heading-lg mb-6">{slide.title}</h2>
             <p className="leading-relaxed mb-6">{slide.content}</p>
             <ul className="space-y-3 mb-8">
-                 {/* Filter empty bullet points before rendering */}
+              {/* Filter empty bullet points before rendering */}
               {slide.bulletPoints
                 .filter((point) => point.text)
                 .map((point, i) => (

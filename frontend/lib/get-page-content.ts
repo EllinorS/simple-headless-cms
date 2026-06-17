@@ -32,4 +32,3 @@ export function readContent(c: PageContent) {
   }
   return { v, img };
 }
-

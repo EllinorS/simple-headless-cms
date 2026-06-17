@@ -87,10 +87,8 @@ export default function SessionEditor({
       // Append and re-sort so the list stays in chronological order
       setSessions((prev) =>
         [...prev, newSession].sort((a, b) =>
-          a.date !== b.date
-            ? a.date.localeCompare(b.date)
-            : a.time.localeCompare(b.time)
-        )
+          a.date !== b.date ? a.date.localeCompare(b.date) : a.time.localeCompare(b.time),
+        ),
       );
 
       toast.success('Session added');
@@ -159,17 +157,24 @@ export default function SessionEditor({
       </ul>
 
       {/* Form to add a new session */}
-      <form
-        onSubmit={handleAdd}
-        className="flex flex-wrap gap-2 items-end border-t pt-4"
-      >
+      <form onSubmit={handleAdd} className="flex flex-wrap gap-2 items-end border-t pt-4">
         <div className="flex flex-col gap-1">
           <Label htmlFor="session-date">Date</Label>
-          <Input id="session-date" type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} />
+          <Input
+            id="session-date"
+            type="date"
+            value={newDate}
+            onChange={(e) => setNewDate(e.target.value)}
+          />
         </div>
         <div className="flex flex-col gap-1">
           <Label htmlFor="session-time">Time</Label>
-          <Input id="session-time" type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} />
+          <Input
+            id="session-time"
+            type="time"
+            value={newTime}
+            onChange={(e) => setNewTime(e.target.value)}
+          />
         </div>
         <div className="flex flex-col gap-1">
           <Label htmlFor="session-type">Type</Label>
@@ -186,7 +191,9 @@ export default function SessionEditor({
             </SelectTrigger>
             <SelectContent>
               {SESSION_TYPES.map((t) => (
-                <SelectItem key={t} value={t}>{t}</SelectItem>
+                <SelectItem key={t} value={t}>
+                  {t}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -210,7 +217,9 @@ export default function SessionEditor({
             </SelectTrigger>
             <SelectContent>
               {DURATIONS.map((d) => (
-                <SelectItem key={d} value={d}>{d}</SelectItem>
+                <SelectItem key={d} value={d}>
+                  {d}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>

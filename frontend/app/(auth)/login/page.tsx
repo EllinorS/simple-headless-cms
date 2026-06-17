@@ -21,7 +21,7 @@ export default function LoginPage() {
   const [forgotSubmitted, setForgotSubmitted] = useState(false);
   const router = useRouter();
 
-  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validation = LoginSchema.safeParse({ email, password });
     if (!validation.success) {
@@ -37,7 +37,7 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const handleForgot = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ export default function LoginPage() {
   };
 
   return (
-     <div className="flex flex-col items-center gap-8">
+    <div className="flex flex-col items-center gap-8">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">Admin Login</CardTitle>
@@ -90,7 +90,12 @@ export default function LoginPage() {
               />
             </div>
             <div className="flex justify-end">
-              <Button type="button" variant="link" className="p-0 h-auto text-sm" onClick={() => setForgotOpen(true)}>
+              <Button
+                type="button"
+                variant="link"
+                className="p-0 h-auto text-sm"
+                onClick={() => setForgotOpen(true)}
+              >
                 Forgot password?
               </Button>
             </div>

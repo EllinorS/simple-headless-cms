@@ -34,9 +34,13 @@ function MediaPreview({ src, alt }: { src: string; alt: string }) {
 }
 
 function ContentField({ item }: { item: ContentItem }) {
+  // Whether the field is in edit mode (inputs shown) or read mode
   const [editing, setEditing] = useState(false);
+  // Last saved value, shown in read mode : changes when save successful
   const [currentValue, setCurrentValue] = useState(item.value || '');
+  // Draft value bound to the input while editing : changes when user types
   const [editValue, setEditValue] = useState(item.value || '');
+  // disables button while saving = true
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {

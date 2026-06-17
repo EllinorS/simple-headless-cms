@@ -40,8 +40,6 @@ export const InviteUserSchema = z.object({
 });
 export type InviteUserInput = z.infer<typeof InviteUserSchema>;
 
-
-
 export const ContactSchema = z.object({
   firstName: z.string().min(1, 'First name is required.'),
   lastName: z.string().min(1, 'Last name is required.'),
@@ -52,8 +50,6 @@ export const ContactSchema = z.object({
   consent: z.literal(true, { error: 'Please accept the data processing consent.' }),
 });
 export type ContactFormData = z.infer<typeof ContactSchema>;
-
-
 
 // --- PLAIN TYPES ---
 
@@ -107,9 +103,9 @@ export type CarouselSlide = {
 export type FaqItem = {
   q: string;
   a: string;
-}
+};
 
 export type FaqCategory = {
   title: string;
-  items:FaqItem[]
-}
+  items: FaqItem[];
+};

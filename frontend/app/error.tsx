@@ -5,7 +5,13 @@ import Navbar from '@/components/web/layout/Navbar';
 import Footer from '@/components/web/layout/Footer';
 import { Button } from '@/components/ui/button';
 
-export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -19,7 +25,9 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
         <p className="text-muted-foreground max-w-md mb-10">
           A wipeout on our end. Try again and it should sort itself out.
         </p>
-        <Button onClick={reset} size="lg">Try again</Button>
+        <Button onClick={reset} size="lg">
+          Try again
+        </Button>
       </main>
       <Footer />
     </>

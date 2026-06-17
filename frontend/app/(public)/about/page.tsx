@@ -9,11 +9,19 @@ import { getPageContent, readContent } from '@/lib/get-page-content';
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Meet your surf coach — certified instructor with over 15 years of surfing experience in Raglan, New Zealand. Passionate about sharing the art of surfing.',
+  description:
+    'Meet your surf coach — certified instructor with over 15 years of surfing experience in Raglan, New Zealand. Passionate about sharing the art of surfing.',
   openGraph: {
     title: 'About ALAIA Surf Coach',
     description: 'Meet your surf coach in Raglan, New Zealand.',
-    images: [{ url: '/assets/surf-west-coast-new-zealand.webp', width: 1200, height: 630, alt: 'Surf coach on the west coast of New Zealand' }],
+    images: [
+      {
+        url: '/assets/surf-west-coast-new-zealand.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Surf coach on the west coast of New Zealand',
+      },
+    ],
   },
 };
 
@@ -83,7 +91,10 @@ export default async function AboutPage() {
 
       <CtaBanner
         title={v('about_cta_title', 'Ready to Start Your Surf Journey?')}
-        subtitle={v('about_cta_subtitle', 'Book your first lesson today or plan an unforgettable surf trip across New Zealand')}
+        subtitle={v(
+          'about_cta_subtitle',
+          'Book your first lesson today or plan an unforgettable surf trip across New Zealand',
+        )}
         buttons={[
           { text: 'Book a Lesson', href: '/book-surf-lesson', variant: 'white' },
           { text: 'Plan a Surf Trip', href: '/surf-trip-request', variant: 'glass' },

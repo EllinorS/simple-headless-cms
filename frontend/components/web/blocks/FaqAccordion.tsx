@@ -1,4 +1,9 @@
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/ui/accordion';
 import type { FaqCategory } from '@/lib/types';
 
 export function FaqAccordion({ categories }: { categories: FaqCategory[] }) {
@@ -11,7 +16,9 @@ export function FaqAccordion({ categories }: { categories: FaqCategory[] }) {
             {items.map(({ q, a }) => (
               <AccordionItem key={q} value={q}>
                 <AccordionTrigger className="text-left text-sm font-semibold">{q}</AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground leading-relaxed">{a}</AccordionContent>
+                <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+                  {a}
+                </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

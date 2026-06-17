@@ -3,15 +3,13 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { getSessions } from '@/lib/get-sessions';
 
 export default async function DashboardPage() {
-  const sessions = await getSessions() ?? [];
+  const sessions = (await getSessions()) ?? [];
 
   return (
     <div className="space-y-10">
       <div>
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground mt-1">
-          Overview of your upcoming sessions.
-        </p>
+        <p className="text-muted-foreground mt-1">Overview of your upcoming sessions.</p>
       </div>
 
       <Card className="border bg-background ring-0 rounded-lg max-w-lg">

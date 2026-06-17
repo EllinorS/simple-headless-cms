@@ -7,7 +7,8 @@ import { TripsSection } from './_sections/TripsSection';
 
 export const metadata: Metadata = {
   title: 'Surf in New Zealand | ALAIA Surf Coach',
-  description: 'Surf lessons, packages and custom surf trips in New Zealand with ALAIA Surf Coach. Based in Raglan.',
+  description:
+    'Surf lessons, packages and custom surf trips in New Zealand with ALAIA Surf Coach. Based in Raglan.',
 };
 
 export default async function SurfInNewZealandPage() {
@@ -23,8 +24,20 @@ export default async function SurfInNewZealandPage() {
 
   const pricingCards = [
     { sessions: 1, price: priceSingle, per: priceSingle, label: 'Single session', accent: false },
-    { sessions: 3, price: pricePack3, per: Math.round(pricePack3 / 3), label: 'Package', accent: true },
-    { sessions: 5, price: pricePack5, per: Math.round(pricePack5 / 5), label: 'Best value', accent: false },
+    {
+      sessions: 3,
+      price: pricePack3,
+      per: Math.round(pricePack3 / 3),
+      label: 'Package',
+      accent: true,
+    },
+    {
+      sessions: 5,
+      price: pricePack5,
+      per: Math.round(pricePack5 / 5),
+      label: 'Best value',
+      accent: false,
+    },
   ];
 
   return (

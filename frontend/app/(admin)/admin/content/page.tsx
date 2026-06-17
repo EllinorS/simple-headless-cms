@@ -40,12 +40,11 @@ export default function ContentPage() {
 
       {/* One tab per page*/}
       <Tabs value={selectedPage} onValueChange={setSelectedPage} className="flex-col space-y-6">
-
         <TabsList variant="line" className="flex-wrap h-auto gap-2">
           {/* Create one tab button per page in the PAGES array */}
           {Object.keys(PAGE_BLOCKS).map((page) => (
             <TabsTrigger
-              key={page} 
+              key={page}
               value={page}
               className="capitalize rounded-md border border-border px-4 py-1.5 text-sm data-[state=active]:border-primary data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
             >
@@ -54,7 +53,6 @@ export default function ContentPage() {
           ))}
         </TabsList>
 
-
         <TabsContent value={selectedPage}>
           {/* PAGE_BLOCKS[selectedPage] returns the list of sections for the active page */}
           {PAGE_BLOCKS[selectedPage]?.map((block) => {
@@ -62,13 +60,7 @@ export default function ContentPage() {
               .map((k) => content.find((i) => i.keyName === k))
               .filter(Boolean) as ContentItem[];
 
-            return (
-              <ContentBlock
-                key={block.title}
-                blockTitle={block.title}
-                items={items}
-              />
-            );
+            return <ContentBlock key={block.title} blockTitle={block.title} items={items} />;
           })}
         </TabsContent>
       </Tabs>

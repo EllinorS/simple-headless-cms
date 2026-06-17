@@ -35,14 +35,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     apiClient.get('/auth/me').then(setUser).catch(() => {});
   }, []);
 
-  async function handleLogout() {
+  const handleLogout = async () => {
     try {
       await apiClient.post('/auth/logout');
       router.push('/login');
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Something went wrong');
     }
-  }
+  };
 
   return (
     <div className="flex min-h-screen bg-muted/30">

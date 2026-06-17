@@ -27,7 +27,8 @@ export function SpotsSection({ spots }: Props) {
         <p className="eyebrow text-primary mb-3">Aotearoa New Zealand</p>
         <h2 className="text-3xl md:text-4xl font-bold mb-3">Where could you surf?</h2>
         <p className="text-muted-foreground mb-12">
-          3,000 km of coastline. A wave for every level. Here are some of the regions we explore on custom surf trips.
+          3,000 km of coastline. A wave for every level. Here are some of the regions we explore on
+          custom surf trips.
         </p>
         {/* mobile 1 col, >=640 2 cols, >=768 4 cols */}
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -55,9 +56,7 @@ export function SpotsSection({ spots }: Props) {
                       {spot.type}
                     </Badge>
                   )}
-                  {spot.level && (
-                    <Badge variant="outline">{spot.level}</Badge>
-                  )}
+                  {spot.level && <Badge variant="outline">{spot.level}</Badge>}
                 </div>
                 <CardDescription>{spot.desc}</CardDescription>
                 <Button asChild size="sm" className="mt-auto w-full">

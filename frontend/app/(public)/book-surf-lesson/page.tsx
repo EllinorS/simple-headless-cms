@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Hero from '@/components/web/blocks/Hero';
 import { ContactForm } from '@/components/web/blocks/ContactForm';
 import { BusAccent } from '@/components/web/blocks/BusAccent';
-import { WeekCalendar} from './_components/WeekCalendar';
+import { WeekCalendar } from './_components/WeekCalendar';
 import { getPageContent, readContent } from '@/lib/get-page-content';
 import { getSessions } from '@/lib/get-sessions';
 import { PLACEHOLDER_IMG } from '@/lib/utils';
@@ -43,7 +43,9 @@ export default async function BookSurfLessonPage() {
               emptyMessage="No sessions scheduled right now, get in touch to arrange a lesson."
             />
           )}
-          <p className="text-xs text-muted-foreground mt-4">Kids: 12 and under · Adults: 13 and over</p>
+          <p className="text-xs text-muted-foreground mt-4">
+            Kids: 12 and under · Adults: 13 and over
+          </p>
         </div>
       </section>
 

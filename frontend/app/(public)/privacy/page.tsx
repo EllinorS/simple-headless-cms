@@ -3,7 +3,8 @@ import { getPageContent, readContent } from '@/lib/get-page-content';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'Privacy policy for ALAIA Surf Coach — how we collect, use and protect your personal information.',
+  description:
+    'Privacy policy for ALAIA Surf Coach — how we collect, use and protect your personal information.',
 };
 
 export default async function PrivacyPage() {

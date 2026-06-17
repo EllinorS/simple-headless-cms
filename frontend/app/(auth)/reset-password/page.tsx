@@ -19,7 +19,7 @@ function ResetPasswordForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!token) {
       toast.error('Invalid or missing reset token.');
@@ -42,7 +42,7 @@ function ResetPasswordForm() {
     } finally {
       setLoading(false);
     }
-  }
+  };
   
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

@@ -10,7 +10,7 @@ type NzAccentProps = {
   side?: 'left' | 'right';
   width?: number;
   className?: string;
-}
+};
 
 // SVG viewBox: 1536 × 2000
 export function NzAccent({

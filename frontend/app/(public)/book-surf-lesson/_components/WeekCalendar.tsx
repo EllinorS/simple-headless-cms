@@ -44,7 +44,7 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
   // State: base date, displayed week (Monday), and selected day on mobile
   const today = startOfToday();
   const [weekStart, setWeekStart] = useState(() => startOfISOWeek(today));
-  const [selectedDay, setSelectedDay] = useState(toDateStr(today)); 
+  const [selectedDay, setSelectedDay] = useState(toDateStr(today));
 
   // Navigation: shift weekStart by +-7 days to move between weeks
   const goBack = () => setWeekStart((p) => addWeeks(p, -1));
@@ -172,22 +172,46 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
   );
 }
 
-function SessionCard({ session, compact = false }: { session: CalendarSession; compact?: boolean }) {
+function SessionCard({
+  session,
+  compact = false,
+}: {
+  session: CalendarSession;
+  compact?: boolean;
+}) {
   const inner = (
     <>
-      <p className={compact ? 'text-xs font-semibold text-primary mb-0.5' : 'font-bold text-base mb-1'}>
+      <p
+        className={
+          compact ? 'text-xs font-semibold text-primary mb-0.5' : 'font-bold text-base mb-1'
+        }
+      >
         {formatTime(session.time)}
       </p>
       {session.duration && (
-        <p className={compact ? 'text-[10px] text-muted-foreground mb-0.5' : 'text-xs text-muted-foreground mb-1'}>
+        <p
+          className={
+            compact
+              ? 'text-[10px] text-muted-foreground mb-0.5'
+              : 'text-xs text-muted-foreground mb-1'
+          }
+        >
           {session.duration}
         </p>
       )}
-      <span className={`w-fit font-semibold rounded-full ${compact ? 'text-[10px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} ${typeColor(session.type)}`}>
+      <span
+        className={`w-fit font-semibold rounded-full ${compact ? 'text-[10px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} ${typeColor(session.type)}`}
+      >
         {session.type}
       </span>
       {session.price > 0 && (
-        <p className={compact ? 'text-[10px] text-muted-foreground mt-0.5' : 'text-xs text-muted-foreground mb-4'}>
+        <p
+          className={
+            compact
+              ? 'text-[10px] text-muted-foreground mt-0.5'
+              : 'text-xs text-muted-foreground mb-4'
+          }
+        >
           ${session.price} / person
         </p>
       )}

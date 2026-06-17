@@ -5,8 +5,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 async function request(endpoint: string, method: string, body?: unknown) {
   const response = await fetch(API_URL + endpoint, {
     method: method,
-    headers: { 'Content-Type': 'application/json' }, 
-    credentials: 'include', 
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: body ? JSON.stringify(body) : undefined,
   });
 

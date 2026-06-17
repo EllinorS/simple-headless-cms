@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { getPageContent, readContent } from '@/lib/get-page-content';
 
-export default async function Footer() { 
+export default async function Footer() {
   const c = await getPageContent('global');
   const { img, v } = readContent(c);
 
@@ -164,4 +164,4 @@ export default async function Footer() {
       </div>
     </footer>
   );
-};
+}

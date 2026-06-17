@@ -2,7 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import type { LucideIcon } from 'lucide-react';
 
 type ReviewCardProps = {
-  icon: LucideIcon;  // any Lucide icon component passed as a prop
+  icon: LucideIcon; // any Lucide icon component passed as a prop
   name: string;
   quote: string;
 };

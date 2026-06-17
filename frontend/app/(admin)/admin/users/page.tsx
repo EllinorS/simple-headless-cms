@@ -35,7 +35,7 @@ export default function UsersPage() {
       .catch(() => toast.error('Failed to load users.'));
   }, []);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const validation = InviteUserSchema.safeParse({ email, firstName, lastName, role });
@@ -46,7 +46,12 @@ export default function UsersPage() {
 
     setLoading(true);
     try {
-      const created = await apiClient.post('/auth/users/invite', { email, firstName, lastName, role });
+      const created = await apiClient.post('/auth/users/invite', {
+        email,
+        firstName,
+        lastName,
+        role,
+      });
       toast.success(`Invitation sent to ${email}.`);
       setEmail('');
       setFirstName('');
@@ -58,9 +63,9 @@ export default function UsersPage() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  async function handleDelete(id: number) {
+  const handleDelete = async (id: number) => {
     if (!confirm('delete this user?')) return;
     setDeleting(true);
     try {
@@ -72,7 +77,7 @@ export default function UsersPage() {
     } finally {
       setDeleting(false);
     }
-  }
+  };
 
   return (
     <div>

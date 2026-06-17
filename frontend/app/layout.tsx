@@ -1,20 +1,20 @@
 import type { Metadata } from 'next';
 import '@/app/globals.css';
-import { Poppins, Rubik } from "next/font/google"
+import { Poppins, Rubik } from 'next/font/google';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 import { Toaster } from 'sonner';
 
 const poppins = Poppins({
-  subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["300", "400", "500", "600"],
-})
+  subsets: ['latin'],
+  variable: '--font-body',
+  weight: ['300', '400', '500', '600'],
+});
 
 const rubik = Rubik({
-  subsets: ["latin"],
-  variable: "--font-heading",
-  weight: ["900"],
-})
+  subsets: ['latin'],
+  variable: '--font-heading',
+  weight: ['900'],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3001'),
@@ -22,8 +22,16 @@ export const metadata: Metadata = {
     default: 'ALAIA Surf Coach | Raglan, New Zealand',
     template: '%s | ALAIA Surf Coach',
   },
-  description: 'Professional surf lessons, private coaching and custom surf road trips in Raglan, New Zealand. Group sessions, packages and personalised coaching for all levels.',
-  keywords: ['surf lessons Raglan', 'surf coach New Zealand', 'group surf lessons', 'private surf lessons', 'surf road trip NZ', 'learn to surf Raglan'],
+  description:
+    'Professional surf lessons, private coaching and custom surf road trips in Raglan, New Zealand. Group sessions, packages and personalised coaching for all levels.',
+  keywords: [
+    'surf lessons Raglan',
+    'surf coach New Zealand',
+    'group surf lessons',
+    'private surf lessons',
+    'surf road trip NZ',
+    'learn to surf Raglan',
+  ],
   authors: [{ name: 'ALAIA Surf Coach' }],
   openGraph: {
     type: 'website',
@@ -31,7 +39,14 @@ export const metadata: Metadata = {
     siteName: 'ALAIA Surf Coach',
     title: 'ALAIA Surf Coach | Raglan, New Zealand',
     description: 'Professional surf lessons and custom surf road trips in Raglan, New Zealand.',
-    images: [{ url: '/assets/surfboards-under-flax.webp', width: 1200, height: 630, alt: 'Surferboards under a flax plant' }],
+    images: [
+      {
+        url: '/assets/surfboards-under-flax.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Surferboards under a flax plant',
+      },
+    ],
   },
   icons: {
     icon: '/assets/favicon.svg',
@@ -57,7 +72,8 @@ const jsonLd = {
       '@type': 'LocalBusiness',
       '@id': 'https://www.alaiasurf.co.nz/#business',
       name: 'ALAIA Surf Coach',
-      description: 'Professional surf lessons, private coaching and custom surf road trips in Raglan, New Zealand.',
+      description:
+        'Professional surf lessons, private coaching and custom surf road trips in Raglan, New Zealand.',
       url: 'https://www.alaiasurf.co.nz',
       image: 'https://www.alaiasurf.co.nz/assets/surfer-ocean-new-zealand.webp',
       address: {
@@ -69,7 +85,7 @@ const jsonLd = {
       geo: {
         '@type': 'GeoCoordinates',
         latitude: -37.8009,
-        longitude: 174.8860,
+        longitude: 174.886,
       },
       priceRange: '$60–$250',
       currenciesAccepted: 'NZD',
@@ -92,8 +108,13 @@ export default function RootLayout({
         />
       </head>
       <body className={`${poppins.variable} ${rubik.variable} min-h-screen flex flex-col`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-{children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
           <Toaster richColors />
         </ThemeProvider>
       </body>

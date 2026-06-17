@@ -26,7 +26,13 @@ export const GLOBAL_BLOCKS = [
 export const HOME_BLOCKS = [
   {
     title: 'Hero',
-    keys: ['home_hero_title', 'home_hero_cta_lesson', 'home_hero_cta_trip', 'home_hero_image', 'home_hero_image_alt'],
+    keys: [
+      'home_hero_title',
+      'home_hero_cta_lesson',
+      'home_hero_cta_trip',
+      'home_hero_image',
+      'home_hero_image_alt',
+    ],
   },
   {
     title: 'About Coach',
@@ -148,7 +154,10 @@ export const ABOUT_BLOCKS = [
 ];
 
 export const SURF_IN_NZ_BLOCKS = [
-  { title: 'Hero', keys: ['snz_hero_title', 'snz_hero_subtitle', 'snz_hero_image', 'snz_hero_image_alt'] },
+  {
+    title: 'Hero',
+    keys: ['snz_hero_title', 'snz_hero_subtitle', 'snz_hero_image', 'snz_hero_image_alt'],
+  },
   {
     title: 'Surf Lessons',
     keys: [
@@ -199,7 +208,6 @@ export const BOOK_SURF_LESSON_BLOCKS = [
     keys: ['book_contact_title', 'book_contact_desc'],
   },
 ];
-
 
 export const FAQ_BLOCKS = [
   {
@@ -262,27 +270,59 @@ export const FAQ_BLOCKS = [
   },
 ];
 
-
 export const SURF_TRIP_BLOCKS = [
   {
     title: 'Hero',
-    keys: ['surf_trip_hero_title', 'surf_trip_hero_subtitle', 'surf_trip_hero_image', 'surf_trip_hero_image_alt'],
+    keys: [
+      'surf_trip_hero_title',
+      'surf_trip_hero_subtitle',
+      'surf_trip_hero_image',
+      'surf_trip_hero_image_alt',
+    ],
   },
   {
     title: 'Region 1 — Raglan',
-    keys: ['spots_card_1_name', 'spots_card_1_region', 'spots_card_1_type', 'spots_card_1_level', 'spots_card_1_desc', 'spots_card_1_image'],
+    keys: [
+      'spots_card_1_name',
+      'spots_card_1_region',
+      'spots_card_1_type',
+      'spots_card_1_level',
+      'spots_card_1_desc',
+      'spots_card_1_image',
+    ],
   },
   {
     title: 'Region 2 — Northland',
-    keys: ['spots_card_2_name', 'spots_card_2_region', 'spots_card_2_type', 'spots_card_2_level', 'spots_card_2_desc', 'spots_card_2_image'],
+    keys: [
+      'spots_card_2_name',
+      'spots_card_2_region',
+      'spots_card_2_type',
+      'spots_card_2_level',
+      'spots_card_2_desc',
+      'spots_card_2_image',
+    ],
   },
   {
     title: 'Region 3 — Gisborne',
-    keys: ['spots_card_3_name', 'spots_card_3_region', 'spots_card_3_type', 'spots_card_3_level', 'spots_card_3_desc', 'spots_card_3_image'],
+    keys: [
+      'spots_card_3_name',
+      'spots_card_3_region',
+      'spots_card_3_type',
+      'spots_card_3_level',
+      'spots_card_3_desc',
+      'spots_card_3_image',
+    ],
   },
   {
     title: 'Region 4 — The Catlins',
-    keys: ['spots_card_4_name', 'spots_card_4_region', 'spots_card_4_type', 'spots_card_4_level', 'spots_card_4_desc', 'spots_card_4_image'],
+    keys: [
+      'spots_card_4_name',
+      'spots_card_4_region',
+      'spots_card_4_type',
+      'spots_card_4_level',
+      'spots_card_4_desc',
+      'spots_card_4_image',
+    ],
   },
 ];
 

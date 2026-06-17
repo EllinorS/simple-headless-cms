@@ -70,7 +70,10 @@ export function ContactForm({ source, messagePlaceholder }: Props) {
           Thanks for reaching out. We&apos;ll get back to you shortly.
         </p>
         <button
-          onClick={() => { setSubmitted(false); setForm(EMPTY_FORM); }}
+          onClick={() => {
+            setSubmitted(false);
+            setForm(EMPTY_FORM);
+          }}
           className="text-sm text-primary underline underline-offset-4 mt-4"
         >
           Send another message
@@ -83,32 +86,62 @@ export function ContactForm({ source, messagePlaceholder }: Props) {
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1">
-          <Label htmlFor="firstName" className="text-xs font-medium text-muted-foreground">First name *</Label>
-          <Input id="firstName" value={form.firstName} onChange={(e) => set('firstName', e.target.value)} />
+          <Label htmlFor="firstName" className="text-xs font-medium text-muted-foreground">
+            First name *
+          </Label>
+          <Input
+            id="firstName"
+            value={form.firstName}
+            onChange={(e) => set('firstName', e.target.value)}
+          />
         </div>
         <div className="space-y-1">
-          <Label htmlFor="lastName" className="text-xs font-medium text-muted-foreground">Last name *</Label>
-          <Input id="lastName" value={form.lastName} onChange={(e) => set('lastName', e.target.value)} />
+          <Label htmlFor="lastName" className="text-xs font-medium text-muted-foreground">
+            Last name *
+          </Label>
+          <Input
+            id="lastName"
+            value={form.lastName}
+            onChange={(e) => set('lastName', e.target.value)}
+          />
         </div>
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="email" className="text-xs font-medium text-muted-foreground">Email *</Label>
-        <Input id="email" type="email" value={form.email} onChange={(e) => set('email', e.target.value)} />
+        <Label htmlFor="email" className="text-xs font-medium text-muted-foreground">
+          Email *
+        </Label>
+        <Input
+          id="email"
+          type="email"
+          value={form.email}
+          onChange={(e) => set('email', e.target.value)}
+        />
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="phone" className="text-xs font-medium text-muted-foreground">Phone</Label>
-        <Input id="phone" type="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)} />
+        <Label htmlFor="phone" className="text-xs font-medium text-muted-foreground">
+          Phone
+        </Label>
+        <Input
+          id="phone"
+          type="tel"
+          value={form.phone}
+          onChange={(e) => set('phone', e.target.value)}
+        />
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="subject" className="text-xs font-medium text-muted-foreground">Subject *</Label>
+        <Label htmlFor="subject" className="text-xs font-medium text-muted-foreground">
+          Subject *
+        </Label>
         <Input id="subject" value={form.subject} onChange={(e) => set('subject', e.target.value)} />
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="message" className="text-xs font-medium text-muted-foreground">Message *</Label>
+        <Label htmlFor="message" className="text-xs font-medium text-muted-foreground">
+          Message *
+        </Label>
         <Textarea
           id="message"
           value={form.message}
@@ -126,7 +159,10 @@ export function ContactForm({ source, messagePlaceholder }: Props) {
           onCheckedChange={(checked) => setConsent(checked === true)}
           className="mt-0.5"
         />
-        <Label htmlFor="consent" className="text-xs text-muted-foreground leading-relaxed cursor-pointer">
+        <Label
+          htmlFor="consent"
+          className="text-xs text-muted-foreground leading-relaxed cursor-pointer"
+        >
           I agree that my personal data (name, email, phone) will be processed by ALAIA Surf Coach
           solely for the purpose of responding to my enquiry, in accordance with our{' '}
           <Link href="/privacy" className="underline underline-offset-2 hover:text-foreground">
@@ -136,7 +172,11 @@ export function ContactForm({ source, messagePlaceholder }: Props) {
         </Label>
       </div>
 
-      {error && <p className="text-xs text-destructive" role="alert">{error}</p>}
+      {error && (
+        <p className="text-xs text-destructive" role="alert">
+          {error}
+        </p>
+      )}
 
       <Button onClick={handleSubmit} disabled={submitting} size="lg" className="w-full">
         {submitting ? 'Sending...' : 'Send message'}
