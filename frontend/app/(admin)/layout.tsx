@@ -16,6 +16,7 @@ import { apiClient } from '@/lib/api-client';
 import type { User } from '@/lib/types';
 import { ThemeToggle } from '@/components/web/common/ThemeToggle';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
@@ -61,11 +62,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       )}
       {/* Sidebar */}
       <aside
-        className={`
-        fixed h-full z-50 bg-background border-r border-border flex flex-col transition-all duration-300
-        ${mobileOpen ? 'translate-x-0' : '-translate-x-full'} w-64
-        md:translate-x-0
-      `}
+        className={cn(
+          'fixed h-full z-50 bg-background border-r border-border flex flex-col transition-all duration-300 w-64 md:translate-x-0',
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        )}
       >
         <div className="flex flex-col p-4 gap-1">
           <h1 className="text-2xl font-bold text-primary">ALAIA Admin</h1>
@@ -83,12 +83,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 href={item.href}
                 title={item.label}
                 onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors
-                  ${
-                    isActive
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-                  }`}
+                className={cn(
+                  'flex items-center gap-3 px-3 py-2 rounded-lg transition-colors',
+                  isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                )}
               >
                 <Icon className="w-5 h-5 shrink-0" />
                 <span className="font-medium">{item.label}</span>

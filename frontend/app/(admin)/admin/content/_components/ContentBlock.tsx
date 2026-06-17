@@ -122,7 +122,7 @@ function ContentField({ item }: { item: ContentItem }) {
               </Button>
             </div>
           </div>
-        ) : (
+        ) : ( // if not in editing mode :
           <div className="flex items-center gap-3">
             {item.type === 'IMAGE_URL' && currentValue ? (
               <MediaPreview src={currentValue} alt={item.label} />

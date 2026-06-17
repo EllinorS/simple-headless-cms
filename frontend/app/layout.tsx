@@ -3,6 +3,7 @@ import '@/app/globals.css';
 import { Poppins, Rubik } from 'next/font/google';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 import { Toaster } from 'sonner';
+import { cn } from '@/lib/utils';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -107,7 +108,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${poppins.variable} ${rubik.variable} min-h-screen flex flex-col`}>
+      <body className={cn(poppins.variable, rubik.variable, 'min-h-screen flex flex-col')}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

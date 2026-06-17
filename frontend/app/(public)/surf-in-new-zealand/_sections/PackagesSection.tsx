@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
 import { BusAccent } from '@/components/web/blocks/BusAccent';
 import { range } from '@/lib/cms-utils';
+import { cn } from '@/lib/utils';
 
 export type PricingCard = {
   sessions: number;
@@ -56,21 +57,27 @@ export function PackagesSection({ v, pricingCards }: Props) {
             {pricingCards.map((card) => (
               <Card
                 key={card.sessions}
-                className={`rounded-2xl shadow-none text-center ${card.accent ? 'bg-primary text-primary-foreground border-0' : 'bg-background'}`}
+                className={cn(
+                  'rounded-2xl shadow-none text-center',
+                  card.accent ? 'bg-primary text-primary-foreground border-0' : 'bg-background'
+                )}
               >
                 <CardContent className="p-3 md:p-5">
                   <p
-                    className={`text-xs font-semibold mb-2 ${card.accent ? 'text-white/70' : 'text-muted-foreground'}`}
+                    className={cn(
+                      'text-xs font-semibold mb-2',
+                      card.accent ? 'text-white/70' : 'text-muted-foreground'
+                    )}
                   >
                     {card.label}
                   </p>
                   <p className="text-2xl md:text-3xl font-black">${card.price}</p>
                   <p
-                    className={`text-xs mt-1 ${card.accent ? 'text-white/70' : 'text-muted-foreground'}`}
+                    className={cn('text-xs mt-1', card.accent ? 'text-white/70' : 'text-muted-foreground')}
                   >
                     ${card.per}/session
                   </p>
-                  <p className={`text-xs mt-2 font-medium ${card.accent ? 'text-white/80' : ''}`}>
+                  <p className={cn('text-xs mt-2 font-medium', card.accent && 'text-white/80')}>
                     {card.sessions} session{card.sessions > 1 ? 's' : ''}
                   </p>
                 </CardContent>

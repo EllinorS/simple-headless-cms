@@ -13,6 +13,7 @@ import {
   startOfToday,
 } from 'date-fns';
 import { formatTime } from '@/lib/date-formatter';
+import { cn } from '@/lib/utils';
 
 // One session passed in from page.tsx
 export type CalendarSession = {
@@ -107,13 +108,19 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
                 </span>
                 {/* Filled circle = selected, ring = today */}
                 <span
-                  className={`w-7 h-7 flex items-center justify-center rounded-full text-sm font-bold transition-colors ${isSel ? 'bg-primary text-primary-foreground' : isToday(day) ? 'ring-2 ring-primary' : ''}`}
+                  className={cn(
+                    'w-7 h-7 flex items-center justify-center rounded-full text-sm font-bold transition-colors',
+                    isSel ? 'bg-primary text-primary-foreground'
+                      : isToday(day)
+                        ? 'ring-2 ring-primary'
+                        : ''
+                  )}
                 >
                   {format(day, 'd')}
                 </span>
                 {/* Dot indicator, visible only when the day has sessions */}
                 <span
-                  className={`w-1.5 h-1.5 rounded-full ${hasSessions ? 'bg-primary' : 'bg-transparent'}`}
+                  className={cn('w-1.5 h-1.5 rounded-full', hasSessions ? 'bg-primary' : 'bg-transparent')}
                 />
               </Button>
             );
@@ -142,7 +149,10 @@ export function WeekCalendar({ sessions, emptyMessage }: Props) {
               <p className="text-xs text-muted-foreground mb-2">{format(day, 'EEE')}</p>
               {/* Today's date gets a filled circle */}
               <span
-                className={`inline-flex w-8 h-8 items-center justify-center rounded-full text-sm font-bold ${isToday(day) ? 'bg-primary text-primary-foreground' : ''}`}
+                className={cn(
+                  'inline-flex w-8 h-8 items-center justify-center rounded-full text-sm font-bold',
+                  isToday(day) && 'bg-primary text-primary-foreground'
+                )}
               >
                 {format(day, 'd')}
               </span>
@@ -200,7 +210,11 @@ function SessionCard({
         </p>
       )}
       <span
-        className={`w-fit font-semibold rounded-full ${compact ? 'text-[10px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} ${typeColor(session.type)}`}
+        className={cn(
+          'w-fit font-semibold rounded-full',
+          compact ? 'text-[10px] px-2 py-0.5' : 'text-xs px-2.5 py-1',
+          typeColor(session.type)
+        )}
       >
         {session.type}
       </span>

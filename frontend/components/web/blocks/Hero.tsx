@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { isVideo, optimizeCloudinaryVideo } from '@/lib/utils';
+import { cn, isVideo, optimizeCloudinaryVideo } from '@/lib/utils';
 
 type HeroProps = {
   title: string;
@@ -26,7 +26,7 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section
-      className={`relative w-full overflow-hidden ${size === 'medium' ? 'h-80 md:h-96' : 'h-screen'}`}
+      className={cn('relative w-full overflow-hidden', size === 'medium' ? 'h-80 md:h-96' : 'h-screen')}
     >
       {/* Background — image or video */}
       {backgroundImage && isVideo(backgroundImage) ? (
@@ -54,7 +54,10 @@ export default function Hero({
       {overlay && <div className="absolute inset-0 bg-black/40" />}
 
       <div
-        className={`relative z-10 flex h-full items-end justify-center px-6 ${size === 'medium' ? 'pb-8' : 'pb-30'}`}
+        className={cn(
+          'relative z-10 flex h-full items-end justify-center px-6',
+          size === 'medium' ? 'pb-8' : 'pb-30'
+        )}
       >
         <div className="max-w-4xl text-center text-white">
           <h1 className="mb-6 text-4xl sm:text-5xl font-black leading-tight md:text-7xl">

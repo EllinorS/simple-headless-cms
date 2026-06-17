@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import type { CarouselSlide } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 export default function CarouselBlock({ slides }: { slides: CarouselSlide[] }) {
   const [current, setCurrent] = useState(0);
@@ -73,9 +74,10 @@ export default function CarouselBlock({ slides }: { slides: CarouselSlide[] }) {
               {slides.map((_, i) => (
                 <div
                   key={i}
-                  className={`flex-1 rounded-full transition-all duration-300 ${
+                  className={cn(
+                    'flex-1 rounded-full transition-all duration-300',
                     i === current ? 'h-2 bg-white' : 'h-1 bg-white/40'
-                  }`}
+                  )}
                 />
               ))}
             </div>

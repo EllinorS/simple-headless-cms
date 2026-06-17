@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 type NzVariant = 'full' | 'line';
 type NzFullColor = 'blue' | 'green' | 'white';
@@ -24,9 +25,11 @@ export function NzAccent({
   return (
     <div
       aria-hidden
-      className={`absolute pointer-events-none select-none
-        ${side === 'right' ? 'right-0' : 'left-0'}
-        ${className}`}
+      className={cn(
+        'absolute pointer-events-none select-none',
+        side === 'right' ? 'right-0' : 'left-0',
+        className
+      )}
     >
       <Image
         src={`/assets/alaia-surf-coach-nz-${variant}-${color}.svg`}

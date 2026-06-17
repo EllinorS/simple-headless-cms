@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 type SimpleImageProps = {
   src: string;
@@ -24,7 +25,7 @@ export default function SimpleImage({
   return (
     // Parent div controls the dimensions via aspect ratio, Image fills it with object-cover
     <div
-      className={`relative ${aspectRatios[aspectRatio]} rounded-2xl overflow-hidden ${className}`}
+      className={cn('relative', aspectRatios[aspectRatio], 'rounded-2xl overflow-hidden', className)}
     >
       <Image src={src} alt={alt} fill className="object-cover" />
     </div>

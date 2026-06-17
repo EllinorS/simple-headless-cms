@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 type ImageTextBlockProps = {
   title: string;
@@ -28,12 +29,13 @@ export default function ImageTextBlock({
   sectionClassName,
 }: ImageTextBlockProps) {
   return (
-    <section className={`py-16 md:py-24 ${sectionClassName ? ` ${sectionClassName}` : ''}`}>
+    <section className={cn('py-16 md:py-24', sectionClassName)}>
       <div className="container mx-auto px-6">
         <div
-          className={`grid md:grid-cols-2 gap-12 items-center ${
-            imagePosition === 'left' ? 'md:grid-flow-dense' : ''
-          }`}
+          className={cn(
+            'grid md:grid-cols-2 gap-12 items-center',
+            imagePosition === 'left' && 'md:grid-flow-dense'
+          )}
         >
           {/* Text */}
           <div className={imagePosition === 'left' ? 'md:col-start-2' : ''}>

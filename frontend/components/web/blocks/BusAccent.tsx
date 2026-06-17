@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 type BusColor = 'black' | 'blue' | 'green' | 'white' | 'yellow';
 
@@ -19,9 +20,11 @@ export function BusAccent({
   return (
     <div
       aria-hidden
-      className={`absolute bottom-0 pointer-events-none select-none
-        ${side === 'right' ? 'right-0 translate-x-1/3' : 'left-0 -translate-x-1/3'}
-        ${className}`}
+      className={cn(
+        'absolute bottom-0 pointer-events-none select-none',
+        side === 'right' ? 'right-0 translate-x-1/3' : 'left-0 -translate-x-1/3',
+        className
+      )}
     >
       <Image
         src={`/assets/alaia-surf-coach-bus-${color}.svg`}

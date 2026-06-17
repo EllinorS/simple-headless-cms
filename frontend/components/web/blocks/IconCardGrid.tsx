@@ -1,4 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export type IconCardItem = {
   icon: LucideIcon;
@@ -16,7 +17,7 @@ type Props = {
 
 export function IconCardGrid({ title, subtitle, eyebrow, items, className = '' }: Props) {
   return (
-    <section className={`py-16 md:py-24 bg-secondary text-secondary-foreground ${className}`}>
+    <section className={cn('py-16 md:py-24 bg-secondary text-secondary-foreground', className)}>
       <div className="container mx-auto px-6">
         {(eyebrow || title || subtitle) && (
           <header className="text-center mb-12">
