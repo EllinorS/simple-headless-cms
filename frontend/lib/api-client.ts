@@ -1,13 +1,19 @@
 // Backend URL: from environment variable in production, localhost in development
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3005/api';
 
 // Central function that makes all HTTP requests to the backend
-async function request(endpoint: string, method: string, body?: unknown) {
+async function request(
+  endpoint: string,
+  method: string,
+  body?: unknown,
+  fetchOptions?: RequestInit,
+) {
   const response = await fetch(API_URL + endpoint, {
     method: method,
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
     body: body ? JSON.stringify(body) : undefined,
+    ...fetchOptions,
   });
 
   // If the server returns an error (400, 401, 500...), throw an exception
@@ -24,9 +30,12 @@ async function request(endpoint: string, method: string, body?: unknown) {
 
 // One method per HTTP verb, each calls request() with the correct method
 export const apiClient = {
-  get: (endpoint: string) => request(endpoint, 'GET'),
+  get: (endpoint: string, fetchOptions?: RequestInit) =>
+    request(endpoint, 'GET', undefined, fetchOptions),
   post: (endpoint: string, data?: unknown) => request(endpoint, 'POST', data),
   put: (endpoint: string, data: unknown) => request(endpoint, 'PUT', data),
   patch: (endpoint: string, data: unknown) => request(endpoint, 'PATCH', data),
   delete: (endpoint: string) => request(endpoint, 'DELETE'),
 };
+
+
