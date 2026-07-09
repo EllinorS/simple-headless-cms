@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Proxies /api/* to the Render backend so the browser only ever talks to this
+  // domain: the auth cookie (Set-Cookie from the proxied response) then gets
+  // scoped to this same origin instead of the backend's own domain, which is
+  // required for the admin login cookie to be visible to this app's middleware.
+  async rewrites() {
+    if (!process.env.BACKEND_URL) return [];
+    return [{ source: '/api/:path*', destination: `${process.env.BACKEND_URL}/api/:path*` }];
+  },
   async headers() {
     return [
       {

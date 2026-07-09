@@ -58,7 +58,23 @@ const contactLimiter = rateLimit({
   message: { message: 'Too many messages sent, please try again later.' },
 });
 
-if (process.env.NODE_ENV !== 'test') app.use(limiter);
+// Public content reads (/api/content GET) get their own, more generous limiter:
+// every visitor loads several of these per page view, so sharing the brute-force
+// quota with them starves out legitimate traffic (and can lock the admin out of login).
+const contentLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many requests, please try again later.' },
+});
+
+if (process.env.NODE_ENV !== 'test') {
+  app.use((req, res, next) => {
+    if (req.method === 'GET' && req.path.startsWith('/api/content')) return contentLimiter(req, res, next);
+    return limiter(req, res, next);
+  });
+}
 app.use(cookieParser());
 
 // Allows Express to read JSON sent in request bodies
