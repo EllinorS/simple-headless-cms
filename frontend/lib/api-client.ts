@@ -1,5 +1,6 @@
-// Backend URL: from environment variable in production, localhost in development
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3005/api';
+const CLIENT_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3005/api';
+const SERVER_API_URL = process.env.BACKEND_URL ? `${process.env.BACKEND_URL}/api` : CLIENT_API_URL;
+const API_URL = typeof window === 'undefined' ? SERVER_API_URL : CLIENT_API_URL;
 
 // Central function that makes all HTTP requests to the backend
 async function request(
