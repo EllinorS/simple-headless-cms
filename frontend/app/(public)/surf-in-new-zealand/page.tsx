@@ -23,19 +23,25 @@ export default async function SurfInNewZealandPage() {
   const pricePack5 = Number(vg('global_price_pack_5')) || 250;
 
   const pricingCards = [
-    { sessions: 1, price: priceSingle, per: priceSingle, label: 'Single session', accent: false },
+    {
+      sessions: 1,
+      price: priceSingle,
+      per: priceSingle,
+      label: vg('global_pkg_1_badge', 'Try it out'),
+      accent: false,
+    },
     {
       sessions: 3,
       price: pricePack3,
       per: Math.round(pricePack3 / 3),
-      label: 'Package',
+      label: vg('global_pkg_3_badge', 'Most popular'),
       accent: true,
     },
     {
       sessions: 5,
       price: pricePack5,
       per: Math.round(pricePack5 / 5),
-      label: 'Best value',
+      label: vg('global_pkg_5_badge', 'Best value'),
       accent: false,
     },
   ];

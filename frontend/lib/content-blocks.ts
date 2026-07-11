@@ -21,6 +21,10 @@ export const GLOBAL_BLOCKS = [
     title: 'Package Prices (NZD total)',
     keys: ['global_price_pack_3', 'global_price_pack_5'],
   },
+  {
+    title: 'Package Badges',
+    keys: ['global_pkg_1_badge', 'global_pkg_3_badge', 'global_pkg_5_badge'],
+  },
 ];
 
 export const HOME_BLOCKS = [
@@ -327,6 +331,273 @@ export const SURF_TRIP_BLOCKS = [
   },
 ];
 
+export const SURF_LESSONS_BLOCKS = [
+  {
+    title: 'Hero',
+    keys: [
+      'surf_lessons_hero_title',
+      'surf_lessons_hero_subtitle',
+      'surf_lessons_hero_image',
+      'surf_lessons_hero_image_alt',
+    ],
+  },
+  {
+    title: 'Group Lessons',
+    keys: [
+      'surf_lessons_group_eyebrow',
+      'surf_lessons_group_title',
+      'surf_lessons_group_desc',
+      'surf_lessons_group_b1',
+      'surf_lessons_group_b2',
+      'surf_lessons_group_b3',
+    ],
+  },
+  {
+    title: 'Private Lessons',
+    keys: [
+      'surf_lessons_private_eyebrow',
+      'surf_lessons_private_title',
+      'surf_lessons_private_desc',
+      'surf_lessons_private_b1',
+      'surf_lessons_private_b2',
+      'surf_lessons_private_b3',
+    ],
+  },
+  {
+    title: 'Surf Coaching',
+    keys: [
+      'surf_lessons_coaching_eyebrow',
+      'surf_lessons_coaching_title',
+      'surf_lessons_coaching_desc',
+      'surf_lessons_coaching_b1',
+      'surf_lessons_coaching_b2',
+      'surf_lessons_coaching_b3',
+    ],
+  },
+  {
+    title: 'Surf Spots Section',
+    keys: [
+      'surf_lessons_spots_title',
+      'surf_lessons_spots_desc',
+      'surf_lessons_spot_1_name',
+      'surf_lessons_spot_1_level',
+      'surf_lessons_spot_1_type',
+      'surf_lessons_spot_1_desc',
+      'surf_lessons_spot_2_name',
+      'surf_lessons_spot_2_level',
+      'surf_lessons_spot_2_type',
+      'surf_lessons_spot_2_desc',
+    ],
+  },
+  {
+    title: 'Final CTA',
+    keys: ['surf_lessons_contact_title', 'surf_lessons_contact_desc'],
+  },
+];
+
+export const NZ_SURF_TRIPS_BLOCKS = [
+  {
+    title: 'Hero',
+    keys: ['surf_trips_hero_title', 'surf_trips_hero_subtitle', 'surf_trips_hero_image', 'surf_trips_hero_image_alt'],
+  },
+  {
+    title: 'Intro',
+    keys: ['surf_trips_intro_eyebrow', 'surf_trips_intro_title', 'surf_trips_intro_desc'],
+  },
+  {
+    title: 'How It Works',
+    keys: [
+      'surf_trips_how_title',
+      'surf_trips_how_desc',
+      'surf_trips_step_1_title',
+      'surf_trips_step_1_desc',
+      'surf_trips_step_2_title',
+      'surf_trips_step_2_desc',
+      'surf_trips_step_3_title',
+      'surf_trips_step_3_desc',
+    ],
+  },
+  {
+    title: "What's Included",
+    keys: [
+      'surf_trips_included_eyebrow',
+      'surf_trips_included_title',
+      'surf_trips_included_i1',
+      'surf_trips_included_i2',
+      'surf_trips_included_i3',
+      'surf_trips_included_i4',
+    ],
+  },
+  {
+    title: 'Trip Features',
+    keys: [
+      'surf_trips_feat_1_title',
+      'surf_trips_feat_1_sub',
+      'surf_trips_feat_2_title',
+      'surf_trips_feat_2_sub',
+      'surf_trips_feat_3_title',
+      'surf_trips_feat_3_sub',
+      'surf_trips_feat_4_title',
+      'surf_trips_feat_4_sub',
+    ],
+  },
+  {
+    title: 'Destinations',
+    keys: [
+      'surf_trips_dest_title',
+      'surf_trips_dest_desc',
+      'surf_trips_dest_1_image',
+      'surf_trips_dest_2_image',
+      'surf_trips_dest_3_image',
+      'surf_trips_dest_4_image',
+    ],
+  },
+  {
+    title: 'CTA',
+    keys: ['surf_trips_cta_title', 'surf_trips_cta_desc'],
+  },
+];
+
+export const SPOTS_BLOCKS = [
+  {
+    title: 'Hero',
+    keys: ['spots_hero_title', 'spots_hero_subtitle', 'spots_hero_image', 'spots_hero_image_alt'],
+  },
+  {
+    title: 'Intro',
+    keys: ['spots_intro_eyebrow', 'spots_intro_title', 'spots_intro_desc'],
+  },
+  {
+    title: 'Region 1',
+    keys: [
+      'spots_region_1_name',
+      'spots_region_1_intro',
+      'spots_region_1_cta_label',
+      'spots_region_1_cta_href',
+      'spots_region_1_spot_1_image',
+      'spots_region_1_spot_2_image',
+      'spots_region_1_spot_3_image',
+      'spots_region_1_spot_4_image',
+    ],
+  },
+  {
+    title: 'Region 2',
+    keys: [
+      'spots_region_2_name',
+      'spots_region_2_intro',
+      'spots_region_2_cta_label',
+      'spots_region_2_cta_href',
+      'spots_region_2_spot_1_image',
+      'spots_region_2_spot_2_image',
+      'spots_region_2_spot_3_image',
+      'spots_region_2_spot_4_image',
+    ],
+  },
+  {
+    title: 'Region 3',
+    keys: [
+      'spots_region_3_name',
+      'spots_region_3_intro',
+      'spots_region_3_cta_label',
+      'spots_region_3_cta_href',
+      'spots_region_3_spot_1_image',
+      'spots_region_3_spot_2_image',
+      'spots_region_3_spot_3_image',
+      'spots_region_3_spot_4_image',
+    ],
+  },
+  {
+    title: 'Region 4',
+    keys: [
+      'spots_region_4_name',
+      'spots_region_4_intro',
+      'spots_region_4_cta_label',
+      'spots_region_4_cta_href',
+      'spots_region_4_spot_1_image',
+      'spots_region_4_spot_2_image',
+      'spots_region_4_spot_3_image',
+      'spots_region_4_spot_4_image',
+    ],
+  },
+  {
+    title: 'Region 5',
+    keys: [
+      'spots_region_5_name',
+      'spots_region_5_intro',
+      'spots_region_5_cta_label',
+      'spots_region_5_cta_href',
+      'spots_region_5_spot_1_image',
+      'spots_region_5_spot_2_image',
+      'spots_region_5_spot_3_image',
+      'spots_region_5_spot_4_image',
+    ],
+  },
+  {
+    title: 'CTA',
+    keys: ['spots_cta_title', 'spots_cta_desc'],
+  },
+];
+
+export const SURF_PACKAGES_BLOCKS = [
+  {
+    title: 'Hero',
+    keys: [
+      'surf_packages_hero_title',
+      'surf_packages_hero_subtitle',
+      'surf_packages_hero_image',
+      'surf_packages_hero_image_alt',
+    ],
+  },
+  {
+    title: 'Pricing',
+    keys: [
+      'surf_packages_pricing_eyebrow',
+      'surf_packages_pricing_title',
+      'surf_packages_pricing_desc',
+      'surf_packages_pkg_1_desc',
+      'surf_packages_pkg_3_desc',
+      'surf_packages_pkg_5_desc',
+    ],
+  },
+  {
+    title: 'Why a Package',
+    keys: [
+      'surf_packages_why_title',
+      'surf_packages_why_desc',
+      'surf_packages_why_1_title',
+      'surf_packages_why_1_desc',
+      'surf_packages_why_2_title',
+      'surf_packages_why_2_desc',
+      'surf_packages_why_3_title',
+      'surf_packages_why_3_desc',
+    ],
+  },
+  {
+    title: "What's Included",
+    keys: [
+      'surf_packages_incl_title',
+      'surf_packages_incl_desc',
+      'surf_packages_incl_i1',
+      'surf_packages_incl_i2',
+      'surf_packages_incl_i3',
+      'surf_packages_incl_i4',
+      'surf_packages_incl_i5',
+      'surf_packages_incl_i6',
+    ],
+  },
+  {
+    title: 'FAQ',
+    keys: [
+      'surf_packages_faq_1_q',
+      'surf_packages_faq_1_a',
+      'surf_packages_faq_2_q',
+      'surf_packages_faq_2_a',
+      'surf_packages_faq_3_q',
+      'surf_packages_faq_3_a',
+    ],
+  },
+];
+
 type ContentBlockGroup = { title: string; keys: string[] }[];
 
 export const PAGE_BLOCKS: Record<string, ContentBlockGroup> = {
@@ -337,4 +608,8 @@ export const PAGE_BLOCKS: Record<string, ContentBlockGroup> = {
   'surf-in-new-zealand': SURF_IN_NZ_BLOCKS,
   faq: FAQ_BLOCKS,
   'surf-trip': SURF_TRIP_BLOCKS,
+  'surf-lessons': SURF_LESSONS_BLOCKS,
+  'new-zealand-surf-trips': NZ_SURF_TRIPS_BLOCKS,
+  spots: SPOTS_BLOCKS,
+  'surf-packages': SURF_PACKAGES_BLOCKS,
 };

@@ -142,6 +142,27 @@
   @apply w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center;
 }
 
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--secondary);
+  pointer-events: none;
+  animation: loader-swallow 0.9s ease-in 1s both;
+}
+
+@keyframes loader-swallow {
+  from {
+    clip-path: circle(150% at 50% 50%);
+  } /* 150% ensures full coverage on wide screens */
+  to {
+    clip-path: circle(0% at 50% 50%);
+  }
+}
+
 /* accessibility: disable all animations/transitions */
 @media (prefers-reduced-motion: reduce) {
   *,

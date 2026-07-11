@@ -82,6 +82,11 @@ export default async function Footer() {
                     </Link>
                   </li>
                   <li>
+                    <Link href="/spots" className="hover:opacity-100 transition-opacity">
+                      Surf Spots
+                    </Link>
+                  </li>
+                  <li>
                     <Link href="/faq" className="hover:opacity-100 transition-opacity">
                       FAQ
                     </Link>
@@ -89,6 +94,31 @@ export default async function Footer() {
                   <li>
                     <Link href="/contact" className="hover:opacity-100 transition-opacity">
                       Get in Touch
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-bold mb-6 text-base underline underline-offset-4 decoration-2 tracking-wider uppercase">
+                  Book
+                </p>
+                <ul className="space-y-3 text-sm opacity-80">
+                  <li>
+                    <Link href="/surf-lessons" className="hover:opacity-100 transition-opacity">
+                      Surf Lessons
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/surf-packages" className="hover:opacity-100 transition-opacity">
+                      Lesson Packages
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/new-zealand-surf-trips"
+                      className="hover:opacity-100 transition-opacity"
+                    >
+                      Custom Surf Trips
                     </Link>
                   </li>
                 </ul>

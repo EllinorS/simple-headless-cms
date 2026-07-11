@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import '@/app/globals.css';
 import { Poppins, Rubik } from 'next/font/google';
 import { ThemeProvider } from '@/components/ui/theme-provider';
+import { PageLoader } from '@/components/web/layout/PageLoader';
 import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
 
@@ -18,7 +19,7 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3001'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3002'),
   title: {
     default: 'ALAIA Surf Coach | Raglan, New Zealand',
     template: '%s | ALAIA Surf Coach',
@@ -115,6 +116,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <PageLoader />
           {children}
           <Toaster richColors />
         </ThemeProvider>
