@@ -74,4 +74,69 @@ export const contactSchema = z.object({
   source: z.string().max(100).optional(),
 });
 
+// forms (quiz)
+
+export const createFormSchema = z.object({
+  name: z.string().min(1).max(255),
+  type: z.enum(['CONTACT', 'SURF_TRIP_REQUEST']),
+  isActive: z.boolean().default(true),
+});
+
+export const updateFormSchema = createFormSchema.partial();
+
+export const createFieldSchema = z.object({
+  label: z.string().min(1).max(255),
+  subtitle: z.string().max(255).nullable().optional(),
+  explanation: z.string().nullable().optional(),
+  type: z.enum(['SINGLE', 'MULTIPLE', 'RANK', 'TEXT']),
+  displayType: z.enum(['CARDS', 'SLIDER', 'CHECKBOX', 'RADIO']).nullable().optional(),
+  imageUrl: z.string().nullable().optional(),
+  position: z.number().int().min(0).default(0),
+  isRequired: z.boolean().default(true),
+});
+
+export const updateFieldSchema = z.object({
+  label: z.string().min(1).max(255).optional(),
+  subtitle: z.string().max(255).nullable().optional(),
+  explanation: z.string().nullable().optional(),
+  type: z.enum(['SINGLE', 'MULTIPLE', 'RANK', 'TEXT']).optional(),
+  displayType: z.enum(['CARDS', 'SLIDER', 'CHECKBOX', 'RADIO']).nullable().optional(),
+  imageUrl: z.string().nullable().optional(),
+  isActive: z.boolean().optional(),
+  position: z.number().int().min(0).optional(),
+  isRequired: z.boolean().optional(),
+});
+
+export const createOptionSchema = z.object({
+  label: z.string().min(1).max(500),
+  value: z.string().min(1).max(500),
+  feedback: z.string().max(500).nullable().optional(),
+  imageUrl: z.string().nullable().optional(),
+  position: z.number().int().min(0).default(0),
+});
+
+export const updateOptionSchema = createOptionSchema.partial();
+
+// submissions (quiz answers)
+
+const answerSchema = z.object({
+  fieldId: z.number().int().positive(),
+  value: z.string().max(5000),
+});
+
+export const createSubmissionSchema = z.object({
+  formId: z.number().int().positive(),
+  client: z.object({
+    firstName: z.string().min(1).max(100),
+    lastName: z.string().min(1).max(100),
+    email: z.email(),
+    phone: z.string().max(100).optional(),
+  }),
+  answers: z.array(answerSchema).min(1, 'At least one answer is required'),
+});
+
+export const updateSubmissionStatusSchema = z.object({
+  status: z.enum(['NEW', 'READ', 'REPLIED', 'ARCHIVED']),
+});
+
 

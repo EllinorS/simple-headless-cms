@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { getPageContent, readContent } from '@/lib/get-page-content';
-import { ContactForm } from '@/components/web/blocks/ContactForm';
-import Hero from '@/components/web/blocks/Hero';
-import { SpotsSection } from './_sections/SpotsSection';
-import { PLACEHOLDER_IMG } from '@/lib/utils';
-import { range } from '@/lib/cms-utils';
+import { Button } from '@/components/ui/button';
+import { Waves, Clock, CheckCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Plan Your Surf Trip in New Zealand | ALAIA Surf Coach',
@@ -14,48 +12,56 @@ export const metadata: Metadata = {
 
 export default async function SurfTripRequestPage() {
   const c = await getPageContent('surf-trip');
-  const { v, img } = readContent(c);
+  const { v } = readContent(c);
 
-  const spots = range(4)
-    .map((n) => ({
-      id: n,
-      name: v(`spots_card_${n}_name`),
-      region: v(`spots_card_${n}_region`),
-      type: v(`spots_card_${n}_type`),
-      level: v(`spots_card_${n}_level`),
-      desc: v(`spots_card_${n}_desc`),
-      image: img(`spots_card_${n}_image`, PLACEHOLDER_IMG),
-    }))
-    .filter((s) => s.name);
+  const cards = [
+    {
+      icon: Clock,
+      title: v('surf_trip_card_1_title', '5 minutes'),
+      desc: v('surf_trip_card_1_desc', 'Quick and easy to complete'),
+    },
+    {
+      icon: CheckCircle,
+      title: v('surf_trip_card_2_title', '12 questions'),
+      desc: v('surf_trip_card_2_desc', 'About your level and preferences'),
+    },
+    {
+      icon: Waves,
+      title: v('surf_trip_card_3_title', 'Custom trip'),
+      desc: v('surf_trip_card_3_desc', 'Tailored just for you'),
+    },
+  ];
 
   return (
-    <>
-      <Hero
-        title={v('surf_trip_hero_title', 'Plan your custom surf trip')}
-        subtitle={v(
-          'surf_trip_hero_subtitle',
-          "Tell us about your level and what you're looking for.",
-        )}
-        backgroundImage={img('surf_trip_hero_image', '/assets/surfers-paddling.webp')}
-        alt={v('surf_trip_hero_image_alt', '')}
-        size="medium"
-      />
-
-      <SpotsSection spots={spots} />
-
-      <div id="plan-trip" className="py-24 px-6">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl font-bold mb-3">Plan your trip</h2>
-          <p className="text-muted-foreground mb-12">
-            We&apos;ll get back to you with a custom surf trip plan tailored to your level and
-            goals.
-          </p>
-          <ContactForm
-            source="Surf Trip Request"
-            messagePlaceholder="Tell us about your level, prefered dates, who's coming, what you're looking for..."
-          />
+    <div className="min-h-screen flex items-center justify-center px-6 py-24">
+      <div className="max-w-2xl w-full text-center">
+        <div className="flex justify-center mb-6">
+          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+            <Waves className="w-8 h-8 text-primary" />
+          </div>
         </div>
+        <h1 className="text-4xl md:text-5xl font-black mb-4">
+          {v('surf_trip_hero_title', 'Plan your custom surf trip')}
+        </h1>
+        <p className="text-lg text-muted-foreground mb-12">
+          {v(
+            'surf_trip_hero_subtitle',
+            "Answer a few questions about your experience and what you're looking for. We'll use your answers to design the perfect New Zealand surf adventure for you.",
+          )}
+        </p>
+        <div className="grid sm:grid-cols-3 gap-6 mb-12 text-left">
+          {cards.map(({ icon: Icon, title, desc }) => (
+            <div key={title} className="bg-muted/40 rounded-xl p-4">
+              <Icon className="w-5 h-5 text-primary mb-2" />
+              <p className="font-semibold text-sm">{title}</p>
+              <p className="text-xs text-muted-foreground mt-1">{desc}</p>
+            </div>
+          ))}
+        </div>
+        <Button asChild size="lg">
+          <Link href="/surf-trip-request/quiz">{v('surf_trip_cta', 'Start the quiz →')}</Link>
+        </Button>
       </div>
-    </>
+    </div>
   );
 }

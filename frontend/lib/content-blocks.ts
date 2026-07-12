@@ -278,55 +278,18 @@ export const FAQ_BLOCKS = [
 export const SURF_TRIP_BLOCKS = [
   {
     title: 'Hero',
-    keys: [
-      'surf_trip_hero_title',
-      'surf_trip_hero_subtitle',
-      'surf_trip_hero_image',
-      'surf_trip_hero_image_alt',
-    ],
+    keys: ['surf_trip_hero_title', 'surf_trip_hero_subtitle'],
   },
   {
-    title: 'Region 1 — Raglan',
+    title: 'Quiz Landing',
     keys: [
-      'spots_card_1_name',
-      'spots_card_1_region',
-      'spots_card_1_type',
-      'spots_card_1_level',
-      'spots_card_1_desc',
-      'spots_card_1_image',
-    ],
-  },
-  {
-    title: 'Region 2 — Northland',
-    keys: [
-      'spots_card_2_name',
-      'spots_card_2_region',
-      'spots_card_2_type',
-      'spots_card_2_level',
-      'spots_card_2_desc',
-      'spots_card_2_image',
-    ],
-  },
-  {
-    title: 'Region 3 — Gisborne',
-    keys: [
-      'spots_card_3_name',
-      'spots_card_3_region',
-      'spots_card_3_type',
-      'spots_card_3_level',
-      'spots_card_3_desc',
-      'spots_card_3_image',
-    ],
-  },
-  {
-    title: 'Region 4 — The Catlins',
-    keys: [
-      'spots_card_4_name',
-      'spots_card_4_region',
-      'spots_card_4_type',
-      'spots_card_4_level',
-      'spots_card_4_desc',
-      'spots_card_4_image',
+      'surf_trip_card_1_title',
+      'surf_trip_card_1_desc',
+      'surf_trip_card_2_title',
+      'surf_trip_card_2_desc',
+      'surf_trip_card_3_title',
+      'surf_trip_card_3_desc',
+      'surf_trip_cta',
     ],
   },
 ];

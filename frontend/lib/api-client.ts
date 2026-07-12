@@ -29,6 +29,23 @@ async function request(
   return body2?.data ?? body2;
 }
 
+// Multipart upload: no Content-Type (the browser sets the multipart boundary itself)
+// and the FormData body must not be JSON.stringify'd, so this bypasses request().
+async function upload(endpoint: string, formData: FormData) {
+  const response = await fetch(API_URL + endpoint, {
+    method: 'POST',
+    credentials: 'include',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: response.statusText }));
+    throw new Error(error.message || 'An error occurred');
+  }
+  const body = await response.json();
+  return body?.data ?? body;
+}
+
 // One method per HTTP verb, each calls request() with the correct method
 export const apiClient = {
   get: (endpoint: string, fetchOptions?: RequestInit) =>
@@ -37,6 +54,7 @@ export const apiClient = {
   put: (endpoint: string, data: unknown) => request(endpoint, 'PUT', data),
   patch: (endpoint: string, data: unknown) => request(endpoint, 'PATCH', data),
   delete: (endpoint: string) => request(endpoint, 'DELETE'),
+  upload,
 };
 
 

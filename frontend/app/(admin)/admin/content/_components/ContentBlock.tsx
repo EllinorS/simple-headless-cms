@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { apiClient } from '@/lib/api-client';
 import { toast } from 'sonner';
+import MediaPicker from './MediaPicker';
 
 function MediaPreview({ src, alt }: { src: string; alt: string }) {
   if (isVideo(src)) {
@@ -42,6 +43,8 @@ function ContentField({ item }: { item: ContentItem }) {
   const [editValue, setEditValue] = useState(item.value || '');
   // disables button while saving = true
   const [saving, setSaving] = useState(false);
+  // whether the image picker dialog is open (IMAGE_URL fields only)
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const handleSave = async () => {
     setSaving(true);
@@ -92,18 +95,25 @@ function ContentField({ item }: { item: ContentItem }) {
                 autoFocus
                 className="w-32"
               />
+            ) : item.type === 'IMAGE_URL' ? (
+              <div className="flex items-center gap-3">
+                {editValue && <MediaPreview src={editValue} alt={item.label} />}
+                <Button type="button" variant="outline" size="sm" onClick={() => setPickerOpen(true)}>
+                  {editValue ? 'Change image' : 'Choose image'}
+                </Button>
+                <MediaPicker
+                  open={pickerOpen}
+                  onOpenChange={setPickerOpen}
+                  onSelect={(url) => setEditValue(url)}
+                />
+              </div>
             ) : (
               <Input
                 type="text"
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
                 autoFocus
-                placeholder={item.type === 'IMAGE_URL' ? 'Paste a Cloudinary URL' : ''}
               />
-            )}
-
-            {item.type === 'IMAGE_URL' && editValue && (
-              <MediaPreview src={editValue} alt={item.label} />
             )}
 
             <div className="flex gap-2">

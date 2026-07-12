@@ -109,3 +109,46 @@ export type FaqCategory = {
   title: string;
   items: FaqItem[];
 };
+
+// --- QUIZ / FORMS ---
+
+export type FormOption = {
+  id: number;
+  label: string;
+  value: string;
+  feedback: string | null;
+  imageUrl: string | null;
+  position: number;
+};
+
+export type FormField = {
+  id: number;
+  label: string;
+  subtitle: string | null;
+  explanation: string | null;
+  type: 'SINGLE' | 'MULTIPLE' | 'RANK' | 'TEXT';
+  displayType: 'CARDS' | 'SLIDER' | 'CHECKBOX' | 'RADIO' | null;
+  imageUrl: string | null;
+  isRequired: boolean;
+  position: number;
+  options?: FormOption[];
+};
+
+export type Form = {
+  id: number;
+  name: string;
+  type: 'CONTACT' | 'SURF_TRIP_REQUEST';
+  fields: FormField[];
+};
+
+export type Submission = {
+  id: number;
+  formId: number;
+  formName: string;
+  clientFirstname: string;
+  clientLastname: string;
+  clientEmail: string;
+  clientPhone: string | null;
+  status: 'NEW' | 'READ' | 'REPLIED' | 'ARCHIVED';
+  createdAt: string;
+};

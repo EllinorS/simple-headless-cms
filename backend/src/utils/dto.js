@@ -35,3 +35,16 @@ export const toContentDTO = (c) => ({
   createdAt: c.created_at,
   updatedAt: c.updated_at,
 });
+
+// A form_submissions row (joined with forms.name) → camelCase, for the admin submissions inbox list.
+export const toSubmissionDTO = (s) => ({
+  id: s.id,
+  formId: s.form_id,
+  formName: s.form_name,
+  clientFirstname: s.client_firstname,
+  clientLastname: s.client_lastname,
+  clientEmail: s.client_email,
+  clientPhone: s.client_phone,
+  status: s.status,
+  createdAt: s.created_at,
+});

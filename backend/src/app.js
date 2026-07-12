@@ -13,6 +13,8 @@ import mediaRoutes from './routes/media.cloudinary.routes.js';
 import siteContentRoutes from './routes/siteContent.routes.js';
 import contactRoutes from './routes/contact.routes.js';
 import sessionRoutes from './routes/session.routes.js';
+import formRoutes from './routes/form.routes.js';
+import submissionRoutes from './routes/submission.routes.js';
 
 if (process.env.NODE_ENV === 'production' && !process.env.CLIENT_URL) {
   console.error('FATAL: CLIENT_URL environment variable is required in production.');
@@ -58,6 +60,14 @@ const contactLimiter = rateLimit({
   message: { message: 'Too many messages sent, please try again later.' },
 });
 
+const submissionLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: process.env.NODE_ENV === 'production' ? 5 : 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many requests sent, please try again later.' },
+});
+
 // Public content reads (/api/content GET) get their own, more generous limiter:
 // every visitor loads several of these per page view, so sharing the brute-force
 // quota with them starves out legitimate traffic (and can lock the admin out of login).
@@ -89,6 +99,15 @@ app.use('/api/media', mediaRoutes);
 app.use('/api/content', siteContentRoutes);
 app.use('/api/contact', ...(process.env.NODE_ENV !== 'test' ? [contactLimiter] : []), contactRoutes);
 app.use('/api/sessions', sessionRoutes);
+app.use('/api/forms', formRoutes);
+app.use(
+  '/api/submissions',
+  (req, res, next) => {
+    if (process.env.NODE_ENV !== 'test' && req.method === 'POST') return submissionLimiter(req, res, next);
+    return next();
+  },
+  submissionRoutes,
+);
 
 app.use(errorHandler);
 
