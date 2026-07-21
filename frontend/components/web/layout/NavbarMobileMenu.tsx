@@ -24,7 +24,7 @@ export default function NavbarMobileMenu() {
           rounded-md border border-border bg-background backdrop-blur-xl
           shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-4 md:hidden"
         >
-          <div className="flex flex-col gap-1 text-sm font-medium">
+          <div className="flex flex-col gap-1 text-[15px] font-semibold tracking-wider">
             <Link
               href="/about"
               onClick={() => setOpen(false)}

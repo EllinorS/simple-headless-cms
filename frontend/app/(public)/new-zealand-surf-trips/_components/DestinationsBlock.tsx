@@ -24,7 +24,13 @@ export function DestinationsBlock({
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
           {destinations.map((dest) => (
             <div key={dest.id} className="relative aspect-3/4 rounded-2xl overflow-hidden">
-              <Image src={dest.image} alt="" fill className="object-cover" />
+              <Image
+                src={dest.image}
+                alt={`${title} destination`}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                className="object-cover"
+              />
             </div>
           ))}
         </div>

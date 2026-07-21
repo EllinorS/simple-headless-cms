@@ -1,14 +1,17 @@
 import type { Metadata } from 'next';
 import Hero from '@/components/web/blocks/Hero';
 import { getPageContent, readContent } from '@/lib/get-page-content';
+import { getLessons } from '@/lib/get-lessons';
 import { LessonsSection } from './_sections/LessonsSection';
 import { PackagesSection } from './_sections/PackagesSection';
 import { TripsSection } from './_sections/TripsSection';
+import { SeasonsSection } from './_sections/SeasonsSection';
 
 export const metadata: Metadata = {
-  title: 'Surf in New Zealand | ALAIA Surf Coach',
+  title: 'Surf in New Zealand',
   description:
     'Surf lessons, packages and custom surf trips in New Zealand with ALAIA Surf Coach. Based in Raglan.',
+  alternates: { canonical: '/surf-in-new-zealand' },
 };
 
 export default async function SurfInNewZealandPage() {
@@ -16,9 +19,10 @@ export default async function SurfInNewZealandPage() {
   const cGlobal = await getPageContent('global');
   const { v, img } = readContent(c);
   const { v: vg } = readContent(cGlobal);
+  const lessons = (await getLessons()) ?? [];
 
-  // Prices from global CMS
-  const priceSingle = Number(vg('global_price_group_adults')) || 60;
+  // Single-lesson price now lives in the lessons catalog; package prices stay CMS-managed.
+  const priceSingle = lessons.find((l) => l.title === 'Group - Adults')?.price ?? 60;
   const pricePack3 = Number(vg('global_price_pack_3')) || 160;
   const pricePack5 = Number(vg('global_price_pack_5')) || 250;
 
@@ -54,6 +58,7 @@ export default async function SurfInNewZealandPage() {
         backgroundImage={img('snz_hero_image', '/assets/surfers-paddling.webp')}
         alt={v('snz_hero_image_alt', '')}
       />
+      <SeasonsSection v={v} img={img} />
       <LessonsSection v={v} />
       <PackagesSection v={v} pricingCards={pricingCards} />
       <TripsSection v={v} />

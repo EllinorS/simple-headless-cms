@@ -12,9 +12,11 @@ import authRoutes from './routes/auth.routes.js';
 import mediaRoutes from './routes/media.cloudinary.routes.js';
 import siteContentRoutes from './routes/siteContent.routes.js';
 import contactRoutes from './routes/contact.routes.js';
-import sessionRoutes from './routes/session.routes.js';
+import lessonRoutes from './routes/lesson.routes.js';
+import slotRoutes from './routes/slot.routes.js';
 import formRoutes from './routes/form.routes.js';
 import submissionRoutes from './routes/submission.routes.js';
+import bookingRoutes from './routes/booking.routes.js';
 
 if (process.env.NODE_ENV === 'production' && !process.env.CLIENT_URL) {
   console.error('FATAL: CLIENT_URL environment variable is required in production.');
@@ -79,6 +81,14 @@ const contentLimiter = rateLimit({
   message: { message: 'Too many requests, please try again later.' },
 });
 
+const bookingLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: process.env.NODE_ENV === 'production' ? 5 : 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many booking attempts, please try again later.' },
+});
+
 if (process.env.NODE_ENV !== 'test') {
   app.use((req, res, next) => {
     if (req.method === 'GET' && req.path.startsWith('/api/content')) return contentLimiter(req, res, next);
@@ -98,7 +108,8 @@ app.use('/api/auth', ...(process.env.NODE_ENV !== 'test' ? [authLimiter] : []), 
 app.use('/api/media', mediaRoutes);
 app.use('/api/content', siteContentRoutes);
 app.use('/api/contact', ...(process.env.NODE_ENV !== 'test' ? [contactLimiter] : []), contactRoutes);
-app.use('/api/sessions', sessionRoutes);
+app.use('/api/lessons', lessonRoutes);
+app.use('/api/slots', slotRoutes);
 app.use('/api/forms', formRoutes);
 app.use(
   '/api/submissions',
@@ -107,6 +118,14 @@ app.use(
     return next();
   },
   submissionRoutes,
+);
+app.use(
+  '/api/bookings',
+  (req, res, next) => {
+    if (process.env.NODE_ENV !== 'test' && req.method === 'POST') return bookingLimiter(req, res, next);
+    return next();
+  },
+  bookingRoutes,
 );
 
 app.use(errorHandler);

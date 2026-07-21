@@ -4,20 +4,41 @@ import Hero from '@/components/web/blocks/Hero';
 import { Button } from '@/components/ui/button';
 import { Users, User, TrendingUp } from 'lucide-react';
 import { getPageContent, readContent } from '@/lib/get-page-content';
+import { getLessons } from '@/lib/get-lessons';
 import { PLACEHOLDER_IMG } from '@/lib/utils';
 import { LessonBlock } from './_components/LessonBlock';
 import { InfoStrip } from './_components/InfoStrip';
 import { SurfSpotsBlock } from './_components/SurfSpotsBlock';
 
 export const metadata: Metadata = {
-  title: 'Surf Lessons in Raglan | ALAIA Surf Coach',
+  title: 'Surf Lessons in Raglan',
   description:
     'Group surf lessons, private sessions and performance coaching in Raglan, New Zealand. All levels from beginner to advanced.',
+  alternates: { canonical: '/surf-lessons' },
 };
 
 export default async function SurfLessonsPage() {
   const c = await getPageContent('surf-lessons');
   const { v, img } = readContent(c);
+  const lessons = (await getLessons()) ?? [];
+  const groupLesson = lessons.find((l) => l.title === 'Group - Adults');
+
+  const productJsonLd = groupLesson
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: 'Group Surf Lesson — ALAIA Surf Coach',
+        description: 'Group surf lesson in Raglan, New Zealand. All levels welcome.',
+        brand: { '@type': 'Brand', name: 'ALAIA Surf Coach' },
+        offers: {
+          '@type': 'Offer',
+          price: groupLesson.price,
+          priceCurrency: 'NZD',
+          availability: 'https://schema.org/InStock',
+          url: 'https://www.alaiasurf.co.nz/surf-lessons',
+        },
+      }
+    : null;
 
   const spots = [
     {
@@ -36,6 +57,12 @@ export default async function SurfLessonsPage() {
 
   return (
     <>
+      {productJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+        />
+      )}
       <Hero
         title={v('surf_lessons_hero_title', 'Surf Lessons in Raglan')}
         subtitle={v('surf_lessons_hero_subtitle', 'Group, private and coaching sessions for every level')}

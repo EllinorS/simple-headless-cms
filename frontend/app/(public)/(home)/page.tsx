@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   title: 'Surf Lessons & Road Trips in Raglan, New Zealand',
   description:
     'ALAIA Surf Coach : professional surf lessons, group sessions, packages and custom surf road trips in Raglan, New Zealand. All levels welcome.',
+  alternates: { canonical: '/' },
   openGraph: {
     title: 'ALAIA Surf Coach | Raglan, New Zealand',
     description: 'Surf lessons, coaching and custom road trips in Raglan, NZ.',

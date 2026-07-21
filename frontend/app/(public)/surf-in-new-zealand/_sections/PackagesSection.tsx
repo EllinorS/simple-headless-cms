@@ -48,7 +48,7 @@ export function PackagesSection({ v, pricingCards }: Props) {
               </ul>
             )}
             <Button asChild size="lg">
-              <Link href="/book-surf-lesson">View packages →</Link>
+              <Link href="/surf-packages">View surf packages →</Link>
             </Button>
           </div>
 

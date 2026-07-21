@@ -4,6 +4,7 @@ import { getPageContent, readContent } from '@/lib/get-page-content';
 export const metadata: Metadata = {
   title: 'Terms & Conditions',
   description: 'Terms and conditions for ALAIA Surf Coach.',
+  alternates: { canonical: '/terms' },
 };
 
 export default async function TermsPage() {

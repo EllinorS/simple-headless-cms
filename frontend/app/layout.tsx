@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/ui/theme-provider';
 import { PageLoader } from '@/components/web/layout/PageLoader';
 import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
+import { getPageContent, readContent } from '@/lib/get-page-content';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -59,7 +60,8 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
+function buildJsonLd(sameAs: string[]) {
+  return {
   '@context': 'https://schema.org',
   '@graph': [
     {
@@ -68,7 +70,7 @@ const jsonLd = {
       name: 'ALAIA Surf Coach',
       url: 'https://www.alaiasurf.co.nz',
       logo: 'https://www.alaiasurf.co.nz/assets/alaia-surf-coach-logo-green.svg',
-      sameAs: [],
+      sameAs,
     },
     {
       '@type': 'LocalBusiness',
@@ -94,13 +96,19 @@ const jsonLd = {
       paymentAccepted: 'Cash, Credit Card',
     },
   ],
-};
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const global = await getPageContent('global');
+  const { v } = readContent(global);
+  const sameAs = [v('global_instagram_url'), v('global_facebook_url')].filter(Boolean);
+  const jsonLd = buildJsonLd(sameAs);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>

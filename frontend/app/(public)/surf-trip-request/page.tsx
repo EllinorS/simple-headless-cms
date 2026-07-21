@@ -5,9 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Waves, Clock, CheckCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Plan Your Surf Trip in New Zealand | ALAIA Surf Coach',
+  title: 'Plan Your Surf Trip in New Zealand',
   description:
     "Tell us about your level and what you're looking for — we'll design a custom surf trip just for you.",
+  alternates: { canonical: '/surf-trip-request' },
 };
 
 export default async function SurfTripRequestPage() {

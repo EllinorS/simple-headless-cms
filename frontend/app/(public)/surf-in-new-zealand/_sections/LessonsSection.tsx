@@ -24,8 +24,8 @@ export function LessonsSection({ v }: Props) {
       title={v('snz_lessons_title', 'Surf Lessons')}
       desc={v('snz_lessons_desc')}
       bullets={bullets}
-      buttonText="Book a lesson →"
-      buttonHref="/book-surf-lesson"
+      buttonText="Explore surf lessons →"
+      buttonHref="/surf-lessons"
       cards={LESSON_CARDS}
     />
   );

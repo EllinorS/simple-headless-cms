@@ -23,8 +23,8 @@ export function TripsSection({ v }: Props) {
       title={v('snz_trips_title', 'Custom Surf Trips')}
       desc={v('snz_trips_desc')}
       bullets={bullets}
-      buttonText="Plan my trip →"
-      buttonHref="/surf-trip-request"
+      buttonText="Explore surf trips →"
+      buttonHref="/new-zealand-surf-trips"
       cards={TRIP_CARDS}
       variant="secondary"
     />

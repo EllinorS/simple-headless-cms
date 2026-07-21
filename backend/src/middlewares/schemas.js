@@ -51,16 +51,75 @@ export const updateSiteContentSchema = z.object({
   type: z.enum(['TEXT', 'RICHTEXT', 'IMAGE_URL', 'NUMBER']),
 });
 
-// session
+// lessons (fixed 2-row catalog: Group - Adults / Group - Kids — no create/delete, title never changes)
 
-export const createSessionSchema = z.object({
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD'),
-  time: z.string().min(1).max(10),
-  type: z.enum(['Group - Adults', 'Group - Kids']),
-  duration: z.string().min(1).max(10),
-  price: z.number().min(0, 'Price must be 0 or more'),
+export const updateLessonSchema = z.object({
+  durationMinutes: z.number().int().positive().optional(),
+  maxParticipants: z.number().int().positive().optional(),
+  price: z.number().min(0).optional(),
+  depositAmount: z.number().min(0).optional(),
+  level: z.enum(['ALL', 'BEGINNER', 'INTERMEDIATE', 'ADVANCED']).optional(),
 });
 
+// time_slots (dated bookable instances of a lesson — lessonId FK, no duplicated price/duration)
+
+export const createSlotSchema = z.object({
+  lessonId: z.number().int().positive(),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD'),
+  time: z.string().min(1).max(10),
+  durationMinutes: z.number().int().positive(),
+  maxParticipants: z.number().int().positive(),
+  price: z.number().min(0),
+  depositAmount: z.number().min(0),
+  notes: z.string().max(2000).nullable().optional(),
+});
+
+export const updateSlotSchema = createSlotSchema.omit({ lessonId: true }).partial();
+
+export const cancelSlotSchema = z.object({
+  cancelReason: z.string().min(1).max(500),
+});
+
+
+// bookings (client reservations of a time_slot — single via lessonId+slotId, package via
+// lessonId+slotIds; lessonId is the purchased catalog product, single OR package row)
+
+const clientFieldsSchema = {
+  clientFirstname: z.string().min(1).max(255),
+  clientLastname: z.string().min(1).max(255),
+  clientEmail: z.email('Invalid email address'),
+  clientPhone: z.string().max(50).optional(),
+};
+
+export const createBookingSchema = z.object({
+  lessonId: z.number().int().positive(),
+  slotId: z.number().int().positive(),
+  ...clientFieldsSchema,
+  notes: z.string().max(2000).optional(),
+});
+
+export const createMultipleBookingSchema = z.object({
+  lessonId: z.number().int().positive(),
+  slotIds: z.array(z.number().int().positive()).min(2),
+  ...clientFieldsSchema,
+});
+
+export const tokenActionSchema = z.object({
+  token: z.string().min(1),
+});
+
+export const rescheduleTokenSchema = z.object({
+  token: z.string().min(1),
+  newSlotId: z.number().int().positive(),
+});
+
+export const adminRescheduleSchema = z.object({
+  newSlotId: z.number().int().positive(),
+});
+
+export const adminCancelSchema = z.object({
+  reason: z.string().max(500).optional(),
+});
 
 // contact form
 

@@ -8,7 +8,8 @@ import { PLACEHOLDER_IMG } from '@/lib/utils';
 import { CtaBanner } from '@/components/web/blocks/CtaBanner';
 
 export const metadata: Metadata = {
-  title: 'FAQ — Surf Lessons in Raglan | ALAIA Surf Coach',
+  title: 'FAQ — Surf Lessons in Raglan',
+  alternates: { canonical: '/faq' },
   description:
     'Everything you need to know before booking a surf lesson in Raglan, New Zealand. Questions about levels, what to bring, packages, cancellation, and more.',
   openGraph: {
@@ -39,8 +40,24 @@ export default async function FaqPage() {
     }))
     .filter((cat) => cat.items.length > 0); // keep categories with at least one question
 
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: categories.flatMap((cat) =>
+      cat.items.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      }))
+    ),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <Hero
         title={v('faq_hero_title', 'Frequently Asked Questions')}
         subtitle={v('faq_hero_subtitle', 'Everything you need to know before hitting the water')}

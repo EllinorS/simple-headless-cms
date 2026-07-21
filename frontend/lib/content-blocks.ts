@@ -10,12 +10,7 @@ export const GLOBAL_BLOCKS = [
   },
   {
     title: 'Default Session Prices (NZD / person)',
-    keys: [
-      'global_price_group_adults',
-      'global_price_group_kids',
-      'global_price_private',
-      'global_price_coaching',
-    ],
+    keys: ['global_price_private', 'global_price_coaching'],
   },
   {
     title: 'Package Prices (NZD total)',
@@ -211,6 +206,10 @@ export const BOOK_SURF_LESSON_BLOCKS = [
   {
     title: 'Contact Section',
     keys: ['book_contact_title', 'book_contact_desc'],
+  },
+  {
+    title: 'Bank Transfer Details',
+    keys: ['booking_bank_name', 'booking_bank_account_name', 'booking_bank_account_number', 'booking_payment_note'],
   },
 ];
 

@@ -22,8 +22,8 @@ export default function CarouselSection({ v, img }: Props) {
           ],
           imageSrc: img('home_lesson_group_image', PLACEHOLDER_IMG),
           imageAlt: v('home_lesson_group_title', 'Group Lessons'),
-          buttonText: 'Discover More',
-          buttonHref: '/surf-in-new-zealand',
+          buttonText: 'Explore group lessons',
+          buttonHref: '/surf-lessons',
         },
         {
           title: v('home_lesson_private_title', 'Private Lessons'),
@@ -35,8 +35,8 @@ export default function CarouselSection({ v, img }: Props) {
           ],
           imageSrc: img('home_lesson_private_image', PLACEHOLDER_IMG),
           imageAlt: v('home_lesson_private_title', 'Private Lessons'),
-          buttonText: 'Discover More',
-          buttonHref: '/surf-in-new-zealand',
+          buttonText: 'Explore private lessons',
+          buttonHref: '/surf-lessons',
         },
         {
           title: v('home_lesson_coaching_title', 'Coaching'),
@@ -48,8 +48,8 @@ export default function CarouselSection({ v, img }: Props) {
           ],
           imageSrc: img('home_lesson_coaching_image', PLACEHOLDER_IMG),
           imageAlt: v('home_lesson_coaching_title', 'Coaching'),
-          buttonText: 'Discover More',
-          buttonHref: '/surf-in-new-zealand',
+          buttonText: 'Explore coaching',
+          buttonHref: '/surf-lessons',
         },
       ]}
     />

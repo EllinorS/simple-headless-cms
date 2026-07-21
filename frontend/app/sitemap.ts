@@ -11,5 +11,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/surf-trip-request`, lastModified: new Date() },
     { url: `${BASE}/surf-in-new-zealand`, lastModified: new Date() },
     { url: `${BASE}/faq`, lastModified: new Date() },
+    { url: `${BASE}/surf-lessons`, lastModified: new Date() },
+    { url: `${BASE}/surf-packages`, lastModified: new Date() },
+    { url: `${BASE}/new-zealand-surf-trips`, lastModified: new Date() },
+    { url: `${BASE}/spots`, lastModified: new Date() },
+    { url: `${BASE}/privacy`, lastModified: new Date() },
+    { url: `${BASE}/terms`, lastModified: new Date() },
   ];
 }

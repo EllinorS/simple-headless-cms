@@ -12,6 +12,11 @@ try {
     user: env.DB_USER,
     password: env.DB_PASSWORD,
     database: env.DB_NAME,
+    // Forces the driver to treat DATETIME/TIMESTAMP columns as UTC on both read and write,
+    // instead of the ambiguous 'local' default (Node process timezone). Without this, a value
+    // built from a JS Date and a value compared via SQL NOW() can silently anchor to two
+    // different timezones — see the booking 24h cancel-window logic.
+    timezone: 'Z',
     connectionLimit: 10,
     waitForConnections: true,
     queueLimit: 50,

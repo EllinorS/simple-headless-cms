@@ -22,6 +22,9 @@ export default function MediaPicker({ open, onOpenChange, onSelect }: Props) {
 
   useEffect(() => {
     if (!open) return;
+    // Resets the loading flag on every reopen (media/loading state persists across opens by
+    // design, to avoid refetch flicker) — an intentional sync setState, not derivable from props.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     apiClient
       .get('/media')

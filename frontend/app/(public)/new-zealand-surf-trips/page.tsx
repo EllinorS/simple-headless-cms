@@ -11,9 +11,10 @@ import { IncludedBlock } from './_components/IncludedBlock';
 import { DestinationsBlock } from './_components/DestinationsBlock';
 
 export const metadata: Metadata = {
-  title: 'Custom Surf Trips in New Zealand | ALAIA Surf Coach',
+  title: 'Custom Surf Trips in New Zealand',
   description:
     'Plan a personalised surf road trip across New Zealand, tailored to your level and goals, with coaching every step of the way.',
+  alternates: { canonical: '/new-zealand-surf-trips' },
 };
 
 export default async function NewZealandSurfTripsPage() {

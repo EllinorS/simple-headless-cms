@@ -6,13 +6,14 @@ import Link from 'next/link';
 import {
   LayoutDashboard,
   FileText,
-  CalendarDays,
   LogOut,
   Users,
   MenuIcon,
   ListChecks,
   Waves,
   Image as ImageIcon,
+  BookOpen,
+  Receipt,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { apiClient } from '@/lib/api-client';
@@ -25,7 +26,8 @@ const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/content', label: 'Content', icon: FileText },
   { href: '/admin/media', label: 'Media', icon: ImageIcon },
-  { href: '/admin/sessions', label: 'Sessions', icon: CalendarDays },
+  { href: '/admin/lessons', label: 'Lessons', icon: BookOpen },
+  { href: '/admin/bookings', label: 'Bookings', icon: Receipt },
   { href: '/admin/quiz', label: 'Quiz', icon: ListChecks },
   { href: '/admin/surf-trip-request', label: 'Trip Requests', icon: Waves },
   { href: '/admin/users', label: 'Users', icon: Users },

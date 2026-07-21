@@ -40,7 +40,13 @@ export function RegionsList({ regions }: { regions: Region[] }) {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {region.spots.map((spot) => (
                 <div key={spot.id} className="relative aspect-square rounded-2xl overflow-hidden">
-                  <Image src={spot.image} alt="" fill className="object-cover" />
+                  <Image
+                    src={spot.image}
+                    alt={`${region.name} surf spot`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover"
+                  />
                 </div>
               ))}
             </div>

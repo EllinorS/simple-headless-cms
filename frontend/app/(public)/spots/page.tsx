@@ -8,9 +8,10 @@ import { range } from '@/lib/cms-utils';
 import { RegionsList } from './_components/RegionsList';
 
 export const metadata: Metadata = {
-  title: 'Surf Spots in New Zealand | ALAIA Surf Coach',
+  title: 'Surf Spots in New Zealand',
   description:
     'Discover the best surf spots across New Zealand — from the point breaks of Raglan to the reefs of Taranaki and beyond.',
+  alternates: { canonical: '/spots' },
 };
 
 export default async function SpotsPage() {

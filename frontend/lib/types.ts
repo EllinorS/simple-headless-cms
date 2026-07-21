@@ -80,14 +80,73 @@ export type ContentItem = {
   label: string;
 };
 
-// A surf session as returned by GET /api/sessions/public
-export type Session = {
+// A lessons row as returned by GET /api/lessons(/public) — 2 single lessons (Group - Adults/Kids)
+// + 4 package rows (3-Pack/5-Pack x Adults/Kids). isPackage/sessionsCount/baseLessonId are only
+// meaningful on package rows: baseLessonId points at the single lesson whose time_slots the
+// package books against (packages never get their own slots).
+export type Lesson = {
   id: number;
+  title: string;
+  type: 'ADULTS' | 'KIDS';
+  durationMinutes: number;
+  maxParticipants: number;
+  price: number;
+  depositAmount: number;
+  level: 'ALL' | 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
+  isPackage: boolean;
+  sessionsCount: number;
+  baseLessonId: number | null;
+};
+
+// A time_slots row (joined with its lesson) as returned by GET /api/slots(/public)
+export type TimeSlot = {
+  id: number;
+  lessonId: number;
+  title: string;
+  type: 'ADULTS' | 'KIDS';
   date: string;
   time: string;
-  type: string;
-  duration: string;
+  durationMinutes: number;
+  maxParticipants: number;
   price: number;
+  depositAmount: number;
+  level: 'ALL' | 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
+  isCancelled: boolean;
+  cancelReason: string | null;
+  cancelledAt: string | null;
+  notes: string | null;
+  spotsLeft: number;
+};
+
+// A bookings row as returned by GET /api/bookings(/:id) or the token-gated preview endpoints
+export type Booking = {
+  id: number;
+  slotId: number;
+  lessonId: number;
+  lessonTitle: string;
+  lessonType: 'ADULTS' | 'KIDS';
+  isPackage: boolean;
+  parentBookingId: number | null;
+  clientFirstname: string;
+  clientLastname: string;
+  clientEmail: string;
+  clientPhone: string | null;
+  participants: number;
+  totalPriceAtBooking: number | null;
+  status: 'PENDING' | 'CONFIRMED' | 'CANCELLED';
+  cancelledBy: 'CLIENT' | 'COACH' | null;
+  cancelReason: string | null;
+  cancelledAt: string | null;
+  sessionsRequired: number;
+  notes: string | null;
+  slotDate: string;
+  slotTime: string;
+  createdAt: string;
+  sessions?: Booking[];
+  // Only present in the whole-package preview response (GET /bookings/cancel/package/preview) —
+  // lets the client reschedule one specific session, since reaching that response already
+  // required proving ownership via the group_cancel_token.
+  cancelToken?: string;
 };
 
 export type CarouselSlide = {

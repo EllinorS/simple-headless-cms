@@ -7,7 +7,7 @@ type ImageTextBlockProps = {
   title: string;
   eyebrow?: string;
   subtitle?: string;
-  content: string;
+  content: string | string[];
   imageSrc: string;
   imageAlt: string;
   imagePosition?: 'left' | 'right';
@@ -42,7 +42,13 @@ export default function ImageTextBlock({
             {eyebrow && <p className="eyebrow text-primary mb-4">{eyebrow}</p>}
             <h2 className="heading-xl mb-4">{title}</h2>
             {subtitle && <p className="text-xl mb-6">{subtitle}</p>}
-            <p className="leading-relaxed mb-8">{content}</p>
+            <div className="space-y-4 mb-8">
+              {(Array.isArray(content) ? content : [content]).map((paragraph, i) => (
+                <p key={i} className="leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
             {buttonText && buttonHref && (
               <Button asChild size="lg">
                 <Link href={buttonHref}>{buttonText}</Link>

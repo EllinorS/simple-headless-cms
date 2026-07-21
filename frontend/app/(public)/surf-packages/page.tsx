@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Hero from '@/components/web/blocks/Hero';
 import { TrendingUp, Users, Calendar } from 'lucide-react';
 import { getPageContent, readContent } from '@/lib/get-page-content';
+import { getLessons } from '@/lib/get-lessons';
 import { PLACEHOLDER_IMG } from '@/lib/utils';
 import { range } from '@/lib/cms-utils';
 import { PricingBlock } from './_components/PricingBlock';
@@ -10,8 +11,9 @@ import { IncludedBlock } from './_components/IncludedBlock';
 import { FaqBlock } from './_components/FaqBlock';
 
 export const metadata: Metadata = {
-  title: 'Surf Lesson Packages in Raglan | ALAIA Surf Coach',
+  title: 'Surf Lesson Packages in Raglan',
   description: 'Book a surf lesson package and save. Best value for real progression in Raglan, New Zealand.',
+  alternates: { canonical: '/surf-packages' },
 };
 
 const WHY_ICONS = [TrendingUp, Users, Calendar];
@@ -20,8 +22,10 @@ export default async function SurfPackagesPage() {
   const [c, global] = await Promise.all([getPageContent('surf-packages'), getPageContent('global')]);
   const { v, img } = readContent(c);
   const { v: gv } = readContent(global);
+  const lessons = (await getLessons()) ?? [];
 
-  const priceSingle = Number(gv('global_price_group_adults', '60'));
+  // Single-lesson price now lives in the lessons catalog; package prices stay CMS-managed.
+  const priceSingle = lessons.find((l) => l.title === 'Group - Adults')?.price ?? 60;
   const pricePack3 = Number(gv('global_price_pack_3', '160'));
   const pricePack5 = Number(gv('global_price_pack_5', '250'));
 
@@ -68,8 +72,28 @@ export default async function SurfPackagesPage() {
     }))
     .filter((f) => f.q);
 
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Surf Lesson Packages — ALAIA Surf Coach',
+    description: 'Group surf lesson packages in Raglan, New Zealand. Book more sessions and save.',
+    brand: { '@type': 'Brand', name: 'ALAIA Surf Coach' },
+    offers: packages.map((p) => ({
+      '@type': 'Offer',
+      name: `${p.quantity}-session package`,
+      price: p.price,
+      priceCurrency: 'NZD',
+      availability: 'https://schema.org/InStock',
+      url: 'https://www.alaiasurf.co.nz/surf-packages',
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       <Hero
         title={v('surf_packages_hero_title', 'Surf Lesson Packages')}
         subtitle={v('surf_packages_hero_subtitle', 'Book more sessions, save more, progress faster')}

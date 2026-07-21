@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: 'Contact',
   description:
     "Get in touch with ALAIA Surf Coach in Raglan, New Zealand. Questions about surf lessons, bookings or surf trips — we'd love to hear from you.",
+  alternates: { canonical: '/contact' },
   openGraph: {
     title: 'Contact ALAIA Surf Coach',
     description: 'Get in touch with us in Raglan, New Zealand.',

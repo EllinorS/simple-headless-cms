@@ -19,3 +19,9 @@ export function optimizeCloudinaryVideo(url: string): string {
   if (!url.includes('res.cloudinary.com')) return url;
   return url.replace('/upload/', '/upload/q_auto:eco/');
 }
+
+// Derives a JPG still-frame poster from a Cloudinary video URL (swaps the video extension for .jpg)
+export function cloudinaryVideoPoster(url: string): string | undefined {
+  if (!url.includes('res.cloudinary.com')) return undefined;
+  return url.replace(/\.(mp4|webm|ogg)$/i, '.jpg');
+}

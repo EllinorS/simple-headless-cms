@@ -8,9 +8,10 @@ import { PLACEHOLDER_IMG } from '@/lib/utils';
 import { getPageContent, readContent } from '@/lib/get-page-content';
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: 'Meet Your Surf Coach in Raglan',
   description:
-    'Meet your surf coach — certified instructor with over 15 years of surfing experience in Raglan, New Zealand. Passionate about sharing the art of surfing.',
+    'Meet your surf coach — certified instructor with over 20 years of surfing experience in Raglan, New Zealand. Passionate about sharing the art of surfing.',
+  alternates: { canonical: '/about' },
   openGraph: {
     title: 'About ALAIA Surf Coach',
     description: 'Meet your surf coach in Raglan, New Zealand.',
@@ -83,7 +84,7 @@ export default async function AboutPage() {
         sectionClassName="bg-muted/40 px-4"
         eyebrow="Our Mission"
         title={v('about_mission_title', 'Sharing the Stoke, One Wave at a Time')}
-        content={v('about_mission_p1')}
+        content={[v('about_mission_p1'), v('about_mission_p2'), v('about_mission_p3')].filter(Boolean)}
         imageSrc={img('about_mission_image', '/assets/surfboards-under-flax.webp')}
         imageAlt="Our mission"
         imagePosition="right"
