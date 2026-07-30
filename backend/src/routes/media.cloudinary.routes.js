@@ -10,7 +10,14 @@ const router = express.Router();
 
 // Capped at 20 files/request (10MB each, per upload.cloudinary.middleware.js) to bound
 // worst-case buffered RAM (memoryStorage) per request to ~200MB instead of ~1GB.
-router.post('/', authMiddleware, roleMiddleware('SUPER_ADMIN'), uploadToMemory.array('files', 20), createMedia);
+router.post(
+  '/',
+  authMiddleware,
+  roleMiddleware('SUPER_ADMIN'),
+  uploadToMemory.array('files', 20),
+  validate(updateMediaSchema),
+  createMedia,
+);
 router.get('/', getAllMedia);
 router.get('/:id', getMediaById);
 router.put('/:id', authMiddleware, roleMiddleware('SUPER_ADMIN'), validate(updateMediaSchema), updateMediaById);

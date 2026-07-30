@@ -141,10 +141,36 @@ export const markReviewEmailSent = async (id) => {
   await db.query(`UPDATE bookings SET review_email_sent_at = NOW() WHERE id = ?`, [id]);
 };
 
+// Individual sessions (any position in a package, or a single-lesson booking) still awaiting
+// their day-before reminder — one per session, not per purchase, since a client needs
+// reminding before EACH date in a package, unlike the once-per-purchase review request.
+export const findPendingSessionReminders = async () => {
+  const [rows] = await db.query(
+    `${BOOKING_SELECT} WHERE b.status = 'CONFIRMED' AND b.reminder_email_sent_at IS NULL`,
+  );
+  return rows;
+};
+
+export const markReminderEmailSent = async (id) => {
+  await db.query(`UPDATE bookings SET reminder_email_sent_at = NOW() WHERE id = ?`, [id]);
+};
+
 export const findGroupSessionsById = async (rootId) => {
   const [rows] = await db.query(
     `${BOOKING_SELECT} WHERE (b.id = ? OR b.parent_booking_id = ?) AND b.status != 'CANCELLED' ORDER BY ts.date ASC, ts.time ASC`,
     [rootId, rootId],
+  );
+  return rows;
+};
+
+// Batch variant of findGroupSessionsById — all sessions (parent + siblings) for several
+// roots in one query, keyed by root id via each row's own id (if it's the root) or
+// parent_booking_id (if it's a sibling). Used by reviewRequestJob to avoid one query per root.
+export const findGroupSessionsByRootIds = async (rootIds) => {
+  if (rootIds.length === 0) return [];
+  const [rows] = await db.query(
+    `${BOOKING_SELECT} WHERE (b.id IN (?) OR b.parent_booking_id IN (?)) AND b.status != 'CANCELLED' ORDER BY ts.date ASC, ts.time ASC`,
+    [rootIds, rootIds],
   );
   return rows;
 };

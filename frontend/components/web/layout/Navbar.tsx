@@ -9,14 +9,18 @@ import {
 import { ChevronDown } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import NavbarMobileMenu from './NavbarMobileMenu';
+import { cn } from '@/lib/utils';
 
-const Navbar = () => {
+const Navbar = ({ bannerActive = false }: { bannerActive?: boolean }) => {
   return (
     <nav
-      className="fixed top-4 sm:top-6 left-1/2 z-50 w-[94%] sm:w-[92%] max-w-6xl -translate-x-1/2
-      flex items-center justify-between px-4 sm:px-6 py-2 sm:py-3
-      rounded-md border border-white/20 bg-white/20 backdrop-blur-xl
-      shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-300"
+      className={cn(
+        'fixed left-1/2 z-50 w-[94%] sm:w-[92%] max-w-6xl -translate-x-1/2',
+        'flex items-center justify-between px-4 sm:px-6 py-2 sm:py-3',
+        'rounded-md border border-white/20 bg-white/20 backdrop-blur-xl',
+        'shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-300',
+        bannerActive ? 'top-14 sm:top-16' : 'top-4 sm:top-6',
+      )}
     >
       <Link href="/">
         <Image

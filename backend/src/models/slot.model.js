@@ -9,13 +9,14 @@ const SLOT_SELECT = `
          ts.duration_minutes, ts.max_participants, ts.price, ts.deposit_amount,
          ts.is_cancelled, ts.cancel_reason, ts.cancelled_at, ts.notes,
          l.title, l.level, l.type,
-         (ts.max_participants - IFNULL((
-           SELECT SUM(participants) FROM bookings
-           WHERE slot_id = ts.id AND status != 'CANCELLED'
-         ), 0)) AS spots_left
+         (ts.max_participants - IFNULL(SUM(CASE WHEN b.status != 'CANCELLED' THEN b.participants END), 0)) AS spots_left
   FROM time_slots ts
   JOIN lessons l ON l.id = ts.lesson_id
+  LEFT JOIN bookings b ON b.slot_id = ts.id
 `;
+// GROUP BY ts.id — l.title/level/type are functionally dependent on it (joined on lessons' PK),
+// so MySQL doesn't require listing them (ONLY_FULL_GROUP_BY allows this since 5.7.5).
+const SLOT_GROUP_BY = 'GROUP BY ts.id';
 
 export const createSlot = async (slot) => {
   const { lessonId, date, time, durationMinutes, maxParticipants, price, depositAmount, notes = null } =
@@ -30,14 +31,14 @@ export const createSlot = async (slot) => {
 
 // Returns all slots (past + future + cancelled) for the admin schedule view
 export const findAllSlots = async () => {
-  const [rows] = await db.query(`${SLOT_SELECT} ORDER BY ts.date ASC, ts.time ASC`);
+  const [rows] = await db.query(`${SLOT_SELECT} ${SLOT_GROUP_BY} ORDER BY ts.date ASC, ts.time ASC`);
   return rows;
 };
 
 // Returns only upcoming, non-cancelled slots — public booking page + admin dashboard widget
 export const findPublicSlots = async () => {
   const [rows] = await db.query(
-    `${SLOT_SELECT} WHERE ts.date >= CURDATE() AND ts.is_cancelled = 0 ORDER BY ts.date ASC, ts.time ASC`,
+    `${SLOT_SELECT} WHERE ts.date >= CURDATE() AND ts.is_cancelled = 0 ${SLOT_GROUP_BY} ORDER BY ts.date ASC, ts.time ASC`,
   );
   return rows;
 };
@@ -49,8 +50,16 @@ export const findSlotRawById = async (id) => {
 };
 
 export const findSlotById = async (id) => {
-  const [rows] = await db.query(`${SLOT_SELECT} WHERE ts.id = ?`, [id]);
+  const [rows] = await db.query(`${SLOT_SELECT} WHERE ts.id = ? ${SLOT_GROUP_BY}`, [id]);
   return rows[0];
+};
+
+// Batch lookup — used by package booking creation to fetch all selected slots in one
+// query instead of one findSlotById per slot.
+export const findSlotsByIds = async (ids) => {
+  if (ids.length === 0) return [];
+  const [rows] = await db.query(`${SLOT_SELECT} WHERE ts.id IN (?) ${SLOT_GROUP_BY}`, [ids]);
+  return rows;
 };
 
 const UPDATABLE_COLUMNS = {

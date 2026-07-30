@@ -14,6 +14,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 // label -> minutes, same fixed list the old SessionEditor used
 const DURATIONS: { label: string; minutes: number }[] = [
@@ -49,8 +55,14 @@ export default function LessonCatalogEditor({
   const [editingId, setEditingId] = useState<number | null>(null);
 
   return (
-    <div className="bg-background rounded-lg border divide-y">
-      {lessons.map((lesson) =>
+    <Accordion type="single" collapsible className="bg-background rounded-lg border overflow-hidden">
+      <AccordionItem value="catalog" className="border-0">
+        <AccordionTrigger className="px-4 py-3 text-sm font-semibold hover:no-underline hover:bg-muted/50">
+          Lesson catalog
+        </AccordionTrigger>
+        <AccordionContent className="px-0 pb-0 pt-0">
+          <div className="divide-y border-t">
+            {lessons.map((lesson) =>
         editingId === lesson.id ? (
           <CatalogRowEditing
             key={lesson.id}
@@ -62,8 +74,8 @@ export default function LessonCatalogEditor({
             onCancel={() => setEditingId(null)}
           />
         ) : (
-          <div key={lesson.id} className="flex items-center gap-3 px-4 py-3 text-sm">
-            <span className="font-medium w-32 shrink-0">{lesson.title}</span>
+          <div key={lesson.id} className="flex flex-wrap items-center gap-x-3 gap-y-1.5 px-4 py-3 text-sm">
+            <span className="font-medium shrink-0">{lesson.title}</span>
             {lesson.isPackage && (
               <span className="text-xs bg-primary/10 text-primary border border-primary/30 rounded px-2 py-0.5 shrink-0">
                 Package ×{lesson.sessionsCount}
@@ -72,11 +84,14 @@ export default function LessonCatalogEditor({
             <span className="text-xs bg-muted border rounded px-2 py-0.5 shrink-0">
               {lesson.level}
             </span>
-            <span className="text-muted-foreground shrink-0">Max {lesson.maxParticipants}</span>
-            <span className="flex-1" />
-            <span className="text-muted-foreground shrink-0">{lesson.durationMinutes} min</span>
-            <span className="font-medium shrink-0 w-16 text-right">${lesson.price}</span>
-            <span className="text-xs text-muted-foreground shrink-0 w-24 text-right">
+            <span className="text-muted-foreground shrink-0 hidden sm:inline">
+              Max {lesson.maxParticipants}
+            </span>
+            <span className="text-muted-foreground shrink-0 hidden sm:inline">
+              {lesson.durationMinutes} min
+            </span>
+            <span className="font-medium shrink-0">${lesson.price}</span>
+            <span className="text-xs text-muted-foreground shrink-0">
               ${lesson.depositAmount} deposit
             </span>
             <Button
@@ -84,13 +99,17 @@ export default function LessonCatalogEditor({
               size="icon"
               onClick={() => setEditingId(lesson.id)}
               aria-label="Edit catalog values"
+              className="ml-auto"
             >
               <Pencil className="w-3.5 h-3.5" />
             </Button>
           </div>
-        ),
-      )}
-    </div>
+            ),
+            )}
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }
 
@@ -118,6 +137,8 @@ function CatalogRowEditing({
       await apiClient.patch(`/lessons/${lesson.id}`, payload);
       toast.success('Catalog updated');
       onSaved({ ...lesson, ...payload });
+      // best-effort: public pages self-heal via cache expiry even if this fails
+      fetch('/api/revalidate-lessons', { method: 'POST' }).catch(() => {});
     } catch {
       toast.error('Failed to update catalog');
     } finally {

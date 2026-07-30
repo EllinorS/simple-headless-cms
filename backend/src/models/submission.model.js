@@ -49,6 +49,7 @@ export const findSubmissionDetails = async (submissionId) => {
       form_submissions.created_at,
 
       form_answers.id AS answer_id,
+      form_answers.field_id AS answer_field_id,
       form_answers.value AS answer_value,
 
       form_fields.label AS question_label,
@@ -64,6 +65,18 @@ export const findSubmissionDetails = async (submissionId) => {
     [submissionId],
   );
 
+  return rows;
+};
+
+// find option value->label pairs for a set of fields, so raw stored answer values
+// (option.value, e.g. "RIP_CURRENTS") can be resolved to their human-readable label
+// (option.label, e.g. "Rip currents") for display.
+export const findOptionLabelsByFieldIds = async (fieldIds) => {
+  if (fieldIds.length === 0) return [];
+  const [rows] = await db.query(
+    `SELECT field_id, value, label FROM form_field_options WHERE field_id IN (?)`,
+    [fieldIds],
+  );
   return rows;
 };
 

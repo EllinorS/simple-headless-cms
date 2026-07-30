@@ -84,7 +84,7 @@ export default function SurfTripsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-2">
         <div>
           <h1 className="text-3xl font-bold">Surf Trip Requests</h1>
           <p className="text-muted-foreground mt-1">
@@ -98,7 +98,7 @@ export default function SurfTripsPage() {
         </div>
       </div>
 
-      <div className="flex gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-6">
         {['ALL', ...STATUS_OPTIONS].map((s) => (
           <button key={s} onClick={() => setFilterStatus(s)}
             className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${

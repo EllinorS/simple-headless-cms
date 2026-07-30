@@ -59,10 +59,13 @@ export default function LessonsPage() {
       <div>
         <h2 className="text-xl font-semibold mb-3">Schedule</h2>
         <div className="bg-background rounded-lg border px-4 py-3 space-y-4">
+          <SlotForm lessons={lessons} onCreated={handleSlotCreated} />
           {slots.length === 0 ? (
-            <p className="text-sm text-muted-foreground italic">No slots added yet</p>
+            <p className="text-sm text-muted-foreground italic border-t pt-4">
+              No slots added yet
+            </p>
           ) : (
-            <div className="divide-y">
+            <div className="divide-y border-t">
               {slots.map((slot) => (
                 <SlotRow
                   key={slot.id}
@@ -73,9 +76,6 @@ export default function LessonsPage() {
               ))}
             </div>
           )}
-          <div className="border-t pt-4">
-            <SlotForm lessons={lessons} onCreated={handleSlotCreated} />
-          </div>
         </div>
       </div>
     </div>

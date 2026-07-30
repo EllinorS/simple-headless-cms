@@ -5,6 +5,10 @@
 
 export const GLOBAL_BLOCKS = [
   {
+    title: 'Announcement Banner',
+    keys: ['global_banner_enabled', 'global_banner_text', 'global_banner_color'],
+  },
+  {
     title: 'Footer',
     keys: ['global_footer_image', 'global_instagram_url', 'global_facebook_url'],
   },

@@ -25,6 +25,18 @@ export const getSubmissionById = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: 'Submission not found' });
   }
 
+  const answerRows = details.filter((row) => row.answer_id);
+  const fieldIds = [...new Set(answerRows.map((row) => row.answer_field_id))];
+  const optionRows = await submissionModel.findOptionLabelsByFieldIds(fieldIds);
+
+  // per field, map raw option value -> human label (TEXT fields have no options, so
+  // their map stays empty and the raw answer value is used as-is)
+  const labelsByField = new Map();
+  for (const opt of optionRows) {
+    if (!labelsByField.has(opt.field_id)) labelsByField.set(opt.field_id, new Map());
+    labelsByField.get(opt.field_id).set(opt.value, opt.label);
+  }
+
   const submission = {
     id: details[0].id,
     client: {
@@ -35,12 +47,17 @@ export const getSubmissionById = asyncHandler(async (req, res) => {
     },
     status: details[0].status,
     createdAt: details[0].created_at,
-    answers: details
-      .filter((row) => row.answer_id)
-      .map((row) => ({
-        question: row.question_label,
-        value: row.answer_value,
-      })),
+    answers: answerRows.map((row) => {
+      const fieldLabels = labelsByField.get(row.answer_field_id);
+      // CHECKBOX/RANK answers store comma-joined option values (e.g. "RIP_CURRENTS,REEF_BREAKS")
+      const value = fieldLabels
+        ? row.answer_value
+            .split(',')
+            .map((v) => fieldLabels.get(v) ?? v)
+            .join(', ')
+        : row.answer_value;
+      return { question: row.question_label, value };
+    }),
   };
 
   res.status(200).json({ data: submission });

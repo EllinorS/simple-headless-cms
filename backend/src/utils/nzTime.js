@@ -32,3 +32,17 @@ export const nzWallClockToUtc = (date, time) => {
 // self-service window (matches the confirmed 24h refund/reschedule business rule).
 export const cancelWindowExpiry = (date, time) =>
   new Date(nzWallClockToUtc(date, time).getTime() - 24 * 60 * 60 * 1000);
+
+// Bank-transfer payment hold: normally 48h, but clamped so it can never outlive the session
+// itself — a booking made less than 48h before its slot gets a shorter window instead of a
+// deadline that promises more time than the lesson allows. Floored at 1h from now so even a
+// same-day booking gets some window to complete the transfer (an inherent limit of bank
+// transfer as a payment method for near-immediate bookings, not something code can fix).
+export const paymentHoldExpiry = (date, time) => {
+  const sessionStart = nzWallClockToUtc(date, time);
+  const maxHold = new Date(Date.now() + 48 * 60 * 60 * 1000);
+  const beforeSession = new Date(sessionStart.getTime() - 2 * 60 * 60 * 1000);
+  const floor = new Date(Date.now() + 60 * 60 * 1000);
+  const clamped = maxHold < beforeSession ? maxHold : beforeSession;
+  return clamped < floor ? floor : clamped;
+};

@@ -9,9 +9,20 @@ import { nzWallClockToUtc } from '../utils/nzTime.js';
 
 const REVIEW_DELAY_MS = 48 * 60 * 60 * 1000;
 
-const lastSessionInstant = async (root) => {
+// Groups batch-fetched group sessions by root id (own id if root, parent_booking_id if sibling).
+const groupSessionsByRoot = (sessions) => {
+  const byRoot = new Map();
+  for (const s of sessions) {
+    const rootId = s.parent_booking_id ?? s.id;
+    if (!byRoot.has(rootId)) byRoot.set(rootId, []);
+    byRoot.get(rootId).push(s);
+  }
+  return byRoot;
+};
+
+const lastSessionInstant = (root, sessionsByRoot) => {
   if (root.sessions_required <= 1) return nzWallClockToUtc(root.slot_date, root.slot_time);
-  const sessions = await bookingModel.findGroupSessionsById(root.id);
+  const sessions = sessionsByRoot.get(root.id) ?? [];
   const instants = sessions.map((s) => nzWallClockToUtc(s.slot_date, s.slot_time).getTime());
   return new Date(Math.max(...instants));
 };
@@ -20,13 +31,17 @@ export const checkAndSendReviewRequests = async () => {
   const roots = await bookingModel.findPendingReviewRequestRoots();
   if (roots.length === 0) return;
 
-  const [googleUrl, tripadvisorUrl] = await Promise.all([
+  const [googleUrl, tripadvisorUrl, groupSessions] = await Promise.all([
     siteContentModel.findContentByKey('global_google_review_url'),
     siteContentModel.findContentByKey('global_tripadvisor_review_url'),
+    bookingModel.findGroupSessionsByRootIds(
+      roots.filter((r) => r.sessions_required > 1).map((r) => r.id),
+    ),
   ]);
+  const sessionsByRoot = groupSessionsByRoot(groupSessions);
 
   for (const root of roots) {
-    const lastSession = await lastSessionInstant(root);
+    const lastSession = lastSessionInstant(root, sessionsByRoot);
     if (Date.now() < lastSession.getTime() + REVIEW_DELAY_MS) continue;
 
     try {

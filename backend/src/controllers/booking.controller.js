@@ -30,11 +30,13 @@ const getBankDetails = async () => {
   };
 };
 
-// POST /api/bookings — single lesson. Booking starts PENDING (holds the slot 48h) — the
+// POST /api/bookings — single lesson. Booking starts PENDING (holds the slot up to 48h,
+// less for last-minute bookings — see paymentHoldExpiry) — the
 // client is told to bank-transfer the deposit, not that the booking is confirmed yet.
 export const createBooking = asyncHandler(async (req, res) => {
-  const { bookingId, cancelToken, slot, lesson } = await bookingCreation.createSingleBooking(req.body);
+  const { bookingId, cancelToken, slot, lesson, expiresAt } = await bookingCreation.createSingleBooking(req.body);
   const bankDetails = await getBankDetails();
+  const holdHours = Math.max(1, Math.round((expiresAt.getTime() - Date.now()) / (60 * 60 * 1000)));
   await bookingAwaitingPaymentEmail(
     req.body.clientFirstname,
     req.body.clientEmail,
@@ -43,6 +45,7 @@ export const createBooking = asyncHandler(async (req, res) => {
     slot.time,
     bookingId,
     lesson.depositAmount,
+    holdHours,
     bankDetails,
   );
   res.status(201).json({ message: 'Booking received — awaiting payment', data: { bookingId, cancelToken } });
@@ -50,10 +53,11 @@ export const createBooking = asyncHandler(async (req, res) => {
 
 // POST /api/bookings/multiple — package (3/5 sessions). Same PENDING-hold flow as above.
 export const createMultipleBookings = asyncHandler(async (req, res) => {
-  const { parentBookingId, groupCancelToken, sessions, lesson } = await bookingCreation.createPackageBooking(
+  const { parentBookingId, groupCancelToken, sessions, lesson, expiresAt } = await bookingCreation.createPackageBooking(
     req.body,
   );
   const bankDetails = await getBankDetails();
+  const holdHours = Math.max(1, Math.round((expiresAt.getTime() - Date.now()) / (60 * 60 * 1000)));
   await packageAwaitingPaymentEmail(
     req.body.clientFirstname,
     req.body.clientEmail,
@@ -61,6 +65,7 @@ export const createMultipleBookings = asyncHandler(async (req, res) => {
     sessions,
     parentBookingId,
     lesson.depositAmount,
+    holdHours,
     bankDetails,
   );
   res.status(201).json({ message: 'Package received — awaiting payment', data: { parentBookingId, groupCancelToken } });

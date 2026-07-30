@@ -23,6 +23,18 @@ if (process.env.NODE_ENV === 'production' && !process.env.CLIENT_URL) {
   process.exit(1);
 }
 
+// Without JWT_SECRET, jwt.sign() only fails at the first login attempt, not at boot.
+// Without JWT_EXPIRES_IN, jwt.sign() silently signs a token with no expiry at all — it would
+// stay valid forever if a cookie ever leaked. Both cases should fail loudly at startup instead.
+if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+  console.error('FATAL: JWT_SECRET environment variable is required in production.');
+  process.exit(1);
+}
+if (process.env.NODE_ENV === 'production' && !process.env.JWT_EXPIRES_IN) {
+  console.error('FATAL: JWT_EXPIRES_IN environment variable is required in production.');
+  process.exit(1);
+}
+
 const app = express();
 
 app.set('trust proxy', 1);

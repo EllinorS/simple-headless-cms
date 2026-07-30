@@ -8,7 +8,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { isVideo } from '@/lib/utils';
+import { cn, isVideo } from '@/lib/utils';
+
+const BANNER_COLOR_OPTIONS = [
+  { label: 'Green', value: '#1a7060' },
+  { label: 'Dark red', value: '#8b1e1e' },
+];
 import type { ContentItem } from '@/lib/types';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -77,7 +82,40 @@ function ContentField({ item }: { item: ContentItem }) {
 
         {editing ? (
           <div className="space-y-2">
-            {item.type === 'RICHTEXT' ? (
+            {item.keyName === 'global_banner_enabled' ? (
+              <label className="inline-flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={editValue === 'true'}
+                  onChange={(e) => setEditValue(e.target.checked ? 'true' : 'false')}
+                  className="peer sr-only"
+                />
+                <span
+                  className="w-10 h-6 rounded-full bg-muted peer-checked:bg-primary transition-colors relative
+                  after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-5 after:h-5
+                  after:bg-white after:rounded-full after:shadow after:transition-transform
+                  peer-checked:after:translate-x-4"
+                />
+                <span className="text-sm">{editValue === 'true' ? 'Enabled' : 'Disabled'}</span>
+              </label>
+            ) : item.keyName === 'global_banner_color' ? (
+              <div className="flex gap-3">
+                {BANNER_COLOR_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setEditValue(opt.value)}
+                    className={cn(
+                      'w-9 h-9 rounded-full border-2 transition-all',
+                      editValue === opt.value ? 'border-foreground scale-110' : 'border-transparent',
+                    )}
+                    style={{ backgroundColor: opt.value }}
+                    aria-label={opt.label}
+                    title={opt.label}
+                  />
+                ))}
+              </div>
+            ) : item.type === 'RICHTEXT' ? (
               <Textarea
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
@@ -134,7 +172,26 @@ function ContentField({ item }: { item: ContentItem }) {
           </div>
         ) : ( // if not in editing mode :
           <div className="flex items-center gap-3">
-            {item.type === 'IMAGE_URL' && currentValue ? (
+            {item.keyName === 'global_banner_enabled' ? (
+              <span
+                className={cn(
+                  'text-xs font-medium px-2 py-0.5 rounded',
+                  currentValue === 'true' ? 'bg-primary/15 text-primary' : 'bg-muted text-muted-foreground',
+                )}
+              >
+                {currentValue === 'true' ? 'Enabled' : 'Disabled'}
+              </span>
+            ) : item.keyName === 'global_banner_color' ? (
+              <div className="flex items-center gap-2">
+                <span
+                  className="w-5 h-5 rounded-full border shrink-0"
+                  style={{ backgroundColor: currentValue || BANNER_COLOR_OPTIONS[0].value }}
+                />
+                <p className="text-sm text-muted-foreground">
+                  {BANNER_COLOR_OPTIONS.find((o) => o.value === currentValue)?.label ?? currentValue}
+                </p>
+              </div>
+            ) : item.type === 'IMAGE_URL' && currentValue ? (
               <MediaPreview src={currentValue} alt={item.label} />
             ) : (
               <p className="text-sm text-muted-foreground line-clamp-2">

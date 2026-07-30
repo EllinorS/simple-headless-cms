@@ -94,7 +94,7 @@ export default function AdminBookingsPage() {
         <p className="text-muted-foreground mt-1">Every reservation, single or package. Reschedule or cancel at any time — no 24h restriction for admin.</p>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {TABS.map((t) => (
           <button
             key={t}
@@ -112,33 +112,33 @@ export default function AdminBookingsPage() {
         {filtered.length === 0 ? (
           <p className="text-sm text-muted-foreground italic px-4 py-6">No bookings</p>
         ) : (
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[880px] text-sm">
             <thead className="border-b bg-muted/40 text-xs text-muted-foreground uppercase">
               <tr>
-                <th className="text-left px-4 py-2">#</th>
-                <th className="text-left px-4 py-2">Client</th>
-                <th className="text-left px-4 py-2">Lesson</th>
-                <th className="text-left px-4 py-2">Date/time</th>
-                <th className="text-left px-4 py-2">Status</th>
-                <th className="text-left px-4 py-2">Type</th>
-                <th className="text-right px-4 py-2">Actions</th>
+                <th className="text-left px-4 py-2 whitespace-nowrap">#</th>
+                <th className="text-left px-4 py-2 whitespace-nowrap">Client</th>
+                <th className="text-left px-4 py-2 whitespace-nowrap">Lesson</th>
+                <th className="text-left px-4 py-2 whitespace-nowrap">Date/time</th>
+                <th className="text-left px-4 py-2 whitespace-nowrap">Status</th>
+                <th className="text-left px-4 py-2 whitespace-nowrap">Type</th>
+                <th className="text-right px-4 py-2 whitespace-nowrap">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y">
               {filtered.map((b) => (
                 <tr key={b.id}>
-                  <td className="px-4 py-2">{b.id}</td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2 whitespace-nowrap">{b.id}</td>
+                  <td className="px-4 py-2 whitespace-nowrap">
                     <div className="font-medium">
                       {b.clientFirstname} {b.clientLastname}
                     </div>
                     <div className="text-xs text-muted-foreground">{b.clientEmail}</div>
                   </td>
-                  <td className="px-4 py-2">{b.lessonTitle}</td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2 whitespace-nowrap">{b.lessonTitle}</td>
+                  <td className="px-4 py-2 whitespace-nowrap">
                     {formatSessionDate(b.slotDate)} · {formatTime(b.slotTime)}
                   </td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2 whitespace-nowrap">
                     <span
                       className={`text-xs border rounded px-2 py-0.5 ${
                         b.status === 'CANCELLED'
@@ -152,28 +152,30 @@ export default function AdminBookingsPage() {
                       {b.status === 'CANCELLED' && b.cancelledBy ? ` · by ${b.cancelledBy}` : ''}
                     </span>
                   </td>
-                  <td className="px-4 py-2 text-muted-foreground">{bookingType(b)}</td>
-                  <td className="px-4 py-2 text-right space-x-2">
-                    {b.status !== 'CANCELLED' && (
-                      <>
-                        {b.status === 'PENDING' && (
-                          <Button variant="ghost" size="sm" onClick={() => handleMarkPaid(b)}>
-                            Mark as paid
+                  <td className="px-4 py-2 whitespace-nowrap text-muted-foreground">{bookingType(b)}</td>
+                  <td className="px-4 py-2">
+                    <div className="flex flex-wrap justify-end items-center gap-x-2 gap-y-1">
+                      {b.status !== 'CANCELLED' && (
+                        <>
+                          {b.status === 'PENDING' && (
+                            <Button variant="ghost" size="sm" onClick={() => handleMarkPaid(b)}>
+                              Mark as paid
+                            </Button>
+                          )}
+                          <Button variant="ghost" size="sm" onClick={() => setReschedulingId(b.id)}>
+                            Reschedule
                           </Button>
-                        )}
-                        <Button variant="ghost" size="sm" onClick={() => setReschedulingId(b.id)}>
-                          Reschedule
-                        </Button>
-                        <Button variant="ghost" size="sm" className="text-destructive" onClick={() => handleCancel(b)}>
-                          Cancel
-                        </Button>
-                        {b.sessionsRequired > 1 && (
-                          <Button variant="ghost" size="sm" className="text-destructive" onClick={() => handleCancelGroup(b)}>
-                            Cancel package
+                          <Button variant="ghost" size="sm" className="text-destructive" onClick={() => handleCancel(b)}>
+                            Cancel
                           </Button>
-                        )}
-                      </>
-                    )}
+                          {b.sessionsRequired > 1 && (
+                            <Button variant="ghost" size="sm" className="text-destructive" onClick={() => handleCancelGroup(b)}>
+                              Cancel package
+                            </Button>
+                          )}
+                        </>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}

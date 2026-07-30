@@ -18,16 +18,17 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 
 // Login
 
+// Precomputed once at startup so a nonexistent email still pays the same argon2.verify cost
+// as a real one below — otherwise "no such account" (instant 400) and "wrong password"
+// (400 after a hash verify) are distinguishable by response latency alone.
+const DUMMY_HASH = await argon2.hash('dummy-password-for-timing-safety');
+
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await authModel.findUserByEmail(email);
-  if (!user) {
-    return res.status(400).json({ message: 'Incorrect email or password' });
-  }
 
-  // Verify the password BEFORE revealing account state.
-  const valid = await argon2.verify(user.password, password);
-  if (!valid) {
+  const valid = await argon2.verify(user ? user.password : DUMMY_HASH, password);
+  if (!user || !valid) {
     return res.status(400).json({ message: 'Incorrect email or password' });
   }
 
@@ -67,7 +68,10 @@ export const resetPasswordRequest = asyncHandler(async (req, res) => {
     return res.status(200).json({ message: 'If this email exists, a reset link has been sent.' });
   const resetToken = uuid4();
   await authModel.storeResetToken(user.id, resetToken);
-  await sendResetPasswordEmail(email, resetToken);
+  // Fire-and-forget: awaiting the outbound email call would make the response noticeably
+  // slower for a real account than for a nonexistent one, leaking the same kind of timing
+  // signal this endpoint's response body is designed to hide. sendBrevo already logs failures.
+  sendResetPasswordEmail(email, resetToken).catch(() => {});
   res.status(200).json({ message: 'If this email exists, a reset link has been sent.' });
 });
 

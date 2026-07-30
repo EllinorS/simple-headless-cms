@@ -3,7 +3,7 @@ import * as bookingModel from '../models/booking.model.js';
 import * as lessonModel from '../models/lesson.model.js';
 import * as slotModel from '../models/slot.model.js';
 import { withTransaction } from '../utils/transactionHelper.js';
-import { cancelWindowExpiry, nzWallClockToUtc } from '../utils/nzTime.js';
+import { cancelWindowExpiry, nzWallClockToUtc, paymentHoldExpiry } from '../utils/nzTime.js';
 
 export const createSingleBooking = async (data) => {
   const { lessonId, slotId, clientFirstname, clientLastname, clientEmail, clientPhone, notes } = data;
@@ -23,10 +23,9 @@ export const createSingleBooking = async (data) => {
 
   const cancelToken = uuidv4();
   const cancelTokenExpiresAt = cancelWindowExpiry(slot.date, slot.time);
-  // Payment hold: 48h to complete the bank transfer before the slot is released back to
-  // the public. Not NZ-wall-clock-relative (unlike cancelWindowExpiry) — just a plain
-  // duration from server time.
-  const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000);
+  // Payment hold: normally 48h to complete the bank transfer, clamped so it can never
+  // outlive the session itself for last-minute bookings — see paymentHoldExpiry.
+  const expiresAt = paymentHoldExpiry(slot.date, slot.time);
 
   return withTransaction(async (connection) => {
     const bookingId = await bookingModel.createBookingRow(
@@ -49,7 +48,7 @@ export const createSingleBooking = async (data) => {
       },
       connection,
     );
-    return { bookingId, cancelToken, slot, lesson };
+    return { bookingId, cancelToken, slot, lesson, expiresAt };
   });
 };
 
@@ -66,10 +65,11 @@ export const createPackageBooking = async (data) => {
     throw Object.assign(new Error('You cannot book the same session twice'), { status: 400 });
   }
 
-  const slots = [];
-  for (const slotId of slotIds) {
-    const slot = await slotModel.findSlotById(slotId);
-    if (!slot) throw Object.assign(new Error('Slot not found'), { status: 404 });
+  const slots = await slotModel.findSlotsByIds(slotIds);
+  if (slots.length !== slotIds.length) {
+    throw Object.assign(new Error('Slot not found'), { status: 404 });
+  }
+  for (const slot of slots) {
     if (slot.is_cancelled) {
       throw Object.assign(new Error('One of the selected sessions is cancelled'), { status: 400 });
     }
@@ -78,9 +78,13 @@ export const createPackageBooking = async (data) => {
     if (slot.lesson_id !== lesson.base_lesson_id) {
       throw Object.assign(new Error('All sessions in a package must be the same lesson type'), { status: 400 });
     }
-    slots.push(slot);
   }
   slots.sort((a, b) => nzWallClockToUtc(a.date, a.time) - nzWallClockToUtc(b.date, b.time));
+
+  // Payment hold is shared across every session in the package (they must all be paid for or
+  // released together), so it's tied to the earliest session — the first one the client would
+  // lose if they don't pay in time — not recomputed per slot.
+  const expiresAt = paymentHoldExpiry(slots[0].date, slots[0].time);
 
   return withTransaction(async (connection) => {
     let parentBookingId = null;
@@ -93,7 +97,6 @@ export const createPackageBooking = async (data) => {
       const slot = slots[i];
       const cancelToken = uuidv4();
       const cancelTokenExpiresAt = cancelWindowExpiry(slot.date, slot.time);
-      const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000);
 
       const bookingId = await bookingModel.createBookingRow(
         {
@@ -123,6 +126,6 @@ export const createPackageBooking = async (data) => {
     const groupCancelToken = uuidv4();
     await bookingModel.setGroupCancelToken(connection, parentBookingId, groupCancelToken);
 
-    return { parentBookingId, groupCancelToken, sessions, lesson };
+    return { parentBookingId, groupCancelToken, sessions, lesson, expiresAt };
   });
 };
